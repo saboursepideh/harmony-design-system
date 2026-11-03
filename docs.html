@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harmony: Orchestry Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="orchestry-tokens.css">
+<link rel="stylesheet" href="harmony-components.css">
+<style>
+/* ================= DOCS SHELL ================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { font: var(--type-body-m); color: var(--text-primary); background: var(--bg-page); -webkit-font-smoothing: antialiased; }
+a { color: var(--text-brand); text-decoration: none; }
+code, .mono { font-family: var(--font-mono); font-size: 12px; }
+svg { display: block; }
+.ic { width: 16px; height: 16px; flex-shrink: 0; }
+.ic-sm { width: 12px; height: 12px; flex-shrink: 0; }
+.ic-lg { width: 20px; height: 20px; flex-shrink: 0; }
+
+.doc { display: grid; grid-template-columns: 256px 1fr; min-height: 100vh; }
+.doc-nav { position: sticky; top: 0; height: 100vh; overflow-y: auto; background: var(--bg-surface); border-right: 1px solid var(--border-default); padding: var(--space-6) var(--space-4) var(--space-12); scrollbar-width: thin; }
+.doc-brand { display: flex; align-items: center; gap: var(--space-2); padding: 0 var(--space-2) var(--space-6); }
+.doc-brand img { width: 28px; height: 28px; }
+.doc-brand b { font: var(--type-heading-m); display: block; }
+.doc-brand span { font: var(--type-caption); color: var(--text-secondary); }
+.doc-nav h6 { font: var(--type-overline); letter-spacing: var(--track-overline); text-transform: uppercase; color: var(--text-secondary); padding: var(--space-5) var(--space-2) var(--space-1-5); }
+.doc-nav a { display: block; padding: 6px var(--space-2); border-radius: var(--radius-md); font: var(--type-body-s); color: var(--ink-700); }
+.doc-nav a:hover { background: var(--bg-hover); }
+.doc-nav a.on { background: var(--bg-selected); color: var(--text-brand); font-weight: 500; }
+
+.doc-main { min-width: 0; }
+.doc-wrap { max-width: 1120px; margin: 0 auto; padding: var(--space-12) var(--space-12) var(--space-16); }
+
+.hero { position: relative; overflow: hidden; border-radius: var(--radius-xl); background: var(--ink-800); color: #fff; padding: 56px 56px 48px; margin-bottom: var(--space-16); }
+.hero::after { content: ''; position: absolute; right: -120px; top: -140px; width: 480px; height: 480px; border-radius: 50%; background: var(--brand-gradient); opacity: .9; filter: blur(2px); }
+.hero::before { content: ''; position: absolute; right: 90px; top: 70px; width: 120px; height: 120px; border-radius: 50%; border: 22px solid rgba(255,255,255,.92); z-index: 1; }
+.hero > * { position: relative; z-index: 2; }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; font: var(--type-label); color: var(--teal-200); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); padding: 4px 12px; border-radius: var(--radius-full); margin-bottom: var(--space-6); }
+.hero h1 { font-size: 48px; line-height: 56px; font-weight: 600; letter-spacing: -1px; max-width: 620px; }
+.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--lime-300), var(--teal-200)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { font-size: 16px; line-height: 26px; color: var(--ink-200); max-width: 560px; margin-top: var(--space-4); }
+.hero-stats { display: flex; gap: var(--space-10); margin-top: var(--space-10); padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,.12); }
+.hero-stats b { display: block; font: var(--type-display); letter-spacing: var(--track-display); }
+.hero-stats span { font: var(--type-caption); color: var(--ink-300); }
+
+.sec { margin-bottom: 88px; }
+.sec-num { font: var(--type-overline); letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-brand); margin-bottom: var(--space-2); }
+.sec h2 { font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: -0.6px; }
+.sec-lead { font-size: 15px; line-height: 24px; color: var(--text-secondary); max-width: 680px; margin-top: var(--space-2); margin-bottom: var(--space-8); }
+.sub { margin-top: var(--space-12); }
+.sub h3 { font: var(--type-heading-l); letter-spacing: var(--track-heading-l); margin-bottom: var(--space-1); }
+.sub > p { font: var(--type-body-s); color: var(--text-secondary); max-width: 680px; margin-bottom: var(--space-5); }
+
+.panel { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-6); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap-cards); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-cards); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap-cards); }
+
+/* Principles */
+.principle { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-6); }
+.principle .n { width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--bg-selected); color: var(--text-brand); display: flex; align-items: center; justify-content: center; font: var(--type-heading-s); margin-bottom: var(--space-4); }
+.principle h4 { font: var(--type-heading-m); margin-bottom: var(--space-1-5); }
+.principle p { font: var(--type-body-s); color: var(--text-secondary); }
+
+/* Pipeline */
+.pipe { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); overflow: hidden; }
+.pipe-step { padding: var(--space-5); border-right: 1px solid var(--border-subtle); position: relative; }
+.pipe-step:last-child { border-right: none; }
+.pipe-step:not(:last-child)::after { content: ''; position: absolute; right: -7px; top: 34px; width: 12px; height: 12px; background: var(--bg-surface); border-top: 1px solid var(--border-default); border-right: 1px solid var(--border-default); transform: rotate(45deg); z-index: 1; }
+.pipe-step .k { font: var(--type-overline); letter-spacing: var(--track-overline); color: var(--text-secondary); text-transform: uppercase; }
+.pipe-step .ico { width: 36px; height: 36px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin: var(--space-3) 0; }
+.pipe-step h5 { font: var(--type-heading-s); margin-bottom: 4px; }
+.pipe-step p { font: var(--type-caption); color: var(--text-secondary); }
+.pipe-step.ai { background: linear-gradient(180deg, var(--teal-50), var(--bg-surface)); }
+
+/* Prompt / output */
+.prompt { background: var(--ink-800); color: var(--ink-100); border-radius: var(--radius-lg); padding: var(--space-6); font: 400 13px/22px var(--font-mono); }
+.prompt .who { display: flex; align-items: center; gap: 8px; font: var(--type-label); font-family: var(--font-sans); color: var(--teal-200); margin-bottom: var(--space-3); }
+.prompt .hl { color: var(--lime-300); }
+.prompt .dim { color: var(--ink-400); }
+pre.code { background: var(--ink-900); color: var(--ink-100); border-radius: var(--radius-lg); padding: var(--space-5) var(--space-6); font: 400 12px/20px var(--font-mono); overflow-x: auto; white-space: pre; }
+pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } pre.code .k { color: var(--teal-200); } pre.code .n { color: #F9C784; }
+.checklist { display: flex; flex-direction: column; gap: var(--space-2); }
+.checklist div { display: flex; gap: var(--space-2); font: var(--type-body-s); color: var(--ink-700); }
+.checklist svg { color: var(--status-success-solid); margin-top: 2px; }
+
+/* Audit table */
+.audit { width: 100%; border-collapse: collapse; }
+.audit th { font: var(--type-overline); letter-spacing: var(--track-overline); text-transform: uppercase; color: var(--text-secondary); text-align: left; padding: 0 var(--space-4) var(--space-3); border-bottom: 1px solid var(--border-default); }
+.audit td { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-subtle); font: var(--type-body-s); }
+.audit tr:last-child td { border-bottom: none; }
+.audit .before { color: var(--status-danger-fg); font-weight: 500; }
+.audit .after { color: var(--status-success-fg); font-weight: 600; }
+
+/* Swatches */
+.ramp { display: grid; grid-template-columns: 120px repeat(10, 1fr); gap: 6px; align-items: stretch; margin-bottom: 6px; }
+.ramp-name { font: var(--type-heading-s); display: flex; flex-direction: column; justify-content: center; }
+.ramp-name span { font: var(--type-caption); color: var(--text-secondary); font-weight: 400; }
+.sw { height: 64px; border-radius: var(--radius-md); padding: 6px 8px; display: flex; flex-direction: column; justify-content: flex-end; font: 500 10px/14px var(--font-mono); }
+.sw.brand { outline: 2px solid var(--ink-800); outline-offset: 2px; }
+.tok { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--border-subtle); }
+.tok:last-child { border-bottom: none; }
+.tok-chip { width: 32px; height: 32px; border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,.06); flex-shrink: 0; }
+.tok-name { font: 500 12px/16px var(--font-mono); color: var(--text-primary); }
+.tok-val { font: var(--type-caption); color: var(--text-secondary); }
+.tok-meta { margin-left: auto; font: var(--type-caption); color: var(--text-secondary); text-align: right; }
+.panel h4 { font: var(--type-heading-s); margin-bottom: var(--space-3); }
+.aa { font: var(--type-label); padding: 2px 6px; border-radius: var(--radius-xs); background: var(--status-success-bg); color: var(--status-success-fg); }
+.aa.fail { background: var(--status-danger-bg); color: var(--status-danger-fg); }
+
+/* Type specimen */
+.type-row { display: grid; grid-template-columns: 180px 1fr 220px; gap: var(--space-6); align-items: center; padding: var(--space-4) 0; border-bottom: 1px solid var(--border-subtle); }
+.type-row:last-child { border-bottom: none; }
+.type-row .tn { font: 500 12px/16px var(--font-mono); }
+.type-row .tu { font: var(--type-caption); color: var(--text-secondary); margin-top: 2px; }
+.type-row .ts { font: var(--type-caption); color: var(--text-secondary); text-align: right; }
+
+/* Spacing */
+.space-row { display: grid; grid-template-columns: 120px 60px 1fr 220px; gap: var(--space-4); align-items: center; padding: 6px 0; }
+.space-bar { height: 16px; background: var(--teal-200); border-radius: 3px; border-left: 2px solid var(--teal-700); border-right: 2px solid var(--teal-700); }
+.radius-demo { height: 88px; background: var(--teal-50); border: 1.5px solid var(--teal-700); }
+.shadow-demo { height: 96px; background: var(--bg-surface); border-radius: var(--radius-lg); display: flex; align-items: flex-end; padding: var(--space-3); }
+
+/* Grid demo */
+.cols12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+.cols12 > div { height: 40px; background: rgba(13,108,121,.10); border: 1px dashed rgba(13,108,121,.4); border-radius: 4px; display: flex; align-items: center; justify-content: center; font: var(--type-caption); color: var(--text-brand); }
+.shell { display: grid; grid-template-columns: 120px 1fr; height: 260px; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-default); }
+.shell-nav { background: var(--bg-nav); padding: 14px 10px; display: flex; flex-direction: column; gap: 6px; }
+.shell-nav i { display: block; height: 8px; border-radius: 4px; background: rgba(255,255,255,.18); }
+.shell-nav i.on { background: rgba(255,255,255,.55); }
+.shell-main { background: var(--bg-page); padding: 18px 24px; display: flex; flex-direction: column; gap: 8px; }
+.shell-main .bar { height: 12px; width: 160px; border-radius: 4px; background: var(--ink-300); }
+.shell-main .row { display: grid; gap: 8px; }
+.shell-main .row div { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: 6px; }
+.callout-dim { position: relative; }
+.dim-label { font: 500 10px/12px var(--font-mono); color: var(--red-600); }
+
+/* Component docs */
+.comp { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); margin-bottom: var(--space-6); overflow: hidden; scroll-margin-top: 24px; }
+.comp-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-6); padding: var(--space-6) var(--space-6) var(--space-4); }
+.comp-head h4 { font: var(--type-heading-l); letter-spacing: var(--track-heading-l); }
+.comp-head p { font: var(--type-body-s); color: var(--text-secondary); margin-top: 4px; max-width: 620px; }
+.comp-meta { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+.meta-chip { font: var(--type-label); padding: 3px 8px; border-radius: var(--radius-sm); background: var(--bg-subtle); color: var(--ink-700); border: 1px solid var(--border-default); white-space: nowrap; }
+.meta-chip.m { background: #EEF0FD; border-color: #DADFFB; color: #3B43B5; }
+.meta-chip.ok { background: var(--status-success-bg); border-color: var(--green-100); color: var(--status-success-fg); }
+.meta-chip.ai { background: var(--teal-50); border-color: var(--teal-100); color: var(--teal-800); }
+.comp-demo { margin: 0 var(--space-6); padding: var(--space-8); background: var(--bg-page); background-image: radial-gradient(var(--ink-100) 1px, transparent 1px); background-size: 16px 16px; border-radius: var(--radius-md); display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.comp-demo.col { flex-direction: column; align-items: stretch; }
+.comp-demo.center { justify-content: center; }
+.comp-foot { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: var(--space-6); padding: var(--space-5) var(--space-6) var(--space-6); }
+.comp-foot h5 { font: var(--type-overline); letter-spacing: var(--track-overline); text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--space-2); }
+.comp-foot ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.comp-foot li { font: var(--type-caption); line-height: 20px; color: var(--ink-700); }
+.comp-foot li code { font-size: 11px; background: var(--bg-subtle); border: 1px solid var(--border-subtle); padding: 0 4px; border-radius: 4px; color: var(--ink-800); white-space: nowrap; }
+.do li::before { content: '✓'; color: var(--status-success-solid); font-weight: 700; margin-right: 6px; }
+.dont li::before { content: '✕'; color: var(--status-danger-solid); font-weight: 700; margin-right: 6px; }
+.group-title { font: var(--type-heading-m); margin: var(--space-10) 0 var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
+.group-title span { font: var(--type-caption); color: var(--text-secondary); font-weight: 400; }
+.lbl { font: var(--type-caption); color: var(--text-secondary); width: 100%; }
+
+/* Changelog */
+.log { display: grid; grid-template-columns: 120px 80px 1fr; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); font: var(--type-body-s); }
+.log:last-child { border-bottom: none; }
+.log .d { color: var(--text-secondary); }
+
+
+@media (max-width: 1100px) { .doc { grid-template-columns: 1fr; } .doc-nav { display: none; } .doc-wrap { padding: 32px 24px; } .pipe { grid-template-columns: repeat(3, 1fr); } .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<!-- ============ ICON SPRITE (Tabler-style, 1.75 stroke) ============ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.2 18a2 2 0 001.7 3h16.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-up-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-down-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M18 13l-6 6-6-6"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18a2 2 0 012 2 2 2 0 012-2 2 2 0 01-2-2 2 2 0 01-2 2zM16 6a2 2 0 012 2 2 2 0 012-2 2 2 0 01-2-2 2 2 0 01-2 2zM9 18a6 6 0 016-6 6 6 0 01-6-6 6 6 0 01-6 6 6 6 0 016 6z"/></symbol>
+    <symbol id="i-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 4v4M9 13h.01M15 13h.01M10 16h4M2 13v2M22 13v2"/><circle cx="12" cy="3.5" r=".5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a12 12 0 008.5 3A12 12 0 0112 21 12 12 0 013.5 6 12 12 0 0012 3"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2zM9 13h6M9 17h4"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2M16 3.1a4 4 0 010 7.8M21 21v-2a4 4 0 00-3-3.9"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 010-18c5 0 9 3.6 9 8a4.5 4.5 0 01-4.5 4.5H14a2 2 0 00-1 3.8 1.3 1.3 0 01-1 2.2"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/></symbol>
+    <symbol id="i-type" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M21 21l-6-6"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M16 3v4M8 3v4M4 11h16"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 11l5 5 5-5M12 4v12"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3v7h6l-8 11v-7H5l8-11"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19a9 9 0 019 0 9 9 0 019 0M3 6a9 9 0 019 0 9 9 0 019 0M3 6v13M12 6v13M21 6v13"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 004.5 9M4 5v4h4M4 13a8.1 8.1 0 0015.5 2M20 19v-4h-4"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h.01M12 12h.01M19 12h.01"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v2.2a2 2 0 01-.6 1.4L15 12v7l-6 2v-8.5L4.5 7.5A2 2 0 014 6.1z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="16" r="1"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
+    <symbol id="i-world" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M11.5 3a17 17 0 000 18M12.5 3a17 17 0 010 18"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12l5 5-1.5 1.5a3.5 3.5 0 11-5-5L7 12zM17 12l-5-5 1.5-1.5a3.5 3.5 0 115 5L17 12zM3 21l2.5-2.5M18.5 5.5L21 3M10 11l-2 2M13 14l-2 2"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3M12 12l8-4.5M12 12v9M12 12L4 7.5"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="18" r="2"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M6 8v8M11 6h5a2 2 0 012 2v8"/><path d="M14 3l-3 3 3 3"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M22 12c-2.7 4.7-6 7-10 7s-7.3-2.3-10-7c2.7-4.7 6-7 10-7s7.3 2.3 10 7"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L4 8l8 4 8-4-8-4M4 12l8 4 8-4M4 16l8 4 8-4"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h1M12 3v1M20 12h1M5.6 5.6l.7.7M18.4 5.6l-.7.7M9 16a5 5 0 116 0 3.5 3.5 0 00-1 3 2 2 0 01-4 0 3.5 3.5 0 00-1-3M9.7 17h4.6"/></symbol>
+    <symbol id="i-checks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12l5 5L22 7M2 12l5 5m5-5l5-5"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10h3V7L6.5 3.5a6 6 0 018 8l6 6a2 2 0 01-3 3l-6-6a6 6 0 01-8-8L7 10"/></symbol>
+  </defs>
+</svg>
+
+<div class="doc">
+<!-- ============ DOC NAV ============ -->
+<nav class="doc-nav">
+  <div class="doc-brand"><img src="orchestry-logo.png" alt="Orchestry"><div><b>Harmony</b><span>Orchestry Design System · v2.2</span></div></div>
+  <h6>Start</h6>
+  <a href="#overview" class="on">Overview</a>
+  <a href="#ai-workflow">How AI builds the system</a>
+  <a href="#audit">The audit: before &amp; after</a>
+  <h6>Foundations</h6>
+  <a href="#color">Color</a>
+  <a href="#typography">Typography</a>
+  <a href="#spacing">Spacing</a>
+  <a href="#radius">Radius &amp; elevation</a>
+  <a href="#layout">Layout &amp; grid</a>
+  <a href="#iconography">Iconography</a>
+  <h6>Components</h6>
+  <a href="#c-actions">Actions</a>
+  <a href="#c-inputs">Inputs</a>
+  <a href="#c-navigation">Navigation</a>
+  <a href="#c-containers">Containers</a>
+  <a href="#c-data">Data display</a>
+  <a href="#c-status">Status &amp; labels</a>
+  <a href="#c-feedback">Feedback</a>
+  <h6>Patterns</h6>
+  <a href="#p-dashboard">Dashboard page</a>
+  <a href="#p-states">Data states</a>
+  <a href="#p-writing">Writing for AI insights</a>
+  <h6>Governance</h6>
+  <a href="#governance">Contributing &amp; versioning</a>
+  <a href="#changelog">Changelog</a>
+</nav>
+
+<main class="doc-main"><div class="doc-wrap">
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-kicker"><svg class="ic-sm"><use href="#i-sparkle"/></svg> AI-native design system · Built with Claude + Figma MCP</div>
+  <h1>One source of truth, <em>built by AI</em>, decided by design.</h1>
+  <p>Harmony is the design system behind Orchestry's Microsoft 365 governance product. Every token, component, and rule lives in one place, in Figma, in code, and in a rules file that AI agents can read.</p>
+  <div class="hero-stats">
+    <div><b>1</b><span>Source of truth</span></div>
+    <div><b>230+</b><span>Design tokens</span></div>
+    <div><b>12</b><span>Type styles (was 22 sizes)</span></div>
+    <div><b>41</b><span>Documented components</span></div>
+    <div><b>0</b><span>Hard-coded colors</span></div>
+  </div>
+</header>
+
+<!-- ============ 01 OVERVIEW ============ -->
+<section class="sec" id="overview">
+  <div class="sec-num">01 · Overview</div>
+  <h2>Why Harmony exists</h2>
+  <p class="sec-lead">Before Harmony, our Figma "Design System" file was not something anyone could trust. Components were detached, the same button lived in several files with different looks, and nothing matched the Mantine components engineers actually ship. Harmony fixes that with one rule: <b>if it isn't in Harmony, it doesn't exist.</b></p>
+
+  <div class="grid-4">
+    <div class="principle"><div class="n">1</div><h4>One source of truth</h4><p>Tokens are defined once and flow to Figma variables, CSS, Mantine theme, and the AI rules file. Nobody copies a hex code.</p></div>
+    <div class="principle"><div class="n">2</div><h4>Built on what ships</h4><p>Every component maps 1:1 to a Mantine component and prop. If design and code disagree, the system is broken, not the developer.</p></div>
+    <div class="principle"><div class="n">3</div><h4>AI drafts, humans decide</h4><p>AI generates tokens, variants, and docs from our brand rules. Design reviews and approves every change before it ships.</p></div>
+    <div class="principle"><div class="n">4</div><h4>Clear over clever</h4><p>IT admins scan risk under pressure. Status, risk, and priority always pair color with a word and an icon, never color alone.</p></div>
+  </div>
+
+  <div class="sub">
+    <h3>Who uses Harmony</h3>
+    <p>Three audiences, one system. Each reads it in the format that fits them.</p>
+    <div class="grid-3">
+      <div class="panel"><div class="h-tile" style="background:var(--teal-50);color:var(--teal-700);margin-bottom:12px"><svg class="ic-lg"><use href="#i-palette"/></svg></div><h4>Designers</h4><p class="lbl" style="font-size:13px;line-height:20px">Figma library with variables, variants, and boolean properties. Nothing detached, every instance linked.</p></div>
+      <div class="panel"><div class="h-tile" style="background:var(--indigo-50);color:var(--indigo-600);margin-bottom:12px"><svg class="ic-lg"><use href="#i-code"/></svg></div><h4>Engineers</h4><p class="lbl" style="font-size:13px;line-height:20px">CSS tokens, a Mantine <code>createTheme()</code> file, and Code Connect snippets right inside Figma Dev Mode.</p></div>
+      <div class="panel"><div class="h-tile" style="background:var(--lime-50);color:var(--lime-700);margin-bottom:12px"><svg class="ic-lg"><use href="#i-robot"/></svg></div><h4>AI agents</h4><p class="lbl" style="font-size:13px;line-height:20px">A machine-readable rules file and DTCG token JSON, so Claude and Copilot build on-brand UI by default.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 AI WORKFLOW ============ -->
+<section class="sec" id="ai-workflow">
+  <div class="sec-num">02 · AI workflow</div>
+  <h2>How AI builds the system</h2>
+  <p class="sec-lead">I don't draw components by hand anymore. I give AI the brand guidelines, the Mantine theme, and the rules. It does the repetitive work: building variables, variants, documentation, and code mappings. I review every step and make the design decisions.</p>
+
+  <div class="pipe">
+    <div class="pipe-step"><div class="k">Input</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-book"/></svg></div><h5>Brand + code</h5><p>Brand guidelines, logo colors, and the Mantine theme engineers use.</p></div>
+    <div class="pipe-step ai"><div class="k">AI · Step 1</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-search"/></svg></div><h5>Audit</h5><p>Claude scans Figma files and code and lists every color, size, and duplicate component.</p></div>
+    <div class="pipe-step ai"><div class="k">AI · Step 2</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-palette"/></svg></div><h5>Tokens</h5><p>Generates primitive and semantic tokens and writes them to Figma variables through Figma MCP.</p></div>
+    <div class="pipe-step ai"><div class="k">AI · Step 3</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-layers"/></svg></div><h5>Components</h5><p>Builds every variant with auto layout, properties, and booleans, all bound to tokens.</p></div>
+    <div class="pipe-step ai"><div class="k">AI · Step 4</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-file"/></svg></div><h5>Docs + rules</h5><p>Writes usage, do and don't guidance, accessibility notes, and the AI rules file.</p></div>
+    <div class="pipe-step ai"><div class="k">AI · Step 5</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-refresh"/></svg></div><h5>Connect + audit</h5><p>Maps Figma to Mantine with Code Connect and re-audits files every week for drift.</p></div>
+  </div>
+  <div class="h-note" style="margin-top:12px"><svg class="ic"><use href="#i-users"/></svg><span><b>Human checkpoint at every step.</b> AI proposes; I approve, adjust, or reject. Engineering reviews every change that touches the Mantine theme.</span></div>
+
+  <div class="sub">
+    <h3>Example: creating the Risk Badge</h3>
+    <p>The AI & Agents dashboard needed a way to show how risky an agent is. Here is the real kind of prompt I use, and what comes back.</p>
+    <div class="grid-2">
+      <div class="prompt">
+        <div class="who"><svg class="ic"><use href="#i-sparkle"/></svg> Prompt to Claude (Figma MCP connected)</div>
+        Create a <span class="hl">Risk Badge</span> component in the Harmony library.<br><br>
+        <span class="dim">· </span>Levels: Critical, High, Elevated, Moderate, Low<br>
+        <span class="dim">· </span>Use only <span class="hl">--risk-*</span> semantic tokens<br>
+        <span class="dim">· </span>Sizes: sm (20px), md (24px)<br>
+        <span class="dim">· </span>Boolean: show score<br>
+        <span class="dim">· </span>Map to Mantine <span class="hl">&lt;Badge variant="light"&gt;</span><br>
+        <span class="dim">· </span>Text must pass WCAG AA on its background<br>
+        <span class="dim">· </span>Write usage docs + do/don't in our voice
+      </div>
+      <div class="panel">
+        <h4>What AI generated in about 2 minutes</h4>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <span class="h-risk critical"><svg class="ic-sm"><use href="#i-alert"/></svg>Critical<span class="score">92</span></span>
+          <span class="h-risk high">High<span class="score">71</span></span>
+          <span class="h-risk elevated">Elevated<span class="score">48</span></span>
+          <span class="h-risk moderate">Moderate<span class="score">31</span></span>
+          <span class="h-risk low">Low<span class="score">12</span></span>
+        </div>
+        <div class="checklist">
+          <div><svg class="ic"><use href="#i-check"/></svg>20 variants (5 levels × 2 sizes × score on/off)</div>
+          <div><svg class="ic"><use href="#i-check"/></svg>Every fill and text bound to Figma variables</div>
+          <div><svg class="ic"><use href="#i-check"/></svg>Contrast checked: every level passes AA (4.57–5.58:1)</div>
+          <div><svg class="ic"><use href="#i-check"/></svg>Code Connect snippet for Mantine Badge</div>
+          <div><svg class="ic"><use href="#i-check"/></svg>Docs page with usage, do and don't, a11y</div>
+          <div><svg class="ic"><use href="#i-check"/></svg>Rules file updated for AI agents</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>The rules file: how AI agents stay on brand</h3>
+    <p>This file lives in the repo next to the code. When anyone, a designer, an engineer, or an AI agent, asks Claude or Copilot to build UI, it reads these rules first.</p>
+<pre class="code"><span class="c"># harmony.rules.md · excerpt</span>
+<span class="k">## Tokens</span>
+- Never use raw hex values. Use semantic tokens: <span class="s">--text-*</span>, <span class="s">--bg-*</span>, <span class="s">--border-*</span>, <span class="s">--status-*</span>, <span class="s">--risk-*</span>.
+- Primitives (<span class="s">--teal-600</span>, <span class="s">--ink-400</span>...) are for building semantic tokens only.
+- <span class="s">--text-disabled</span> (<span class="n">#8F9CAE</span>) fails AA. Use it for placeholder and disabled text only.
+- Lime (<span class="n">#96C23A</span>) is decorative. Never use it for text or as the only signal.
+
+<span class="k">## Components</span>
+- Build with Mantine. Use Harmony wrappers: <span class="s">&lt;RiskBadge level="high" score={71} /&gt;</span>, not a custom span.
+- Risk, status, and priority always pair color with a text label.
+- Cards: radius <span class="s">--radius-lg</span> (12px), padding <span class="s">--inset-card</span> (20px), gap <span class="s">--gap-cards</span> (12px).
+
+<span class="k">## Typography</span>
+- Lexend only. Use the 12 <span class="s">--type-*</span> styles. No other font sizes.
+- Numbers in metrics use <span class="s">--type-metric-*</span> with <span class="s">font-variant-numeric: tabular-nums</span>.</pre>
+  </div>
+</section>
+
+<!-- ============ 03 AUDIT ============ -->
+<section class="sec" id="audit">
+  <div class="sec-num">03 · The audit</div>
+  <h2>Before &amp; after, in numbers</h2>
+  <p class="sec-lead">The first thing AI did was count. It scanned the two versions of the AI Readiness dashboard that were in use and listed every distinct value. These are the real results.</p>
+  <div class="panel" style="padding:8px 8px 4px">
+    <table class="audit">
+      <thead><tr><th>What we measured</th><th>Before Harmony</th><th>After Harmony</th><th>How</th></tr></thead>
+      <tbody>
+        <tr><td>Font families</td><td class="before">2 (Lexend + Inter)</td><td class="after">1 (Lexend)</td><td>Matched the brand and the product</td></tr>
+        <tr><td>Accent colors</td><td class="before">2 (teal + blue)</td><td class="after">1 (Orchestry teal)</td><td>Sampled from the logo</td></tr>
+        <tr><td>Font sizes</td><td class="before">22 different sizes</td><td class="after">12 type styles</td><td>Collapsed 11.5, 12.5, 13.5, 15.5… into a scale</td></tr>
+        <tr><td>Corner radius values</td><td class="before">13 values</td><td class="after">6 tokens</td><td>xs 4 · sm 6 · md 8 · lg 12 · xl 16 · full</td></tr>
+        <tr><td>Hard-coded hex colors</td><td class="before">81 unique</td><td class="after">0, tokens only</td><td>Primitive → semantic token layers</td></tr>
+        <tr><td>Text that failed WCAG AA</td><td class="before">3 combinations</td><td class="after">0</td><td>Darker success, warning, and secondary text</td></tr>
+        <tr><td>Card gap / padding</td><td class="before">8px / 20×22px</td><td class="after">12px / 20px</td><td>One spacing scale on a 4pt grid</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 04 COLOR ============ -->
+<section class="sec" id="color">
+  <div class="sec-num">04 · Foundations</div>
+  <h2>Color</h2>
+  <p class="sec-lead">Colors come in two layers. <b>Primitives</b> are the raw paint: teal, lime, ink, and a few feedback hues. <b>Semantic tokens</b> say what the paint is for, like <code>--text-secondary</code> or <code>--risk-high-fg</code>. Product UI only uses semantic tokens, so we can change a color once and it updates everywhere.</p>
+
+  <div class="sub" style="margin-top:0">
+    <h3>Brand</h3>
+    <p>Both brand colors are sampled straight from the Orchestry logo. Teal is the voice of the product. Lime is a highlight, so it never carries text.</p>
+    <div class="grid-3">
+      <div class="panel" style="padding:0;overflow:hidden"><div style="height:120px;background:var(--teal-600)"></div><div style="padding:16px 20px"><b style="font:var(--type-heading-s)">Orchestry Teal</b><div class="tok-val">#007980 · teal-600 · logo</div><div style="margin-top:8px"><span class="aa">AA 5.19:1 on white</span></div></div></div>
+      <div class="panel" style="padding:0;overflow:hidden"><div style="height:120px;background:var(--teal-700)"></div><div style="padding:16px 20px"><b style="font:var(--type-heading-s)">Action Teal</b><div class="tok-val">#0D6C79 · teal-700 · buttons, links, focus</div><div style="margin-top:8px"><span class="aa">AA 6.11:1 on white</span></div></div></div>
+      <div class="panel" style="padding:0;overflow:hidden"><div style="height:120px;background:var(--brand-gradient)"></div><div style="padding:16px 20px"><b style="font:var(--type-heading-s)">Orchestry Lime → Teal</b><div class="tok-val">#96C23A → #35A973 → #007980 · brand gradient</div><div style="margin-top:8px"><span class="aa fail">Decorative only · 2.08:1</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Primitive ramps</h3>
+    <p>The outlined swatches are the exact logo colors. Every other step was generated by AI around them and then tuned by eye.</p>
+    <div class="panel">
+      <div class="ramp"><div class="ramp-name">Teal<span>Brand + action</span></div>
+        <div class="sw" style="background:#EEF6F6;color:#0B5560">50</div><div class="sw" style="background:#D4EBEC;color:#0B5560">100</div><div class="sw" style="background:#A9D6D8;color:#0B5560">200</div><div class="sw" style="background:#72BBBF;color:#083F47">300</div><div class="sw" style="background:#3A9DA2;color:#fff">400</div><div class="sw" style="background:#128A90;color:#fff">500</div><div class="sw brand" style="background:#007980;color:#fff">600</div><div class="sw" style="background:#0D6C79;color:#fff">700</div><div class="sw" style="background:#0B5560;color:#fff">800</div><div class="sw" style="background:#083F47;color:#fff">900</div></div>
+      <div class="ramp"><div class="ramp-name">Lime<span>Highlight</span></div>
+        <div class="sw" style="background:#F5FAEC;color:#4D6B1A">50</div><div class="sw" style="background:#E7F3D0;color:#4D6B1A">100</div><div class="sw" style="background:#CFE6A3;color:#4D6B1A">200</div><div class="sw" style="background:#B3D66F;color:#4D6B1A">300</div><div class="sw brand" style="background:#96C23A;color:#2E353F">400</div><div class="sw" style="background:#7DA82B;color:#fff">500</div><div class="sw" style="background:#648A21;color:#fff">600</div><div class="sw" style="background:#4D6B1A;color:#fff">700</div><div></div><div></div></div>
+      <div class="ramp"><div class="ramp-name">Ink<span>Text, borders, surfaces</span></div>
+        <div class="sw" style="background:#F6F8F9;color:#606F84;border:1px solid #E6E9ED">25</div><div class="sw" style="background:#F1F3F6;color:#606F84">50</div><div class="sw" style="background:#E6E9ED;color:#606F84">100</div><div class="sw" style="background:#D0D6DD;color:#38414E">200</div><div class="sw" style="background:#B5BEC9;color:#2E353F">300</div><div class="sw" style="background:#8F9CAE;color:#fff">400</div><div class="sw" style="background:#606F84;color:#fff">500</div><div class="sw" style="background:#4B5666;color:#fff">600</div><div class="sw" style="background:#38414E;color:#fff">700</div><div class="sw" style="background:#2E353F;color:#fff">800</div></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Semantic tokens</h3>
+    <p>These are the names designers pick in Figma and engineers write in code. Each pair has been contrast-checked.</p>
+    <div class="grid-3">
+      <div class="panel"><h4>Text</h4>
+        <div class="tok"><div class="tok-chip" style="background:var(--text-primary)"></div><div><div class="tok-name">text-primary</div><div class="tok-val">ink-800 · #2E353F</div></div><div class="tok-meta"><span class="aa">12.4:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--text-secondary)"></div><div><div class="tok-name">text-secondary</div><div class="tok-val">ink-500 · #606F84</div></div><div class="tok-meta"><span class="aa">5.1:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--text-brand)"></div><div><div class="tok-name">text-brand</div><div class="tok-val">teal-700 · #0D6C79</div></div><div class="tok-meta"><span class="aa">6.1:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--text-disabled)"></div><div><div class="tok-name">text-disabled</div><div class="tok-val">ink-400 · placeholder only</div></div><div class="tok-meta"><span class="aa fail">2.8:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--text-nav)"></div><div><div class="tok-name">text-nav</div><div class="tok-val">ink-200 on nav</div></div><div class="tok-meta"><span class="aa">7.1:1</span></div></div>
+      </div>
+      <div class="panel"><h4>Surfaces &amp; borders</h4>
+        <div class="tok"><div class="tok-chip" style="background:var(--bg-page)"></div><div><div class="tok-name">bg-page</div><div class="tok-val">ink-25 · #F6F8F9</div></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--bg-surface)"></div><div><div class="tok-name">bg-surface</div><div class="tok-val">white · cards, tables</div></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--bg-hover)"></div><div><div class="tok-name">bg-hover</div><div class="tok-val">ink-50 · rows, menus</div></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--bg-selected)"></div><div><div class="tok-name">bg-selected</div><div class="tok-val">teal-50 · selected</div></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--bg-nav)"></div><div><div class="tok-name">bg-nav</div><div class="tok-val">ink-700 · sidebar</div></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--border-default)"></div><div><div class="tok-name">border-default</div><div class="tok-val">ink-100 · cards, inputs</div></div></div>
+      </div>
+      <div class="panel"><h4>Status</h4>
+        <div class="tok"><div class="tok-chip" style="background:var(--status-success-bg);border-color:var(--status-success-fg)"></div><div><div class="tok-name">status-success</div><div class="tok-val">fg #177048 · bg #EBF7F0</div></div><div class="tok-meta"><span class="aa">5.5:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--status-warning-bg);border-color:var(--status-warning-fg)"></div><div><div class="tok-name">status-warning</div><div class="tok-val">fg #8A5A12 · bg #FDF6E9</div></div><div class="tok-meta"><span class="aa">5.5:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--status-danger-bg);border-color:var(--status-danger-fg)"></div><div><div class="tok-name">status-danger</div><div class="tok-val">fg #C0362C · bg #FCEEEC</div></div><div class="tok-meta"><span class="aa">4.9:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--status-info-bg);border-color:var(--status-info-fg)"></div><div><div class="tok-name">status-info</div><div class="tok-val">fg #1D4ED8 · bg #EAF2FE</div></div><div class="tok-meta"><span class="aa">6.0:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--bg-hover);border-color:var(--status-neutral-fg)"></div><div><div class="tok-name">status-neutral</div><div class="tok-val">fg #606F84 · bg #F1F3F6</div></div><div class="tok-meta"><span class="aa">4.6:1</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Fixes from the audit</h3>
+    <p>The old dashboard used these combinations for real content. AI flagged them and proposed darker shades from the same hue.</p>
+    <div class="grid-3">
+      <div class="panel"><h4>Success text</h4><div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span class="h-badge" style="color:#1E8E5A;background:#EBF7F0">Ready</span><span class="aa fail">3.76:1</span></div><div style="display:flex;gap:8px;align-items:center"><span class="h-badge success">Ready</span><span class="aa">5.54:1</span></div></div>
+      <div class="panel"><h4>Warning text</h4><div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span class="h-badge" style="color:#B7791F;background:#FDF6E9">Needs review</span><span class="aa fail">3.39:1</span></div><div style="display:flex;gap:8px;align-items:center"><span class="h-badge warning">Needs review</span><span class="aa">5.50:1</span></div></div>
+      <div class="panel"><h4>Secondary text</h4><div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span style="color:#8F9CAE;font:var(--type-body-s)">Home / AI Readiness</span><span class="aa fail">2.79:1</span></div><div style="display:flex;gap:8px;align-items:center"><span style="color:var(--text-secondary);font:var(--type-body-s)">Home / AI Readiness</span><span class="aa">5.12:1</span></div></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>Risk, priority &amp; data visualization</h3>
+    <p>The AI &amp; Agents product talks about risk all day, so risk got its own scale instead of borrowing status colors.</p>
+    <div class="grid-2">
+      <div class="panel"><h4>Risk scale</h4>
+        <div class="tok"><span class="h-risk critical" style="width:92px;justify-content:center">Critical</span><div style="margin-left:8px"><div class="tok-name">risk-critical</div><div class="tok-val">Exposed data, external sharing, no owner</div></div><div class="tok-meta"><span class="aa">5.6:1</span></div></div>
+        <div class="tok"><span class="h-risk high" style="width:92px;justify-content:center">High</span><div style="margin-left:8px"><div class="tok-name">risk-high</div><div class="tok-val">Broad permissions or sensitive connectors</div></div><div class="tok-meta"><span class="aa">4.6:1</span></div></div>
+        <div class="tok"><span class="h-risk elevated" style="width:92px;justify-content:center">Elevated</span><div style="margin-left:8px"><div class="tok-name">risk-elevated</div><div class="tok-val">Worth a look, not urgent</div></div><div class="tok-meta"><span class="aa">4.6:1</span></div></div>
+        <div class="tok"><span class="h-risk moderate" style="width:92px;justify-content:center">Moderate</span><div style="margin-left:8px"><div class="tok-name">risk-moderate</div><div class="tok-val">Minor gaps, review when convenient</div></div><div class="tok-meta"><span class="aa">5.5:1</span></div></div>
+        <div class="tok"><span class="h-risk low" style="width:92px;justify-content:center">Low</span><div style="margin-left:8px"><div class="tok-name">risk-low</div><div class="tok-val">Governed and owned</div></div><div class="tok-meta"><span class="aa">5.5:1</span></div></div>
+      </div>
+      <div class="panel"><h4>Categorical data viz</h4>
+        <p class="lbl" style="margin-bottom:12px">Ordered so neighbors are easy to tell apart. Charts use them in this order.</p>
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:16px">
+          <div class="sw" style="background:var(--viz-1);color:#fff;height:48px">1</div><div class="sw" style="background:var(--viz-2);color:#fff;height:48px">2</div><div class="sw" style="background:var(--viz-3);color:#fff;height:48px">3</div><div class="sw" style="background:var(--viz-4);color:#fff;height:48px">4</div><div class="sw" style="background:var(--viz-5);color:#fff;height:48px">5</div><div class="sw" style="background:var(--viz-6);color:#fff;height:48px">6</div><div class="sw" style="background:var(--viz-7);color:#fff;height:48px">7</div><div class="sw" style="background:var(--viz-8);color:#fff;height:48px">8</div>
+        </div>
+        <h4>Entity identity (Agents)</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span class="h-tag" style="background:var(--agent-studio-bg);color:var(--agent-studio-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-robot"/></svg>Copilot Studio</span>
+          <span class="h-tag" style="background:var(--agent-sharepoint-bg);color:var(--mint-700)"><svg class="ic-sm" style="color:inherit"><use href="#i-file"/></svg>SharePoint agent</span>
+          <span class="h-tag" style="background:var(--agent-builder-bg);color:var(--agent-builder-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-tool"/></svg>Agent Builder</span>
+          <span class="h-tag" style="background:var(--entity-environment-bg);color:var(--entity-environment-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-world"/></svg>Environment</span>
+          <span class="h-tag" style="background:var(--entity-solution-bg);color:var(--cyan-700)"><svg class="ic-sm" style="color:inherit"><use href="#i-box"/></svg>Solution</span>
+          <span class="h-tag" style="background:var(--entity-connection-bg);color:var(--orange-600)"><svg class="ic-sm" style="color:inherit"><use href="#i-plug"/></svg>Connection</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 TYPOGRAPHY ============ -->
+<section class="sec" id="typography">
+  <div class="sec-num">05 · Foundations</div>
+  <h2>Typography</h2>
+  <p class="sec-lead">One family: <b>Lexend</b>, designed for reading ease, which helps people scan dense governance data. Three weights: 400, 500, 600. Twelve styles replaced 22 random font sizes.</p>
+  <div class="panel" style="padding:8px 24px">
+    <div class="type-row"><div><div class="tn">display</div><div class="tu">Hero score</div></div><div style="font:var(--type-display);letter-spacing:var(--track-display)">72 / 100</div><div class="ts">32 / 40 · Medium · −0.5</div></div>
+    <div class="type-row"><div><div class="tn">metric-l</div><div class="tu">Metric cards</div></div><div style="font:var(--type-metric-l);letter-spacing:var(--track-metric-l)">1,284 agents</div><div class="ts">28 / 36 · Medium · −0.4</div></div>
+    <div class="type-row"><div><div class="tn">metric-m</div><div class="tu">KPIs, stat cards</div></div><div style="font:var(--type-metric-m);letter-spacing:var(--track-metric-m)">38 environments</div><div class="ts">20 / 28 · Medium · −0.3</div></div>
+    <div class="type-row"><div><div class="tn">heading-l</div><div class="tu">Page title</div></div><div style="font:var(--type-heading-l);letter-spacing:var(--track-heading-l)">AI Readiness</div><div class="ts">20 / 28 · Semibold · −0.2</div></div>
+    <div class="type-row"><div><div class="tn">heading-m</div><div class="tu">Section, modal title</div></div><div style="font:var(--type-heading-m)">Top recommendations</div><div class="ts">16 / 24 · Semibold</div></div>
+    <div class="type-row"><div><div class="tn">heading-s</div><div class="tu">Card title, table name</div></div><div style="font:var(--type-heading-s)">Sensitive data exposure</div><div class="ts">14 / 20 · Semibold</div></div>
+    <div class="type-row"><div><div class="tn">body-m</div><div class="tu">Default text, nav</div></div><div style="font:var(--type-body-m)">Agents created in the last 30 days without an owner.</div><div class="ts">14 / 20 · Regular</div></div>
+    <div class="type-row"><div><div class="tn">body-s</div><div class="tu">Tables, descriptions</div></div><div style="font:var(--type-body-s)">HR Onboarding Assistant · Copilot Studio</div><div class="ts">13 / 20 · Regular</div></div>
+    <div class="type-row"><div><div class="tn">button</div><div class="tu">Buttons, links</div></div><div style="font:var(--type-button)">Review agents</div><div class="ts">13 / 20 · Semibold</div></div>
+    <div class="type-row"><div><div class="tn">label</div><div class="tu">Badges, form labels</div></div><div style="font:var(--type-label)">High risk</div><div class="ts">12 / 16 · Semibold</div></div>
+    <div class="type-row"><div><div class="tn">caption</div><div class="tu">Helper, meta</div></div><div style="font:var(--type-caption);color:var(--text-secondary)">Last scanned 12 minutes ago</div><div class="ts">12 / 16 · Regular</div></div>
+    <div class="type-row"><div><div class="tn">overline</div><div class="tu">Table headers, nav groups</div></div><div style="font:var(--type-overline);letter-spacing:var(--track-overline);text-transform:uppercase;color:var(--text-secondary)">Risk level</div><div class="ts">11 / 16 · Semibold · Caps</div></div>
+  </div>
+</section>
+
+<!-- ============ 06 SPACING ============ -->
+<section class="sec" id="spacing">
+  <div class="sec-num">06 · Foundations</div>
+  <h2>Spacing</h2>
+  <p class="sec-lead">Every space is a multiple of 4. Semantic names like <code>--inset-card</code> and <code>--gap-cards</code> mean nobody has to remember numbers, and Mantine's <code>xs–xl</code> spacing maps directly to them.</p>
+  <div class="grid-2">
+    <div class="panel">
+      <h4>Scale</h4>
+      <div class="space-row"><span class="tok-name">space-0-5</span><span class="tok-val">2px</span><div class="space-bar" style="width:2px"></div><span class="tok-val">Icon nudges</span></div>
+      <div class="space-row"><span class="tok-name">space-1</span><span class="tok-val">4px</span><div class="space-bar" style="width:4px"></div><span class="tok-val">Label → value</span></div>
+      <div class="space-row"><span class="tok-name">space-1-5</span><span class="tok-val">6px</span><div class="space-bar" style="width:6px"></div><span class="tok-val">Icon → text in badges</span></div>
+      <div class="space-row"><span class="tok-name">space-2</span><span class="tok-val">8px</span><div class="space-bar" style="width:8px"></div><span class="tok-val">Mantine xs · inline gap</span></div>
+      <div class="space-row"><span class="tok-name">space-3</span><span class="tok-val">12px</span><div class="space-bar" style="width:12px"></div><span class="tok-val">Mantine sm · card gap</span></div>
+      <div class="space-row"><span class="tok-name">space-4</span><span class="tok-val">16px</span><div class="space-bar" style="width:16px"></div><span class="tok-val">Mantine md · stack</span></div>
+      <div class="space-row"><span class="tok-name">space-5</span><span class="tok-val">20px</span><div class="space-bar" style="width:20px"></div><span class="tok-val">Mantine lg · card padding</span></div>
+      <div class="space-row"><span class="tok-name">space-6</span><span class="tok-val">24px</span><div class="space-bar" style="width:24px"></div><span class="tok-val">Large card padding</span></div>
+      <div class="space-row"><span class="tok-name">space-8</span><span class="tok-val">32px</span><div class="space-bar" style="width:32px"></div><span class="tok-val">Mantine xl · section gap</span></div>
+      <div class="space-row"><span class="tok-name">space-10</span><span class="tok-val">40px</span><div class="space-bar" style="width:40px"></div><span class="tok-val">Page padding (x)</span></div>
+      <div class="space-row"><span class="tok-name">space-12</span><span class="tok-val">48px</span><div class="space-bar" style="width:48px"></div><span class="tok-val">Empty states</span></div>
+      <div class="space-row"><span class="tok-name">space-16</span><span class="tok-val">64px</span><div class="space-bar" style="width:64px"></div><span class="tok-val">Page sections</span></div>
+    </div>
+    <div class="panel">
+      <h4>Semantic spacing in a card</h4>
+      <div style="background:repeating-linear-gradient(-45deg,rgba(13,108,121,.08),rgba(13,108,121,.08) 4px,transparent 4px,transparent 8px);border-radius:12px;padding:20px;border:1px dashed var(--teal-300);margin-bottom:12px">
+        <div class="h-card" style="border-color:var(--border-default)">
+          <div class="h-metric-head"><span class="h-metric-title">Agents without owner</span><span class="h-risk high sm">High</span></div>
+          <div class="h-metric-n">47</div>
+          <div class="h-metric-l">of 1,284 agents · 3.7%</div>
+          <div class="h-progress"><i style="width:37%;background:var(--risk-high-solid)"></i></div>
+        </div>
+      </div>
+      <div class="tok"><span class="tok-name">inset-card</span><span class="tok-meta">20px · padding inside cards</span></div>
+      <div class="tok"><span class="tok-name">inset-card-lg</span><span class="tok-meta">24px · hero cards, modals</span></div>
+      <div class="tok"><span class="tok-name">gap-cards</span><span class="tok-meta">12px · between cards</span></div>
+      <div class="tok"><span class="tok-name">gap-section</span><span class="tok-meta">32px · between page sections</span></div>
+      <div class="tok"><span class="tok-name">gap-stack</span><span class="tok-meta">12px · vertical rhythm in a card</span></div>
+      <div class="tok"><span class="tok-name">gap-inline</span><span class="tok-meta">8px · icons, buttons in a row</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 RADIUS & ELEVATION ============ -->
+<section class="sec" id="radius">
+  <div class="sec-num">07 · Foundations</div>
+  <h2>Radius &amp; elevation</h2>
+  <p class="sec-lead">Six radii instead of thirteen. Bigger things get rounder corners. Shadows are rare: cards sit flat on borders, and only floating layers like menus, toasts, and modals cast a shadow.</p>
+  <div class="grid-3" style="grid-template-columns:repeat(6,1fr);margin-bottom:12px">
+    <div class="panel"><div class="radius-demo" style="border-radius:var(--radius-xs)"></div><div class="tok-name" style="margin-top:12px">radius-xs · 4</div><div class="tok-val">Bars, progress</div></div>
+    <div class="panel"><div class="radius-demo" style="border-radius:var(--radius-sm)"></div><div class="tok-name" style="margin-top:12px">radius-sm · 6</div><div class="tok-val">Small controls</div></div>
+    <div class="panel"><div class="radius-demo" style="border-radius:var(--radius-md)"></div><div class="tok-name" style="margin-top:12px">radius-md · 8</div><div class="tok-val">Buttons, inputs</div></div>
+    <div class="panel"><div class="radius-demo" style="border-radius:var(--radius-lg)"></div><div class="tok-name" style="margin-top:12px">radius-lg · 12</div><div class="tok-val">Cards, tiles</div></div>
+    <div class="panel"><div class="radius-demo" style="border-radius:var(--radius-xl)"></div><div class="tok-name" style="margin-top:12px">radius-xl · 16</div><div class="tok-val">Modals</div></div>
+    <div class="panel"><div class="radius-demo" style="border-radius:var(--radius-full)"></div><div class="tok-name" style="margin-top:12px">radius-full</div><div class="tok-val">Badges, avatars</div></div>
+  </div>
+  <div class="grid-4" style="background:var(--bg-page);padding:24px;border-radius:12px;border:1px solid var(--border-default)">
+    <div><div class="shadow-demo" style="box-shadow:var(--shadow-xs)"><div><div class="tok-name">shadow-xs</div><div class="tok-val">Switch thumbs</div></div></div></div>
+    <div><div class="shadow-demo" style="box-shadow:var(--shadow-sm)"><div><div class="tok-name">shadow-sm</div><div class="tok-val">Hovered cards</div></div></div></div>
+    <div><div class="shadow-demo" style="box-shadow:var(--shadow-md)"><div><div class="tok-name">shadow-md</div><div class="tok-val">Menus, toasts</div></div></div></div>
+    <div><div class="shadow-demo" style="box-shadow:var(--shadow-lg)"><div><div class="tok-name">shadow-lg</div><div class="tok-val">Modals</div></div></div></div>
+  </div>
+</section>
+
+<!-- ============ 08 LAYOUT ============ -->
+<section class="sec" id="layout">
+  <div class="sec-num">08 · Foundations</div>
+  <h2>Layout &amp; grid</h2>
+  <p class="sec-lead">A 280px dark sidebar, a content area capped at 1200px, and a 12-column grid with 12px gutters. Breakpoints are Mantine's own, so design and code wrap at the same widths.</p>
+  <div class="grid-2">
+    <div class="panel">
+      <h4>App shell</h4>
+      <div class="shell">
+        <div class="shell-nav"><i style="width:70%;height:10px;margin-bottom:10px;background:rgba(255,255,255,.6)"></i><i class="on"></i><i></i><i></i><i style="width:60%"></i><i></i></div>
+        <div class="shell-main">
+          <div class="bar" style="width:90px;height:8px;background:var(--ink-200)"></div>
+          <div class="bar"></div>
+          <div class="row" style="grid-template-columns:1fr;height:60px"><div></div></div>
+          <div class="row" style="grid-template-columns:repeat(3,1fr);height:56px"><div></div><div></div><div></div></div>
+          <div class="row" style="grid-template-columns:2fr 1fr;flex:1"><div></div><div></div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-top:16px">
+        <div class="tok"><span class="tok-name">layout-sidebar</span><span class="tok-meta">280px / 72px</span></div>
+        <div class="tok"><span class="tok-name">layout-content-max</span><span class="tok-meta">1200px</span></div>
+        <div class="tok"><span class="tok-name">layout-page-x</span><span class="tok-meta">40px</span></div>
+        <div class="tok"><span class="tok-name">layout-page-y</span><span class="tok-meta">32px</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h4>12-column grid · 12px gutter</h4>
+      <div class="cols12" style="margin-bottom:8px"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div></div>
+      <div class="cols12" style="margin-bottom:8px"><div style="grid-column:span 4">KPI · 4</div><div style="grid-column:span 4">KPI · 4</div><div style="grid-column:span 4">KPI · 4</div></div>
+      <div class="cols12" style="margin-bottom:8px"><div style="grid-column:span 3">3</div><div style="grid-column:span 3">3</div><div style="grid-column:span 3">3</div><div style="grid-column:span 3">3</div></div>
+      <div class="cols12" style="margin-bottom:20px"><div style="grid-column:span 8">Table · 8</div><div style="grid-column:span 4">Chart · 4</div></div>
+      <h4>Breakpoints (Mantine)</h4>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">
+        <div class="meta-chip" style="text-align:center">xs 576</div><div class="meta-chip" style="text-align:center">sm 768</div><div class="meta-chip" style="text-align:center">md 992</div><div class="meta-chip" style="text-align:center">lg 1200</div><div class="meta-chip" style="text-align:center">xl 1408</div>
+      </div>
+      <h4 style="margin-top:20px">Control heights</h4>
+      <div style="display:flex;gap:8px;align-items:flex-end">
+        <button class="h-btn secondary sm">sm · 28</button><button class="h-btn secondary">md · 32</button><button class="h-btn secondary lg">lg · 40</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 ICONOGRAPHY ============ -->
+<section class="sec" id="iconography">
+  <div class="sec-num">09 · Foundations</div>
+  <h2>Iconography</h2>
+  <p class="sec-lead">Tabler icons, the set Mantine recommends: 24px grid, 1.75 stroke, round caps. Shown at 16px in UI and 20px in tiles. Icons inherit text color, and they always come with a label or a tooltip.</p>
+  <div class="panel" style="display:grid;grid-template-columns:repeat(12,1fr);gap:8px">
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-robot"/></svg></div><span class="tok-val">robot</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-shield"/></svg></div><span class="tok-val">shield</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-db"/></svg></div><span class="tok-val">database</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-users"/></svg></div><span class="tok-val">users</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-lock"/></svg></div><span class="tok-val">lock</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-world"/></svg></div><span class="tok-val">world</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-plug"/></svg></div><span class="tok-val">plug</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-box"/></svg></div><span class="tok-val">box</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-chart"/></svg></div><span class="tok-val">chart</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-alert"/></svg></div><span class="tok-val">alert</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-sparkle"/></svg></div><span class="tok-val">sparkles</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-bulb"/></svg></div><span class="tok-val">bulb</span></div>
+  </div>
+</section>
+
+<!-- ============ 10 COMPONENTS ============ -->
+<section class="sec" id="components">
+  <div class="sec-num">10 · Components</div>
+  <h2>Components</h2>
+  <p class="sec-lead">41 components, each built from tokens, mapped to a Mantine component, and documented with when to use it. Every component on this page is live HTML that uses <code>orchestry-tokens.css</code>, the same file the product uses.</p>
+
+  <!-- ===== ACTIONS ===== -->
+  <div class="group-title" id="c-actions"><svg class="ic-lg"><use href="#i-bolt"/></svg> Actions <span>Button · Icon Button · Link</span></div>
+
+  <div class="comp" id="button">
+    <div class="comp-head"><div><h4>Button</h4><p>Starts an action. One primary button per view: the thing we most want the admin to do next.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Button</span><span class="meta-chip ok">AA</span><span class="meta-chip ai">AI-generated · 24 variants</span></div></div>
+    <div class="comp-demo">
+      <button class="h-btn primary">Review agents</button>
+      <button class="h-btn secondary"><svg class="ic"><use href="#i-download"/></svg>Export</button>
+      <button class="h-btn subtle">View all<svg class="ic"><use href="#i-right"/></svg></button>
+      <button class="h-btn danger">Disable agent</button>
+      <button class="h-btn primary focus">Focused</button>
+      <button class="h-btn primary" disabled>Disabled</button>
+      <div class="lbl">Sizes</div>
+      <button class="h-btn primary sm">Small · 28</button><button class="h-btn primary">Medium · 32</button><button class="h-btn primary lg">Large · 40</button>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Variants: <code>primary</code> <code>secondary</code> <code>subtle</code> <code>danger</code></li><li>Height <code>control-h-md</code> 32 · radius <code>radius-md</code> · <code>type-button</code></li><li>Booleans: leftIcon, rightIcon, loading</li><li>Focus: <code>focus-ring</code> 3px teal-100</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Start labels with a verb: "Review agents"</li><li>Use one primary per screen area</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use lime or blue for buttons</li><li>Put two primary buttons side by side</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="icon-button">
+    <div class="comp-head"><div><h4>Icon Button &amp; Link</h4><p>Icon buttons for compact, repeated actions like row menus. Links for moving to another page.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · ActionIcon · Anchor</span><span class="meta-chip ok">AA</span></div></div>
+    <div class="comp-demo">
+      <button class="h-icon-btn" aria-label="Filter"><svg class="ic"><use href="#i-filter"/></svg></button>
+      <button class="h-icon-btn" aria-label="Refresh"><svg class="ic"><use href="#i-refresh"/></svg></button>
+      <button class="h-icon-btn ghost" aria-label="More"><svg class="ic"><use href="#i-dots"/></svg></button>
+      <span style="width:24px"></span>
+      <a class="h-link" href="#">View agent details<svg class="ic-sm"><use href="#i-right"/></svg></a>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>32×32 · icon 16 · <code>radius-md</code></li><li>Variants: <code>default</code> <code>ghost</code></li><li>Requires <code>aria-label</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Add a tooltip with the action name</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use icon-only for primary actions</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ===== INPUTS ===== -->
+  <div class="group-title" id="c-inputs"><svg class="ic-lg"><use href="#i-type"/></svg> Inputs <span>Text Input · Select · Date Range · Menu · Switch · Checkbox</span></div>
+
+  <div class="comp" id="text-input">
+    <div class="comp-head"><div><h4>Text Input &amp; Search</h4><p>Used for search in tables and in forms like setting a review owner.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · TextInput</span><span class="meta-chip ok">AA</span></div></div>
+    <div class="comp-demo" style="align-items:flex-start">
+      <div class="h-field"><label>Search</label><div class="h-input"><svg class="ic"><use href="#i-search"/></svg>Search agents…</div><small>Name, owner, or environment</small></div>
+      <div class="h-field"><label>Agent owner</label><div class="h-input focus">Maria Chen</div><small>Focused</small></div>
+      <div class="h-field"><label>Review by</label><div class="h-input error" style="color:var(--text-primary)">32/13/2025</div><small class="err">Enter a valid date</small></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Height 32 · <code>border-default</code> · <code>radius-md</code></li><li>States: default, hover, focus, error, disabled</li><li>Placeholder uses <code>text-disabled</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Always show a visible label</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use placeholder as the label</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="select">
+    <div class="comp-head"><div><h4>Select, Date Range &amp; Menu</h4><p>Filters at the top of the dashboard: time range, environment, and agent type.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Select · Menu · DatePickerInput</span></div></div>
+    <div class="comp-demo" style="align-items:flex-start">
+      <div class="h-select"><svg class="ic"><use href="#i-cal"/></svg>Last 30 days<svg class="ic-sm"><use href="#i-down"/></svg></div>
+      <div class="h-select"><svg class="ic"><use href="#i-world"/></svg>All environments<svg class="ic-sm"><use href="#i-down"/></svg></div>
+      <div class="h-menu"><div>Last 7 days</div><div class="on">Last 30 days<svg class="ic"><use href="#i-check"/></svg></div><div>Last 90 days</div><hr><div>Custom range…</div></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Trigger: 32 high, leading icon optional</li><li>Menu: <code>radius</code> 10 · <code>shadow-md</code> · 6px inset</li><li>Selected item: <code>bg-hover</code> + check icon</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Show the current value in the trigger</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Hide filters inside a "More" menu</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="switch">
+    <div class="comp-head"><div><h4>Switch &amp; Checkbox</h4><p>Switch for settings that apply right away. Checkbox for selecting rows or choosing options in a form.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Switch · Checkbox</span></div></div>
+    <div class="comp-demo">
+      <span class="h-inline"><span class="h-switch on"></span>Include inactive agents</span>
+      <span class="h-inline"><span class="h-switch"></span>Show only external sharing</span>
+      <span class="h-inline"><span class="h-check on"><svg class="ic-sm"><use href="#i-check"/></svg></span>Copilot Studio</span>
+      <span class="h-inline"><span class="h-check"></span>SharePoint agents</span>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Switch 32×18 · on: <code>action-primary</code></li><li>Checkbox 16 · <code>radius-xs</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Write the label as the "on" state</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use a switch inside a form that needs Save</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <div class="group-title" id="c-navigation"><svg class="ic-lg"><use href="#i-layers"/></svg> Navigation <span>Side Nav · Tabs · Breadcrumbs · Pagination</span></div>
+
+  <div class="comp" id="side-nav">
+    <div class="comp-head"><div><h4>Side Navigation</h4><p>The product's main menu. Dark, so the content area stays calm and bright.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · AppShell.Navbar · NavLink</span><span class="meta-chip ok">AA 7.1:1</span></div></div>
+    <div class="comp-demo">
+      <div class="h-nav">
+        <div class="h-nav-item"><svg class="ic"><use href="#i-home"/></svg><span class="grow">Home</span></div>
+        <div class="h-nav-section">Insights</div>
+        <div class="h-nav-item on"><svg class="ic"><use href="#i-sparkle"/></svg><span class="grow">AI &amp; Agents</span><svg class="ic-sm"><use href="#i-down"/></svg></div>
+        <div class="h-nav-sub on">AI Readiness</div>
+        <div class="h-nav-sub">Agents</div>
+        <div class="h-nav-item"><svg class="ic"><use href="#i-shield"/></svg><span class="grow">Security</span><span class="h-nav-badge">3</span></div>
+        <div class="h-nav-item"><svg class="ic"><use href="#i-users"/></svg><span class="grow">Teams &amp; Groups</span></div>
+      </div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Width <code>layout-sidebar</code> 280 · collapsed 72</li><li>Item 40 high · sub-item 36 · <code>radius-md</code></li><li>Active: <code>bg-nav-active</code> + 3px indicator</li><li>Text <code>text-nav</code> · groups <code>overline</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Keep labels to 1–3 words</li><li>Use a count badge only for action items</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Nest deeper than two levels</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="tabs">
+    <div class="comp-head"><div><h4>Tabs</h4><p>Switch between views of the same subject, like AI Readiness and Agents.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Tabs</span></div></div>
+    <div class="comp-demo col">
+      <div class="h-tabs"><span class="h-tab on">AI Readiness</span><span class="h-tab">Agents<span class="h-count total">1,284</span></span><span class="h-tab">Recommendations<span class="h-count urgent">4</span></span></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Label <code>14/20</code> 500 · active 600 + <code>text-brand</code></li><li>2px <code>border-brand</code> indicator · gap 28</li><li>Optional count chip</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Keep tab order stable</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use tabs for steps in a flow</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="breadcrumbs">
+    <div class="comp-head"><div><h4>Breadcrumbs &amp; Pagination</h4><p>Breadcrumbs show where you are. Pagination moves through long tables.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Breadcrumbs · Pagination</span><span class="meta-chip ok">AA 5.1:1</span></div></div>
+    <div class="comp-demo" style="justify-content:space-between">
+      <div class="h-crumbs">Home<svg class="ic-sm"><use href="#i-right"/></svg>Insights<svg class="ic-sm"><use href="#i-right"/></svg><b>AI Readiness</b></div>
+      <div class="h-pages"><span class="h-page"><svg class="ic-sm" style="transform:rotate(180deg)"><use href="#i-right"/></svg></span><span class="h-page on">1</span><span class="h-page">2</span><span class="h-page">3</span><span class="h-page">…</span><span class="h-page">26</span><span class="h-page"><svg class="ic-sm"><use href="#i-right"/></svg></span></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Crumbs: <code>body-s</code> · <code>text-secondary</code> (was #8F9CAE, failed AA)</li><li>Pages: 28 square · <code>radius-sm</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Make the current page plain text</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use disabled gray for crumbs</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ===== CONTAINERS ===== -->
+  <div class="group-title" id="c-containers"><svg class="ic-lg"><use href="#i-grid"/></svg> Containers <span>Card · Page Header · Section Header</span></div>
+
+  <div class="comp" id="card">
+    <div class="comp-head"><div><h4>Card</h4><p>The base box that almost every dashboard widget sits in. White, flat, with a light border.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Card · Paper</span></div></div>
+    <div class="comp-demo">
+      <div class="h-card" style="width:220px"><b style="font:var(--type-heading-s)">Default</b><p class="lbl" style="margin-top:4px">Border, no shadow</p></div>
+      <div class="h-card interactive" style="width:220px;border-color:var(--border-strong);box-shadow:var(--shadow-sm)"><b style="font:var(--type-heading-s)">Hover</b><p class="lbl" style="margin-top:4px">Stronger border + shadow-sm</p></div>
+      <div class="h-card selected" style="width:220px"><b style="font:var(--type-heading-s)">Selected</b><p class="lbl" style="margin-top:4px">Brand border + focus ring</p></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li><code>bg-surface</code> · <code>border-default</code> · <code>radius-lg</code> 12 (was 14)</li><li>Padding <code>inset-card</code> 20 (was 20×22)</li><li>Gap between cards <code>gap-cards</code> 12 (was 8)</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Let cards in a row share equal height</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Nest a card inside a card</li><li>Add shadows to static cards</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="page-header">
+    <div class="comp-head"><div><h4>Page Header &amp; Section Header</h4><p>Page headers name the page and hold page-wide actions. Section headers name a group of cards.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Group · Title</span></div></div>
+    <div class="comp-demo col" style="gap:24px">
+      <div class="h-page-head">
+        <div><div class="h-crumbs">Home<svg class="ic-sm"><use href="#i-right"/></svg>Insights</div><div class="h-page-title">AI &amp; Agents</div></div>
+        <div class="h-actions"><div class="h-select"><svg class="ic"><use href="#i-cal"/></svg>Last 30 days<svg class="ic-sm"><use href="#i-down"/></svg></div><button class="h-btn secondary"><svg class="ic"><use href="#i-download"/></svg>Export</button><button class="h-btn primary">Run scan</button></div>
+      </div>
+      <div class="h-sec-head">
+        <div><div class="h-sec-title"><svg class="ic"><use href="#i-bulb"/></svg>Top recommendations</div><div class="h-sec-sub">The fastest ways to raise your readiness score</div></div>
+        <a class="h-link" href="#">View all<svg class="ic-sm"><use href="#i-right"/></svg></a>
+      </div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Page title <code>heading-l</code> · crumbs above</li><li>Section title <code>heading-m</code> + 16px icon</li><li>Subtitle <code>body-s</code> · <code>text-secondary</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Right-align actions; primary last</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Put more than 3 actions in a header</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ===== DATA DISPLAY ===== -->
+  <div class="group-title" id="c-data"><svg class="ic-lg"><use href="#i-chart"/></svg> Data display <span>Score Card · KPI Tile · Metric Card · Stat Card · Progress Bar · Ring Gauge · Line Chart · Donut Chart · Legend · Data Table · Avatar · User Row · Icon Tile</span></div>
+
+  <div class="comp" id="score-card">
+    <div class="comp-head"><div><h4>Score Card</h4><p>The hero of the AI Readiness page. One number that says how ready the tenant is for Copilot and agents, compared to similar companies.</p></div><div class="comp-meta"><span class="meta-chip m">Custom · built on Mantine Card</span><span class="meta-chip ai">AI-generated</span></div></div>
+    <div class="comp-demo col">
+      <div class="h-card" style="padding:var(--inset-card-lg)">
+        <div class="h-score">
+          <div class="h-score-top">
+            <div><div style="font:var(--type-heading-m)">AI Readiness Score</div><div class="h-sec-sub">How prepared your Microsoft 365 tenant is for Copilot and agents</div></div>
+            <div><div class="h-score-num">72</div><div class="h-score-of">out of 100 · <span class="h-delta up"><svg class="ic-sm"><use href="#i-up-arrow"/></svg>+6</span></div></div>
+          </div>
+          <div class="h-score-track"><div class="h-score-fill" style="width:72%"></div><div class="h-score-bench" style="left:64%"><span>Industry avg 64</span></div></div>
+          <div class="h-ruler"></div>
+          <div class="h-ruler-n"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></div>
+          <div class="h-score-meta"><span>Last scanned 12 minutes ago</span><a class="h-link" href="#">How is this calculated?</a></div>
+      <div style="display:flex;gap:12px;margin-top:16px">
+        <div class="h-kpi"><div class="h-kpi-l">Data security</div><div class="h-kpi-r"><span class="h-kpi-n">68</span><span class="h-delta up"><svg class="ic-sm"><use href="#i-up-arrow"/></svg>4</span></div></div>
+        <div class="h-kpi"><div class="h-kpi-l">Governance</div><div class="h-kpi-r"><span class="h-kpi-n">81</span><span class="h-delta up"><svg class="ic-sm"><use href="#i-up-arrow"/></svg>9</span></div></div>
+        <div class="h-kpi"><div class="h-kpi-l">Agent oversight</div><div class="h-kpi-r"><span class="h-kpi-n">54</span><span class="h-delta down"><svg class="ic-sm"><use href="#i-down-arrow"/></svg>3</span></div></div>
+        </div>
+      </div>
+</div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Number <code>type-display</code> · color follows score band</li><li>Track <code>viz-score-track</code> · fill <code>viz-score-fill</code></li><li>Benchmark marker: 2px <code>ink-800</code> + label</li><li>KPI tiles: <code>bg-subtle</code> · <code>type-metric-m</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Always show the benchmark and the change</li><li>Link to "How is this calculated?"</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Show a score without a scale</li><li>Use red for the fill; the score is not an error</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="metric-card">
+    <div class="comp-head"><div><h4>Metric Card &amp; Progress Bar</h4><p>One measurement, its context, and how far along it is. Used in rows of three or four.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Card · Progress</span><span class="meta-chip ai">AI-generated</span></div></div>
+    <div class="comp-demo">
+      <div class="grid-3" style="width:100%">
+        <div class="h-card"><div class="h-metric-head"><span class="h-metric-title">Sensitivity labels</span><span class="h-badge success"><span class="h-dot"></span>Good</span></div><div class="h-metric-n">84%</div><div class="h-metric-l">of files labeled</div><div class="h-progress"><i style="width:84%;background:var(--status-success-solid)"></i></div></div>
+        <div class="h-card"><div class="h-metric-head"><span class="h-metric-title">Oversharing</span><span class="h-badge warning"><span class="h-dot"></span>Needs review</span></div><div class="h-metric-n">1,912</div><div class="h-metric-l">sites shared with "Everyone"</div><div class="h-progress"><i style="width:46%;background:var(--status-warning-solid)"></i></div></div>
+        <div class="h-card"><div class="h-metric-head"><span class="h-metric-title">Agents without owner</span><span class="h-badge danger"><span class="h-dot"></span>At risk</span></div><div class="h-metric-n">47</div><div class="h-metric-l">of 1,284 agents</div><div class="h-progress"><i style="width:22%;background:var(--status-danger-solid)"></i></div></div>
+      </div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Title <code>heading-s</code> · value <code>type-metric-l</code></li><li>Progress 8px (lg 12) · <code>radius-xs</code> · track <code>border-subtle</code></li><li>Fill uses <code>status-*-solid</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Pair the status color with a status badge</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Show more than one number as the hero</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="stat-card">
+    <div class="comp-head"><div><h4>Stat Card &amp; Icon Tile</h4><p>The inventory row on the Agents tab: how many of each thing exist. The icon tile gives every entity a consistent color and shape.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Card · ThemeIcon</span></div></div>
+    <div class="comp-demo">
+      <div class="grid-4" style="width:100%">
+        <div class="h-card"><div class="h-tile" style="background:var(--agent-studio-bg);color:var(--agent-studio-fg)"><svg class="ic-lg"><use href="#i-robot"/></svg></div><div class="h-stat-t">Agents</div><div class="h-stat-n">1,284</div><div class="h-stat-s warn">47 without owner</div></div>
+        <div class="h-card"><div class="h-tile" style="background:var(--entity-environment-bg);color:var(--entity-environment-fg)"><svg class="ic-lg"><use href="#i-world"/></svg></div><div class="h-stat-t">Environments</div><div class="h-stat-n">38</div><div class="h-stat-s">6 production</div></div>
+        <div class="h-card"><div class="h-tile" style="background:var(--entity-connection-bg);color:var(--entity-connection-fg)"><svg class="ic-lg"><use href="#i-plug"/></svg></div><div class="h-stat-t">Connections</div><div class="h-stat-n">412</div><div class="h-stat-s warn">19 to external services</div></div>
+        <div class="h-card"><div class="h-tile" style="background:var(--entity-dlp-bg);color:var(--entity-dlp-fg)"><svg class="ic-lg"><use href="#i-shield"/></svg></div><div class="h-stat-t">DLP policies</div><div class="h-stat-n">14</div><div class="h-stat-s">Covering 92% of agents</div></div>
+      </div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Icon tile 36 · <code>radius</code> 10 · <code>entity-*</code> tokens</li><li>Value <code>type-metric-m</code></li><li>Subline turns <code>status-warning-fg</code> when it needs action</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Use the same tile color for an entity everywhere</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Pick tile colors by taste per screen</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="charts">
+    <div class="comp-head"><div><h4>Ring Gauge, Line Chart, Donut &amp; Legend</h4><p>Charts follow the <code>viz-*</code> order, use thin grid lines, and always come with a legend that also shows values.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine Charts · RingProgress · LineChart · DonutChart</span></div></div>
+    <div class="comp-demo" style="align-items:stretch">
+      <div class="h-card" style="width:200px;display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="font:var(--type-heading-s);align-self:flex-start">Labeled content</div>
+        <svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="48" fill="none" stroke="var(--border-subtle)" stroke-width="10"/><circle cx="60" cy="60" r="48" fill="none" stroke="var(--viz-1)" stroke-width="10" stroke-linecap="round" stroke-dasharray="253.3 301.6" transform="rotate(-90 60 60)"/><text x="60" y="58" text-anchor="middle" style="font:var(--type-metric-l);fill:var(--text-primary)">84%</text><text x="60" y="76" text-anchor="middle" style="font:var(--type-caption);fill:var(--text-secondary)">of files</text></svg>
+      </div>
+      <div class="h-card" style="flex:1;min-width:300px">
+        <div class="h-metric-head" style="flex-wrap:wrap;gap:8px"><span class="h-metric-title">Agents created per week</span><div class="h-legend"><span><i class="h-dot" style="background:var(--viz-1)"></i>Governed</span><span><i class="h-dot" style="background:var(--viz-4)"></i>Ungoverned</span></div></div>
+        <svg viewBox="0 0 420 150" width="100%" height="150">
+          <g stroke="var(--viz-grid)" stroke-width="1"><line x1="28" y1="10" x2="420" y2="10"/><line x1="28" y1="50" x2="420" y2="50"/><line x1="28" y1="90" x2="420" y2="90"/><line x1="28" y1="130" x2="420" y2="130" stroke="var(--border-strong)"/></g>
+          <g style="font:400 10px var(--font-sans)" fill="var(--viz-axis)"><text x="0" y="14">60</text><text x="0" y="54">40</text><text x="0" y="94">20</text><text x="6" y="134">0</text><text x="30" y="147">W1</text><text x="96" y="147">W2</text><text x="162" y="147">W3</text><text x="228" y="147">W4</text><text x="294" y="147">W5</text><text x="360" y="147">W6</text></g>
+          <polyline fill="none" stroke="var(--viz-1)" stroke-width="2" stroke-linejoin="round" points="36,98 102,86 168,80 234,62 300,48 366,30 412,24"/>
+          <polyline fill="none" stroke="var(--viz-4)" stroke-width="2" stroke-linejoin="round" points="36,78 102,82 168,92 234,96 300,104 366,110 412,114"/>
+          <circle cx="412" cy="24" r="3.5" fill="#fff" stroke="var(--viz-1)" stroke-width="2"/><circle cx="412" cy="114" r="3.5" fill="#fff" stroke="var(--viz-4)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="h-card" style="width:100%;display:flex;gap:24px;align-items:center">
+        <svg width="112" height="112" viewBox="0 0 120 120" style="flex-shrink:0"><g transform="rotate(-90 60 60)" fill="none" stroke-width="14"><circle cx="60" cy="60" r="48" stroke="var(--agent-studio-fg)" stroke-dasharray="172.9 301.6"/><circle cx="60" cy="60" r="48" stroke="var(--agent-sharepoint-fg)" stroke-dasharray="79.4 301.6" stroke-dashoffset="-174.9"/><circle cx="60" cy="60" r="48" stroke="var(--agent-builder-fg)" stroke-dasharray="43.2 301.6" stroke-dashoffset="-256.3"/></g><text x="60" y="60" text-anchor="middle" style="font:var(--type-metric-m);fill:var(--text-primary)">1,284</text><text x="60" y="76" text-anchor="middle" style="font:var(--type-caption);fill:var(--text-secondary)">agents</text></svg>
+        <div class="h-legend-list" style="max-width:320px"><div><i class="h-dot" style="background:var(--agent-studio-fg)"></i><span class="grow">Copilot Studio</span><b>745</b></div><div><i class="h-dot" style="background:var(--agent-sharepoint-fg)"></i><span class="grow">SharePoint</span><b>347</b></div><div><i class="h-dot" style="background:var(--agent-builder-fg)"></i><span class="grow">Agent Builder</span><b>192</b></div></div>
+      </div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Series colors in <code>viz-1…8</code> order, or <code>agent-*</code> for agent types</li><li>Grid <code>viz-grid</code> · axis labels <code>viz-axis</code> 10px</li><li>Line 2px · ring stroke 10 · donut 14</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Show the number in the legend, not only the color</li><li>Put the total in the donut center</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use more than 6 slices in a donut</li><li>Use status red/green as series colors</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="table">
+    <div class="comp-head"><div><h4>Data Table</h4><p>The workhorse of the Agents tab. Rows expand to explain <i>why</i> an agent is risky, without leaving the page.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Table</span><span class="meta-chip ai">AI-generated</span></div></div>
+    <div class="comp-demo col" style="padding:24px">
+      <div class="h-card" style="padding:0;overflow:hidden">
+        <table class="h-table">
+          <thead><tr><th>Agent</th><th>Owner</th><th>Type</th><th>Risk</th><th>Last active</th><th></th></tr></thead>
+          <tbody>
+            <tr class="exp"><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-studio-bg);color:var(--agent-studio-fg)"><svg class="ic"><use href="#i-robot"/></svg></div><div><b>HR Onboarding Assistant</b><small>Contoso-Prod</small></div></div></td><td><span class="h-badge neutral">No owner</span></td><td>Copilot Studio</td><td><span class="h-risk critical"><svg class="ic-sm"><use href="#i-alert"/></svg>Critical<span class="score">92</span></span></td><td>2 hours ago</td><td><svg class="ic" style="transform:rotate(180deg);color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
+            <tr class="detail"><td colspan="6"><div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 0 4px 40px"><span class="h-tag"><svg class="ic-sm"><use href="#i-world"/></svg>Shared externally</span><span class="h-tag"><svg class="ic-sm"><use href="#i-db"/></svg>Reads HR SharePoint site</span><span class="h-tag"><svg class="ic-sm"><use href="#i-lock"/></svg>No sensitivity label</span><span class="h-tag"><svg class="ic-sm"><use href="#i-users"/></svg>412 users</span></div></td></tr>
+            <tr><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-sharepoint-bg);color:var(--agent-sharepoint-fg)"><svg class="ic"><use href="#i-file"/></svg></div><div><b>Policy Q&amp;A</b><small>Legal site</small></div></div></td><td><div class="h-cell" style="gap:8px"><div class="h-avatar sm" style="background:var(--viz-3)">DK</div>Daniel Kim</div></td><td>SharePoint</td><td><span class="h-risk high">High<span class="score">71</span></span></td><td>Yesterday</td><td><svg class="ic" style="color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
+            <tr><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-builder-bg);color:var(--agent-builder-fg)"><svg class="ic"><use href="#i-tool"/></svg></div><div><b>Sales Deal Coach</b><small>Contoso-Sales</small></div></div></td><td><div class="h-cell" style="gap:8px"><div class="h-avatar sm" style="background:var(--viz-1)">MC</div>Maria Chen</div></td><td>Agent Builder</td><td><span class="h-risk low">Low<span class="score">12</span></span></td><td>3 days ago</td><td><svg class="ic" style="color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Header <code>overline</code> · <code>text-secondary</code> (was #8F9CAE)</li><li>Row 12/16 padding · divider <code>border-subtle</code></li><li>Expanded row + detail: <code>bg-hover</code></li><li>Booleans: expandable, selectable, sortable</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Put the most important column first</li><li>Explain risk with insight tags in the detail row</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Zebra-stripe rows</li><li>Hide the risk reason behind a modal</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="avatar">
+    <div class="comp-head"><div><h4>Avatar &amp; User Row</h4><p>Shows people: agent owners, makers, and reviewers. Initials fall back to a <code>viz-*</code> color picked from the name.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Avatar · Group</span></div></div>
+    <div class="comp-demo">
+      <div class="h-card" style="width:380px;padding:4px 20px">
+        <div class="h-user"><div class="h-avatar" style="background:var(--viz-1)">MC</div><div class="meta"><b>Maria Chen</b><small>Owns 14 agents</small></div><span class="h-badge success"><span class="h-dot"></span>Active</span></div>
+        <div class="h-user"><div class="h-avatar" style="background:var(--viz-3)">DK</div><div class="meta"><b>Daniel Kim</b><small>Owns 9 agents</small></div><span class="h-badge warning"><span class="h-dot"></span>Review due</span></div>
+        <div class="h-user"><div class="h-avatar" style="background:var(--ink-400)"><svg class="ic"><use href="#i-users"/></svg></div><div class="meta"><b>Former employee</b><small>Owns 6 agents · left 2 months ago</small></div><span class="h-badge danger"><span class="h-dot"></span>Orphaned</span></div>
+      </div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Avatar 32 (sm 24) · <code>radius-full</code></li><li>Name <code>heading-s</code> 13 · meta <code>caption</code></li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Show a clear state for missing owners</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use random colors per render</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ===== STATUS & LABELS ===== -->
+  <div class="group-title" id="c-status"><svg class="ic-lg"><use href="#i-alert"/></svg> Status &amp; labels <span>Status Badge · Risk Badge · Priority Indicator · Insight Tag · Count Chip</span></div>
+
+  <div class="comp" id="status-badge">
+    <div class="comp-head"><div><h4>Status Badge</h4><p>The state of a thing: ready, needs review, at risk. One shape, five meanings, always with a word.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Badge variant="light"</span><span class="meta-chip ok">AA all</span><span class="meta-chip ai">AI-generated</span></div></div>
+    <div class="comp-demo">
+      <span class="h-badge success"><span class="h-dot"></span>Ready</span>
+      <span class="h-badge warning"><span class="h-dot"></span>Needs review</span>
+      <span class="h-badge danger"><span class="h-dot"></span>At risk</span>
+      <span class="h-badge info"><span class="h-dot"></span>Scanning</span>
+      <span class="h-badge neutral"><span class="h-dot"></span>Inactive</span>
+      <span class="h-badge brand"><svg class="ic-sm"><use href="#i-sparkle"/></svg>AI insight</span>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>22 high · <code>radius-full</code> · <code>type-label</code></li><li><code>status-*-fg</code> on <code>status-*-bg</code></li><li>Boolean: dot / icon</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Keep labels to 1–2 words</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use a status badge for risk; use Risk Badge</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="risk-badge">
+    <div class="comp-head"><div><h4>Risk Badge</h4><p>How risky an agent or site is. Built by AI from one prompt (see <a href="#ai-workflow">AI workflow</a>). Its own scale, so "risk" never gets confused with "status".</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Badge</span><span class="meta-chip ok">AA 4.57–5.58</span><span class="meta-chip ai">AI-generated · 20 variants</span></div></div>
+    <div class="comp-demo">
+      <span class="h-risk critical"><svg class="ic-sm"><use href="#i-alert"/></svg>Critical<span class="score">92</span></span>
+      <span class="h-risk high">High<span class="score">71</span></span>
+      <span class="h-risk elevated">Elevated<span class="score">48</span></span>
+      <span class="h-risk moderate">Moderate<span class="score">31</span></span>
+      <span class="h-risk low">Low<span class="score">12</span></span>
+      <span style="width:16px"></span>
+      <span class="h-risk critical sm">Critical</span><span class="h-risk high sm">High</span><span class="h-risk elevated sm">Elevated</span><span class="h-risk moderate sm">Moderate</span><span class="h-risk low sm">Low</span>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>md 24 · sm 20 · <code>radius-full</code></li><li><code>risk-*-fg</code> on <code>risk-*-bg</code></li><li>Booleans: score, icon (Critical only)</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Show the score when sorting by risk</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Invent a 6th level</li><li>Use color without the word</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="priority">
+    <div class="comp-head"><div><h4>Priority, Insight Tag &amp; Count Chip</h4><p>Priority ranks recommendations. Insight tags explain <i>why</i>. Count chips summarize a list.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Group · Badge · Pill</span></div></div>
+    <div class="comp-demo">
+      <span class="h-pri urgent"><span class="h-dot"></span>Urgent</span>
+      <span class="h-pri important"><span class="h-dot"></span>Important</span>
+      <span class="h-pri standard"><span class="h-dot"></span>Standard</span>
+      <span style="width:16px"></span>
+      <span class="h-tag"><svg class="ic-sm"><use href="#i-world"/></svg>Shared externally</span>
+      <span class="h-tag"><svg class="ic-sm"><use href="#i-lock"/></svg>No label</span>
+      <span style="width:16px"></span>
+      <span class="h-count urgent">4 urgent</span><span class="h-count important">7 important</span><span class="h-count total">23 total</span>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Priority: 7px dot + <code>priority-*</code> text</li><li>Tag: 22 high · <code>bg-hover</code> · 11px · icon 12</li><li>Count: <code>type-label</code> on status bg</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Write tags as facts: "Shared externally"</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Show more than 4 tags; add "+3 more"</li></ul></div>
+    </div>
+  </div>
+
+  <!-- ===== FEEDBACK ===== -->
+  <div class="group-title" id="c-feedback"><svg class="ic-lg"><use href="#i-info"/></svg> Feedback <span>Callout · Tooltip · Modal · Toast · Empty State · Partial Data · Skeleton</span></div>
+
+  <div class="comp" id="callout">
+    <div class="comp-head"><div><h4>Callout &amp; Tooltip</h4><p>Callouts add context inside a card. Tooltips explain a term or an icon on hover.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Alert · Tooltip</span><span class="meta-chip ok">AA</span></div></div>
+    <div class="comp-demo col" style="gap:10px">
+      <div class="h-note"><svg class="ic"><use href="#i-info"/></svg><span>Score updates every 24 hours. <b>Last scan:</b> today at 9:14 AM.</span></div>
+      <div class="h-note info"><svg class="ic"><use href="#i-sparkle"/></svg><span><b>AI insight:</b> 3 of your top 5 risky agents are owned by the same team. Start there.</span></div>
+      <div class="h-note warning"><svg class="ic"><use href="#i-alert"/></svg><span><b>Partial data.</b> 2 environments could not be scanned. Results may be incomplete.</span></div>
+      <div class="h-note success"><svg class="ic"><use href="#i-checks"/></svg><span>All production agents have an owner.</span></div>
+      <div style="padding-top:8px"><div class="h-tooltip">Agents with no active owner in Entra ID for 30+ days.</div></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Callout: <code>radius-md</code> · 10/12 padding · <code>caption</code> 18 lh</li><li>Variants: neutral, info, warning, success</li><li>Tooltip: <code>bg-inverse</code> · max 240</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Lead with the bold key phrase</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Put actions or links in a tooltip</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="modal">
+    <div class="comp-head"><div><h4>Modal &amp; Toast</h4><p>Modals show focused detail, like how a score was calculated. Toasts confirm an action finished.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Modal · Notifications</span></div></div>
+    <div class="comp-demo center" style="background-color:var(--bg-overlay);background-image:none;align-items:flex-start;gap:24px">
+      <div class="h-modal">
+        <div class="h-modal-head"><div><b>How your score is calculated</b><small>Weighted average of 4 categories</small></div><button class="h-icon-btn ghost" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></button></div>
+        <div class="h-modal-body">
+          <div><div class="h-mrow-top">Data security<span>68 · 35%</span></div><div class="h-progress"><i style="width:68%;background:var(--viz-1)"></i></div></div>
+          <div><div class="h-mrow-top">Governance<span>81 · 25%</span></div><div class="h-progress"><i style="width:81%;background:var(--viz-1)"></i></div></div>
+          <div><div class="h-mrow-top">Agent oversight<span>54 · 25%</span></div><div class="h-progress"><i style="width:54%;background:var(--viz-1)"></i></div></div>
+          <div><div class="h-mrow-top">Adoption<span>88 · 15%</span></div><div class="h-progress"><i style="width:88%;background:var(--viz-1)"></i></div></div>
+        </div>
+        <div class="h-modal-foot"><button class="h-btn secondary">Learn more</button><button class="h-btn primary">Got it</button></div>
+      </div>
+      <div class="h-toast"><svg class="ic"><use href="#i-check"/></svg>Report exported<a href="#">Open</a></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Modal 440 · <code>radius-xl</code> · <code>shadow-lg</code> · overlay <code>bg-overlay</code></li><li>Toast: <code>bg-inverse</code> · <code>radius</code> 10 · 4s auto-dismiss</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Close modals with Esc and the X</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Use a modal for errors a toast can handle</li></ul></div>
+    </div>
+  </div>
+
+  <div class="comp" id="empty">
+    <div class="comp-head"><div><h4>Empty State, Partial Data &amp; Skeleton</h4><p>Governance data can be slow, missing, or not set up yet. Each case gets its own honest state.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Skeleton · Stack</span><span class="meta-chip ai">AI-generated</span></div></div>
+    <div class="comp-demo" style="align-items:stretch">
+      <div class="h-empty" style="flex:1;width:auto"><div class="h-tile" style="background:var(--teal-50);color:var(--teal-700)"><svg class="ic-lg"><use href="#i-robot"/></svg></div><b>No agents found yet</b><p>Connect Power Platform so Orchestry can find Copilot Studio agents in your tenant.</p><button class="h-btn primary">Connect Power Platform</button></div>
+      <div class="h-card" style="flex:1"><div class="h-metric-head"><span class="h-metric-title">Connections by type</span><span class="h-badge warning"><span class="h-dot"></span>Partial</span></div><div class="h-hatch">2 of 38 environments not scanned</div><a class="h-link" href="#" style="margin-top:12px">Retry scan<svg class="ic-sm"><use href="#i-refresh"/></svg></a></div>
+      <div class="h-card" style="flex:1;display:flex;flex-direction:column;gap:12px"><div class="h-skel" style="width:40%;height:14px"></div><div class="h-skel" style="width:30%;height:28px"></div><div class="h-skel" style="width:70%;height:12px"></div><div class="h-skel" style="width:100%;height:8px"></div><div class="h-skel" style="width:100%;height:56px;border-radius:8px"></div></div>
+    </div>
+    <div class="comp-foot">
+      <div><h5>Spec</h5><ul><li>Empty: dashed <code>border-strong</code> · 48 tile · one action</li><li>Partial: hatch pattern + warning badge</li><li>Skeleton: matches final layout · 1.4s shimmer</li></ul></div>
+      <div class="do"><h5>Do</h5><ul><li>Tell people what to do next</li><li>Say what's missing in partial states</li></ul></div>
+      <div class="dont"><h5>Don't</h5><ul><li>Show 0 when data is missing</li><li>Use spinners for whole pages</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 PATTERNS ============ -->
+<section class="sec" id="patterns">
+  <div class="sec-num">11 · Patterns</div>
+  <h2>Patterns</h2>
+  <p class="sec-lead">Components are words. Patterns are sentences. These are the layouts and rules that turn components into a screen an IT admin can read in five seconds.</p>
+
+  <div class="sub" id="p-dashboard" style="margin-top:0">
+    <h3>Dashboard page</h3>
+    <p>Every insight page follows the same order: <b>how am I doing → what's behind it → what should I do</b>.</p>
+    <div class="grid-2" style="grid-template-columns:1.2fr 1fr">
+      <div class="panel" style="background:var(--bg-page)">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><div><div class="h-crumbs" style="font-size:11px">Home › Insights</div><div style="font:var(--type-heading-m)">AI &amp; Agents</div></div><div style="display:flex;gap:6px"><span class="h-btn secondary sm">Last 30 days</span><span class="h-btn primary sm">Run scan</span></div></div>
+          <div class="h-tabs" style="gap:20px"><span class="h-tab on" style="font-size:12px;padding-bottom:8px">AI Readiness</span><span class="h-tab" style="font-size:12px;padding-bottom:8px">Agents</span></div>
+          <div class="h-card" style="padding:14px;display:flex;justify-content:space-between;align-items:center;outline:2px dashed var(--teal-400);outline-offset:3px"><span style="font:var(--type-heading-s)">① Score card</span><span style="font:var(--type-metric-m);color:var(--status-success-fg)">72</span></div>
+          <div class="grid-3" style="outline:2px dashed var(--violet-500);outline-offset:3px;border-radius:12px"><div class="h-card" style="padding:12px;font:var(--type-caption)">② Metric</div><div class="h-card" style="padding:12px;font:var(--type-caption)">② Metric</div><div class="h-card" style="padding:12px;font:var(--type-caption)">② Metric</div></div>
+          <div class="grid-2" style="grid-template-columns:2fr 1fr;outline:2px dashed var(--orange-500);outline-offset:3px;border-radius:12px"><div class="h-card" style="padding:12px;height:84px;font:var(--type-caption)">③ Recommendations table</div><div class="h-card" style="padding:12px;font:var(--type-caption)">③ Chart</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--teal-50);color:var(--teal-700);font:var(--type-label)">1</span><div><div style="font:var(--type-heading-s)">How am I doing?</div><div class="tok-val">One score card with benchmark and change. Always first, full width.</div></div></div>
+        <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--violet-50);color:var(--violet-700);font:var(--type-label)">2</span><div><div style="font:var(--type-heading-s)">What's behind it?</div><div class="tok-val">3–4 metric or stat cards on the 12-col grid (span 4 or 3), gap 12.</div></div></div>
+        <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--orange-50);color:var(--orange-700);font:var(--type-label)">3</span><div><div style="font:var(--type-heading-s)">What should I do?</div><div class="tok-val">Recommendations or risk table (span 8) with supporting chart (span 4).</div></div></div>
+        <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-sm"><use href="#i-layers"/></svg></span><div><div style="font:var(--type-heading-s)">Spacing</div><div class="tok-val">Page padding 40/32 · section gap 32 · card gap 12 · max width 1200.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" id="p-states">
+    <h3>Data states</h3>
+    <p>Every data component has to design for all five states. AI generates them automatically when it creates a component.</p>
+    <div class="panel" style="padding:8px 8px 4px">
+      <table class="audit">
+        <thead><tr><th>State</th><th>When</th><th>What we show</th><th>Component</th></tr></thead>
+        <tbody>
+          <tr><td><b>Loading</b></td><td>First load, under 10s</td><td>Skeleton shaped like the real content</td><td><span class="h-tag">Skeleton</span></td></tr>
+          <tr><td><b>Empty</b></td><td>Nothing set up yet</td><td>What it is, why it's empty, one action</td><td><span class="h-tag">Empty State</span></td></tr>
+          <tr><td><b>Partial</b></td><td>Some sources failed</td><td>Real data + hatch for missing + warning badge</td><td><span class="h-tag">Partial Data</span></td></tr>
+          <tr><td><b>Stale</b></td><td>Last scan over 24h ago</td><td>Neutral callout with scan time + "Run scan"</td><td><span class="h-tag">Callout</span></td></tr>
+          <tr><td><b>Error</b></td><td>Scan failed</td><td>Warning callout, plain reason, retry link</td><td><span class="h-tag">Callout</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub" id="p-writing">
+    <h3>Writing for AI insights</h3>
+    <p>AI insights in the product are only useful if people trust them. These rules are in the rules file, so AI-written copy follows them too.</p>
+    <div class="grid-3">
+      <div class="panel"><h4>Lead with the fact</h4><div class="h-note success" style="margin-bottom:8px"><svg class="ic"><use href="#i-check"/></svg><span>47 agents have no owner.</span></div><div class="h-note" style="background:var(--status-danger-bg);color:var(--status-danger-fg)"><svg class="ic" style="color:inherit"><use href="#i-x"/></svg><span>It looks like some agents may be missing owners.</span></div></div>
+      <div class="panel"><h4>Say what to do next</h4><div class="h-note success" style="margin-bottom:8px"><svg class="ic"><use href="#i-check"/></svg><span>Assign owners to 12 critical agents first.</span></div><div class="h-note" style="background:var(--status-danger-bg);color:var(--status-danger-fg)"><svg class="ic" style="color:inherit"><use href="#i-x"/></svg><span>Ownership is important for governance.</span></div></div>
+      <div class="panel"><h4>Show your source</h4><div class="h-note success" style="margin-bottom:8px"><svg class="ic"><use href="#i-check"/></svg><span>Based on Entra ID sign-ins, last 30 days.</span></div><div class="h-note" style="background:var(--status-danger-bg);color:var(--status-danger-fg)"><svg class="ic" style="color:inherit"><use href="#i-x"/></svg><span>Our AI detected inactive owners.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 GOVERNANCE ============ -->
+<section class="sec" id="governance">
+  <div class="sec-num">12 · Governance</div>
+  <h2>How Harmony stays true</h2>
+  <p class="sec-lead">A design system only works if it stays the single source of truth. So adding or changing something follows one path, and AI checks the files every week for anything that drifted.</p>
+  <div class="pipe" style="grid-template-columns:repeat(5,1fr)">
+    <div class="pipe-step"><div class="k">1 · Request</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-bulb"/></svg></div><h5>Anyone asks</h5><p>Designer, engineer, or PM opens a request with the use case.</p></div>
+    <div class="pipe-step"><div class="k">2 · Check</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-search"/></svg></div><h5>Does it exist?</h5><p>AI searches Harmony for an existing component or variant first.</p></div>
+    <div class="pipe-step ai"><div class="k">3 · Draft</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-sparkle"/></svg></div><h5>AI drafts it</h5><p>Variants, tokens, docs, and code mapping, from the rules file.</p></div>
+    <div class="pipe-step"><div class="k">4 · Review</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-eye"/></svg></div><h5>Design + Eng</h5><p>I review the design; engineering reviews the Mantine mapping.</p></div>
+    <div class="pipe-step"><div class="k">5 · Publish</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-git"/></svg></div><h5>Ship it</h5><p>Library published, tokens versioned, changelog written by AI.</p></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:12px">
+    <div class="panel">
+      <h4>Weekly drift audit (AI)</h4>
+      <div class="checklist">
+        <div><svg class="ic"><use href="#i-check"/></svg>Finds detached instances in product files</div>
+        <div><svg class="ic"><use href="#i-check"/></svg>Flags raw hex values and off-scale font sizes</div>
+        <div><svg class="ic"><use href="#i-check"/></svg>Compares Figma variables to <code>orchestry-tokens.css</code></div>
+        <div><svg class="ic"><use href="#i-check"/></svg>Re-checks every text pair for WCAG AA</div>
+        <div><svg class="ic"><use href="#i-check"/></svg>Posts a short report for design and engineering</div>
+      </div>
+    </div>
+    <div class="panel">
+      <h4>Versioning</h4>
+      <div class="tok"><span class="meta-chip">Major</span><span class="tok-val" style="margin-left:8px">Token renamed or removed, component API changed</span></div>
+      <div class="tok"><span class="meta-chip">Minor</span><span class="tok-val" style="margin-left:8px">New component, variant, or token</span></div>
+      <div class="tok"><span class="meta-chip">Patch</span><span class="tok-val" style="margin-left:8px">Value tweak, docs fix, contrast fix</span></div>
+      <p class="lbl" style="margin-top:12px">Figma library, CSS tokens, Mantine theme, and the rules file always share one version number.</p>
+    </div>
+  </div>
+
+  <div class="sub" id="changelog">
+    <h3>Changelog</h3>
+    <div class="panel" style="padding:8px 24px">
+      <div class="log"><span class="d">v2.2.0</span><span class="meta-chip" style="justify-self:start">Minor</span><span>Added Partial Data state and Skeleton for slow tenant scans. Weekly drift audit turned on.</span></div>
+      <div class="log"><span class="d">v2.1.0</span><span class="meta-chip" style="justify-self:start">Minor</span><span>Added Risk Badge, Priority Indicator, Insight Tag, and agent entity colors for the AI &amp; Agents dashboard.</span></div>
+      <div class="log"><span class="d">v2.0.1</span><span class="meta-chip" style="justify-self:start">Patch</span><span>Success and warning text darkened to pass AA. Breadcrumbs and table headers moved to <code>text-secondary</code>.</span></div>
+      <div class="log"><span class="d">v2.0.0</span><span class="meta-chip ai" style="justify-self:start">Major</span><span><b>Harmony launch.</b> Primitive + semantic token layers, Lexend only, 12 type styles, 6 radii, 41 components mapped to Mantine, AI rules file.</span></div>
+      <div class="log"><span class="d">v1.x</span><span class="meta-chip" style="justify-self:start;opacity:.6">Legacy</span><span style="color:var(--text-secondary)">The old "Design System" Figma file. Archived. Not a source of truth.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid var(--border-default);padding-top:24px;display:flex;justify-content:space-between;font:var(--type-caption);color:var(--text-secondary)">
+  <span>Harmony · Orchestry Design System · v2.2.0</span>
+  <span>Designed by Sara Sabour · Built with Claude + Figma MCP</span>
+</footer>
+
+</div></main>
+</div>
+<script>
+// Highlight nav item for the section in view
+const links=[...document.querySelectorAll('.doc-nav a')];
+const targets=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id));}})},{rootMargin:'-10% 0px -80% 0px'});
+targets.forEach(t=>io.observe(t));
+</script>
+</body>
+</html>

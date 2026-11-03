@@ -1,0 +1,227 @@
+/* =====================================================================
+   HARMONY: Orchestry Design System
+   Design tokens v2.2.0 (single source of truth for Figma variables + code)
+   Generated from: Orchestry Brand Guidelines + Mantine theme
+   Layers: Primitive -> Semantic -> Component
+   ===================================================================== */
+
+:root {
+  /* ---------- 1. PRIMITIVES: never use directly in product UI ---------- */
+
+  /* Brand: sampled from the Orchestry logo */
+  --teal-50:  #EEF6F6;
+  --teal-100: #D4EBEC;
+  --teal-200: #A9D6D8;
+  --teal-300: #72BBBF;
+  --teal-400: #3A9DA2;
+  --teal-500: #128A90;
+  --teal-600: #007980; /* Orchestry Teal (logo) */
+  --teal-700: #0D6C79; /* Action teal: 6.1:1 on white */
+  --teal-800: #0B5560;
+  --teal-900: #083F47;
+
+  --lime-50:  #F5FAEC;
+  --lime-100: #E7F3D0;
+  --lime-200: #CFE6A3;
+  --lime-300: #B3D66F;
+  --lime-400: #96C23A; /* Orchestry Lime (logo): decorative only, 2.1:1 */
+  --lime-500: #7DA82B;
+  --lime-600: #648A21;
+  --lime-700: #4D6B1A;
+
+  --leaf-500: #35A973; /* Logo mid-tone, used only in the brand gradient */
+
+  /* Ink: cool neutral */
+  --ink-0:   #FFFFFF;
+  --ink-25:  #F6F8F9;
+  --ink-50:  #F1F3F6;
+  --ink-100: #E6E9ED;
+  --ink-150: #EEF0F2;
+  --ink-200: #D0D6DD;
+  --ink-300: #B5BEC9;
+  --ink-400: #8F9CAE;
+  --ink-500: #606F84;
+  --ink-600: #4B5666;
+  --ink-700: #38414E;
+  --ink-800: #2E353F;
+  --ink-900: #1D2229;
+
+  /* Feedback hues */
+  --green-50:  #EBF7F0;  --green-100: #CFEBDB;  --green-500: #2FA36B;  --green-600: #1E8E5A;  --green-700: #177048;
+  --amber-50:  #FDF6E9;  --amber-100: #F9E7C2;  --amber-500: #D9951F;  --amber-600: #B7791F;  --amber-700: #8A5A12;
+  --yellow-50: #FDF8E1;  --yellow-500: #EAB308; --yellow-700: #806000;
+  --orange-50: #FDEFE7;  --orange-100: #FADCC8; --orange-500: #EA580C; --orange-600: #C2410C; --orange-700: #9A3412;
+  --red-50:    #FCEEEC;  --red-100: #F8D7D3;    --red-500: #DC4A3F;    --red-600: #C0362C;    --red-700: #B91C1C;
+  --blue-50:   #EAF2FE;  --blue-100: #D0E1FE;   --blue-500: #3B82F6;   --blue-600: #2563EB;   --blue-700: #1D4ED8;
+  --violet-50: #F1EBFC;  --violet-100: #E2D6FA; --violet-500: #8B5CF6; --violet-600: #7C3AED; --violet-700: #6D28D9;
+  --cyan-50:   #E1F4F8;  --cyan-600: #0891B2;   --cyan-700: #0E7490;
+  --pink-50:   #FCEAF0;  --pink-600: #BE185D;   --pink-700: #9D174D;
+  --indigo-50: #EDEBFC;  --indigo-600: #4F46E5; --indigo-700: #4338CA;
+  --mint-50:   #E1F4F1;  --mint-600: #0D9488;   --mint-700: #0F766E;
+
+  /* ---------- 2. SEMANTIC: what designers and engineers actually use ---------- */
+
+  /* Backgrounds */
+  --bg-page:      var(--ink-25);
+  --bg-surface:   var(--ink-0);
+  --bg-subtle:    var(--ink-25);
+  --bg-hover:     var(--ink-50);
+  --bg-pressed:   var(--ink-100);
+  --bg-selected:  var(--teal-50);
+  --bg-inverse:   var(--ink-800);
+  --bg-nav:       var(--ink-700);
+  --bg-nav-hover: rgba(255,255,255,0.08);
+  --bg-nav-active: rgba(255,255,255,0.12);
+  --bg-overlay:   rgba(29,34,41,0.32);
+
+  /* Text */
+  --text-primary:   var(--ink-800);  /* 12.4:1 */
+  --text-secondary: var(--ink-500);  /* 5.1:1 */
+  --text-disabled:  var(--ink-400);  /* Placeholder/disabled only, never content */
+  --text-inverse:   var(--ink-0);
+  --text-brand:     var(--teal-700);
+  --text-on-brand:  var(--ink-0);
+  --text-nav:       var(--ink-200);
+  --text-nav-muted: var(--ink-300);
+
+  /* Borders */
+  --border-default: var(--ink-100);
+  --border-subtle:  var(--ink-150);
+  --border-strong:  var(--ink-200);
+  --border-brand:   var(--teal-700);
+  --border-nav:     rgba(255,255,255,0.08);
+
+  /* Actions */
+  --action-primary:        var(--teal-700);
+  --action-primary-hover:  var(--teal-800);
+  --action-primary-subtle: var(--teal-50);
+  --action-danger:         var(--red-600);
+  --focus-ring:            0 0 0 3px var(--teal-100);
+
+  /* Status */
+  --status-success-fg: var(--green-700);  --status-success-bg: var(--green-50);  --status-success-solid: var(--green-600);
+  --status-warning-fg: var(--amber-700);  --status-warning-bg: var(--amber-50);  --status-warning-solid: var(--amber-600);
+  --status-danger-fg:  var(--red-600);    --status-danger-bg:  var(--red-50);    --status-danger-solid:  var(--red-600);
+  --status-info-fg:    var(--blue-700);   --status-info-bg:    var(--blue-50);   --status-info-solid:    var(--blue-600);
+  --status-neutral-fg: var(--ink-500);    --status-neutral-bg: var(--ink-25);    --status-neutral-solid: var(--ink-400);
+
+  /* Risk scale (AI & Agents) */
+  --risk-critical-fg: var(--red-700);     --risk-critical-bg: #FCEAEA;  --risk-critical-solid: var(--red-600);
+  --risk-high-fg:     var(--orange-600);  --risk-high-bg:     var(--orange-50); --risk-high-solid: var(--orange-500);
+  --risk-elevated-fg: #B45309;            --risk-elevated-bg: #FDF3E4;  --risk-elevated-solid: var(--amber-500);
+  --risk-moderate-fg: var(--yellow-700);  --risk-moderate-bg: var(--yellow-50); --risk-moderate-solid: var(--yellow-500);
+  --risk-low-fg:      var(--green-700);   --risk-low-bg:      var(--green-50);  --risk-low-solid: var(--green-600);
+
+  /* Priority (Recommendations) */
+  --priority-urgent:    var(--red-600);
+  --priority-important: var(--amber-700);
+  --priority-standard:  var(--ink-500);
+
+  /* Data visualization: categorical, ordered for max distinction */
+  --viz-1: var(--teal-700);
+  --viz-2: var(--blue-600);
+  --viz-3: var(--violet-600);
+  --viz-4: var(--orange-500);
+  --viz-5: var(--cyan-600);
+  --viz-6: var(--pink-600);
+  --viz-7: var(--lime-600);
+  --viz-8: var(--indigo-600);
+  --viz-grid: var(--ink-150);
+  --viz-axis: var(--ink-500);
+  --viz-score-track: linear-gradient(90deg, var(--blue-100) 0%, #C9F1E7 45%, var(--green-100) 100%);
+  --viz-score-fill:  linear-gradient(90deg, var(--blue-500) 0%, #14B8A6 55%, var(--green-600) 100%);
+
+  /* Entity identity (Agents) */
+  --agent-studio-fg: var(--orange-500);      --agent-studio-bg: var(--orange-50);
+  --agent-sharepoint-fg: var(--mint-600);    --agent-sharepoint-bg: var(--mint-50);
+  --agent-builder-fg: var(--violet-600);     --agent-builder-bg: var(--violet-50);
+  --entity-environment-fg: var(--indigo-600); --entity-environment-bg: var(--indigo-50);
+  --entity-dlp-fg: #16A34A;                   --entity-dlp-bg: #E6F6EA;
+  --entity-connection-fg: var(--orange-500);  --entity-connection-bg: var(--orange-50);
+  --entity-solution-fg: var(--cyan-600);      --entity-solution-bg: var(--cyan-50);
+  --entity-neutral-fg: var(--ink-700);        --entity-neutral-bg: #EDEFF2;
+
+  --brand-gradient: linear-gradient(135deg, var(--lime-400) 0%, var(--leaf-500) 45%, var(--teal-600) 100%);
+
+  /* ---------- 3. TYPOGRAPHY ---------- */
+  --font-sans: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* size / line-height / weight / tracking */
+  --type-display:    500 32px/40px var(--font-sans);  --track-display: -0.5px;
+  --type-metric-l:   500 28px/36px var(--font-sans);  --track-metric-l: -0.4px;
+  --type-metric-m:   500 20px/28px var(--font-sans);  --track-metric-m: -0.3px;
+  --type-heading-l:  600 20px/28px var(--font-sans);  --track-heading-l: -0.2px;
+  --type-heading-m:  600 16px/24px var(--font-sans);
+  --type-heading-s:  600 14px/20px var(--font-sans);
+  --type-body-m:     400 14px/20px var(--font-sans);
+  --type-body-s:     400 13px/20px var(--font-sans);
+  --type-caption:    400 12px/16px var(--font-sans);
+  --type-label:      600 12px/16px var(--font-sans);
+  --type-button:     600 13px/20px var(--font-sans);
+  --type-overline:   600 11px/16px var(--font-sans);  --track-overline: 0.4px;
+
+  /* ---------- 4. SPACING (4-pt scale) ---------- */
+  --space-0: 0;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Semantic spacing */
+  --inset-card: var(--space-5);
+  --inset-card-lg: var(--space-6);
+  --gap-cards: var(--space-3);
+  --gap-section: var(--space-8);
+  --gap-stack: var(--space-3);
+  --gap-inline: var(--space-2);
+
+  /* ---------- 5. RADIUS ---------- */
+  --radius-xs: 4px;    /* bars, progress, chart marks */
+  --radius-sm: 6px;    /* small controls, icon buttons sm */
+  --radius-md: 8px;    /* buttons, inputs, nav items, notes */
+  --radius-lg: 12px;   /* cards, panels, icon tiles */
+  --radius-xl: 16px;   /* modals, drawers */
+  --radius-full: 999px;/* pills, badges, avatars */
+
+  /* ---------- 6. ELEVATION ---------- */
+  --shadow-xs: 0 1px 2px rgba(29,34,41,0.05);
+  --shadow-sm: 0 2px 8px rgba(29,34,41,0.06);
+  --shadow-md: 0 10px 28px rgba(29,34,41,0.10);
+  --shadow-lg: 0 20px 60px rgba(29,34,41,0.22);
+
+  /* ---------- 7. LAYOUT ---------- */
+  --layout-sidebar: 280px;
+  --layout-sidebar-collapsed: 72px;
+  --layout-content-max: 1200px;
+  --layout-page-x: var(--space-10);
+  --layout-page-y: var(--space-8);
+  --layout-columns: 12;
+  --layout-gutter: var(--space-3);
+  --control-h-sm: 28px;
+  --control-h-md: 32px;
+  --control-h-lg: 40px;
+
+  /* ---------- 8. MOTION ---------- */
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 280ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---------- 9. Z-INDEX ---------- */
+  --z-sticky: 10;
+  --z-dropdown: 30;
+  --z-modal: 90;
+  --z-toast: 100;
+}
