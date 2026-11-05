@@ -71,8 +71,8 @@ const route = (re, fn) => routes.push([re, fn]);
 const fitThumbs = root => root.querySelectorAll('.comp-tile .thumb > div').forEach(el => {
   const box = el.parentElement, wide = el.classList.contains('wide');
   el.style.zoom = 1;
-  const w = wide ? 600 : el.scrollWidth, hgt = el.scrollHeight;
-  el.style.zoom = Math.min(.78, (box.clientWidth - 24) / w, (box.clientHeight - 16) / hgt);
+  const w = Math.max(el.scrollWidth, el.offsetWidth), hgt = el.scrollHeight;
+  el.style.zoom = Math.min(.72, (box.clientWidth - 56) / w, (box.clientHeight - 44) / hgt);
 });
 const go = () => {
   const h = location.hash.slice(1).split('?')[0] || '/';

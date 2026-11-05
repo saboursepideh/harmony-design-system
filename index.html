@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>(function(){try{var t=localStorage.getItem('harmony.theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
-<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.2">
-<link rel="stylesheet" href="harmony-components.css?v=3.0.2">
+<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.6">
+<link rel="stylesheet" href="harmony-components.css?v=3.0.6">
 <style>
 /* ================= PLAYGROUND SHELL (pg-*) — built on Harmony tokens ================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -227,22 +227,27 @@ pre.code .t { color: var(--teal-200); } pre.code .a { color: #F9C784; } pre.code
 .ov-card b { font: var(--type-heading-m); display: block; margin: var(--space-3) 0 4px; color: var(--text-primary); }
 .ov-card p { font: var(--type-body-s); color: var(--text-secondary); }
 .ov-card.ai { background: linear-gradient(160deg, var(--action-primary-subtle), var(--bg-surface) 60%); }
-.comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--gap-cards); }
+.comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 28px 20px; }
 .home-grid-wrap { container-type: inline-size; }
-.comp-grid.home-grid { grid-template-columns: repeat(5, 1fr); }
-@container (max-width: 1100px) { .comp-grid.home-grid { grid-template-columns: repeat(4, 1fr); } .home-grid > :nth-child(n+9) { display: none; } }
-@container (max-width: 860px) { .comp-grid.home-grid { grid-template-columns: repeat(3, 1fr); } .home-grid > :nth-child(n+7) { display: none; } }
-@container (max-width: 620px) { .comp-grid.home-grid { grid-template-columns: repeat(2, 1fr); } .home-grid > :nth-child(n+5) { display: none; } }
-.comp-tile { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); overflow: hidden; color: inherit; display: block; }
-.comp-tile:hover { border-color: var(--border-brand); }
-.comp-tile { cursor: pointer; }
-.comp-tile:focus-visible { outline: 2px solid var(--border-focus, var(--border-brand)); outline-offset: 2px; }
-.comp-tile .thumb { height: 140px; background: var(--bg-page); background-image: radial-gradient(var(--border-default) 1px, transparent 1px); background-size: 12px 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none; padding: var(--space-3); }
-.comp-tile .thumb > div { flex-shrink: 0; max-width: none; }
-.comp-tile .thumb > div.wide { width: 360px; }
-.comp-tile .meta { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--border-subtle); }
-.comp-tile b { font: var(--type-heading-s); display: block; }
-.comp-tile span { font: var(--type-caption); color: var(--text-secondary); }
+.comp-grid.home-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@container (max-width: 1100px) { .comp-grid.home-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .home-grid > :nth-child(n+9) { display: none; } }
+@container (max-width: 860px) { .comp-grid.home-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .home-grid > :nth-child(n+7) { display: none; } }
+@container (max-width: 620px) { .comp-grid.home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .home-grid > :nth-child(n+5) { display: none; } }
+.comp-tile { min-width: 0; display: flex; flex-direction: column; gap: 12px; color: inherit; cursor: pointer; border-radius: 18px; outline: none; }
+.comp-tile .thumb { position: relative; min-width: 0; height: 168px; border-radius: 16px; display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none; padding: var(--space-3);
+  background: radial-gradient(120% 80% at 50% 0%, rgba(26,148,150,.10), transparent 60%), radial-gradient(60% 50% at 100% 100%, rgba(166,206,57,.10), transparent 70%), var(--bg-surface);
+  box-shadow: inset 0 0 0 1px var(--border-subtle), 0 1px 2px rgba(16,24,40,.04);
+  transition: box-shadow .25s var(--ease-standard), transform .25s var(--ease-standard); }
+[data-theme="dark"] .comp-tile .thumb { background: radial-gradient(120% 80% at 50% 0%, rgba(26,148,150,.18), transparent 60%), radial-gradient(60% 50% at 100% 100%, rgba(166,206,57,.08), transparent 70%), var(--bg-surface); box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+.comp-tile .thumb > div { flex-shrink: 0; max-width: none; transition: transform .35s var(--ease-standard); }
+.comp-tile .thumb > div.wide { width: 440px; }
+.comp-tile:hover .thumb, .comp-tile:focus-visible .thumb { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--border-brand), 0 12px 32px -12px rgba(15,94,96,.35); }
+.comp-tile:focus-visible .thumb { box-shadow: inset 0 0 0 2px var(--border-brand), 0 0 0 4px var(--teal-100); }
+.comp-tile .meta { display: flex; align-items: baseline; gap: 8px; padding: 0 4px; min-width: 0; }
+.comp-tile b { font: var(--type-heading-s); color: var(--text-primary); white-space: nowrap; flex-shrink: 0; }
+.comp-tile span { font: var(--type-caption); color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.comp-tile .meta::after { content: "→"; margin-left: auto; font: var(--type-body-s); color: var(--text-brand); opacity: 0; transform: translateX(-4px); transition: opacity .2s, transform .2s var(--ease-standard); }
+.comp-tile:hover .meta::after, .comp-tile:focus-visible .meta::after { opacity: 1; transform: none; }
 
 /* Search */
 .pg-overlay { position: fixed; inset: 0; background: var(--bg-overlay); z-index: var(--z-modal); display: none; align-items: flex-start; justify-content: center; padding-top: 12vh; }
@@ -512,10 +517,10 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 
 <div class="pg-toasts" id="toasts" aria-live="polite"></div>
 
-<script src="harmony-tokens.js?v=3.0.2"></script>
-<script src="harmony-registry.js?v=3.0.2"></script>
-<script src="harmony-registry-plus.js?v=3.0.2"></script>
-<script src="harmony-ai.js?v=3.0.2"></script>
-<script src="harmony-playground.js?v=3.0.2"></script>
+<script src="harmony-tokens.js?v=3.0.6"></script>
+<script src="harmony-registry.js?v=3.0.6"></script>
+<script src="harmony-registry-plus.js?v=3.0.6"></script>
+<script src="harmony-ai.js?v=3.0.6"></script>
+<script src="harmony-playground.js?v=3.0.6"></script>
 </body>
 </html>
