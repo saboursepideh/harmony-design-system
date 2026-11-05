@@ -31,6 +31,7 @@ Source of truth, in this order:
 | Cards | `--bg-surface` + `--border-default` | |
 | Side navigation | `--bg-nav`, `--text-nav` | 7.05:1 |
 
+- Every primitive family (teal, lime, leaf, ink, green, amber, yellow, orange, red, blue, violet, cyan, pink, indigo, mint) runs the same ten steps: 50, 100, 200 … 900. Ink also keeps three helpers: 0, 25, 150.
 - Orchestry Teal (`--teal-600`, `#007980`) is the logo color. Use `--action-primary` (teal-700) for interactive UI.
 - Orchestry Lime (`--lime-400`, `#96C23A`) is decorative only (2.1:1). Never use it for text, icons that carry meaning, or as the only signal.
 - `--brand-gradient` is for marketing moments and the hero. Never inside data UI.
