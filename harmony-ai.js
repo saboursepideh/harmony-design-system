@@ -12,7 +12,7 @@ const AI = H.AI = {};
 
 /* ---------- Resolve tokens to real colors (for contrast checks) ---------- */
 const probe = () => { let p = document.getElementById('h-probe'); if (!p) { p = document.createElement('div'); p.id = 'h-probe'; p.style.cssText = 'position:absolute;left:-9999px;top:0'; document.body.appendChild(p); } return p; };
-H.rgb = token => { const p = probe(); p.style.color = ''; p.style.color = token.startsWith('--') ? `var(${token})` : token; const m = getComputedStyle(p).color.match(/[\d.]+/g); return m ? m.slice(0, 3).map(Number) : [0, 0, 0]; };
+H.rgb = token => { const p = probe(); p.style.color = ''; p.style.color = token.startsWith('--') ? `var(${token})` : token; const m = (getComputedStyle(p).color.match(/[\d.]+/g) || [0, 0, 0]).map(Number); if (m.length > 3 && m[3] < 1 && token !== '--bg-surface') { const base = H.rgb('--bg-surface'); return [0, 1, 2].map(i => m[i] * m[3] + base[i] * (1 - m[3])); } return m.slice(0, 3); };
 const lum = ([r, g, b]) => { const f = c => (c /= 255) <= .03928 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4; return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); };
 H.contrast = (a, b) => { const x = lum(H.rgb(a)), y = lum(H.rgb(b)); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
 H.hex = token => '#' + H.rgb(token).map(v => Math.round(v).toString(16).padStart(2, '0')).join('').toUpperCase();
@@ -121,7 +121,7 @@ R.insight = a => ({
   render: p => H.registry.find(c => c.id === 'ai-insight').render({ confidence: p.confidence, state: p.state, sources: true }).replace('3 HR agents are shared with the whole company', esc(p.title)),
   react: p => `<AIInsight state="${p.state}" confidence="${p.confidence}" title="${p.title}" … />`,
   anatomy: [['Pattern', 'AI Insight (label · confidence · finding · sources · actions)']],
-  pair: ['--teal-800', '--teal-50'],
+  pair: ['--text-brand', '--bg-surface'],
 });
 H.AI_R = R;
 })();
@@ -166,7 +166,7 @@ R.modal = a => ({
 R.timeline = a => ({
   builtFrom: ['card', 'section-header', 'avatar', 'status-badge'],
   controls: [{ k: 'title', t: 'text', d: a.quoted || `${cap(a.d.noun)} activity` }, { k: 'items', t: 'range', min: 2, max: 5, d: 4 }],
-  render: p => { const ev = [['Jordan Lee', 'limited sharing to HR team', '2h ago', 'success'], ['Orchestry AI', 'flagged as Critical risk', '1d ago', 'danger'], ['Priya Shah', 'added HTTP connector', '3d ago', 'warning'], ['Marcus Chen', 'became owner', '1w ago', 'info'], ['System', 'first discovered', '2w ago', 'neutral']]; return `<div class="h-card fit" style="max-width:460px"><div class="h-sec-title" style="margin-bottom:16px">${ic('clock')}${esc(p.title)}</div>${ev.slice(0, p.items).map(([w, t, when, tone], i, arr) => `<div style="display:flex;gap:12px;position:relative;padding-bottom:${i < arr.length - 1 ? 18 : 0}px">${i < arr.length - 1 ? '<span style="position:absolute;left:11px;top:26px;bottom:2px;width:2px;background:var(--border-subtle)"></span>' : ''}${w === 'Orchestry AI' ? `<div class="h-avatar sm" style="background:var(--teal-50);color:var(--teal-700)">${ic('sparkle', 'ic-sm')}</div>` : H.avatar(w, i, 'sm')}<div style="flex:1;font:var(--type-body-s)"><b style="font-weight:600">${w}</b> ${t}<div style="font:var(--type-caption);color:var(--text-secondary)">${when}</div></div><span class="h-dot" style="background:var(--status-${tone}-solid);margin-top:7px"></span></div>`).join('')}</div>`; },
+  render: p => { const ev = [['Jordan Lee', 'limited sharing to HR team', '2h ago', 'success'], ['Orchestry AI', 'flagged as Critical risk', '1d ago', 'danger'], ['Priya Shah', 'added HTTP connector', '3d ago', 'warning'], ['Marcus Chen', 'became owner', '1w ago', 'info'], ['System', 'first discovered', '2w ago', 'neutral']]; return `<div class="h-card fit" style="max-width:460px"><div class="h-sec-title" style="margin-bottom:16px">${ic('clock')}${esc(p.title)}</div>${ev.slice(0, p.items).map(([w, t, when, tone], i, arr) => `<div style="display:flex;gap:12px;position:relative;padding-bottom:${i < arr.length - 1 ? 18 : 0}px">${i < arr.length - 1 ? '<span style="position:absolute;left:11px;top:26px;bottom:2px;width:2px;background:var(--border-subtle)"></span>' : ''}${w === 'Orchestry AI' ? `${H.aiMark('sm')}` : H.avatar(w, i, 'sm')}<div style="flex:1;font:var(--type-body-s)"><b style="font-weight:600">${w}</b> ${t}<div style="font:var(--type-caption);color:var(--text-secondary)">${when}</div></div><span class="h-dot" style="background:var(--status-${tone}-solid);margin-top:7px"></span></div>`).join('')}</div>`; },
   react: p => `<Timeline items={events.slice(0, ${p.items})} bulletSize={24} lineWidth={2} />`,
   anatomy: [['Bullet', 'avatar sm 24'], ['Line', '2px border-subtle'], ['Text', 'type-body-s + caption time']],
   pair: ['--text-primary', '--bg-surface'],
@@ -204,7 +204,7 @@ R.form = a => ({
   render: p => `<div class="h-card fit" style="max-width:440px;display:flex;flex-direction:column;gap:16px"><div style="font:var(--type-heading-m)">${esc(p.title)}</div><div class="h-field"><label>Name<span class="req">*</span></label><div class="h-input${p.error ? ' error' : ''}"><input value="${p.error ? '' : esc(a.d.item)}" placeholder="Enter a name"${p.error ? ' aria-invalid="true"' : ''}></div>${p.error ? '<small class="err">Enter a name to continue.</small>' : '<small>Shown in reports and alerts.</small>'}</div><div class="h-field"><label>Owner</label><button class="h-select" style="width:100%">${ic('user')}<span style="flex:1;text-align:left">Jordan Lee</span>${ic('down')}</button></div><label class="h-inline"><span class="h-switch on"></span>Alert owner when risk goes up</label><div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--border-subtle);padding-top:16px"><button class="h-btn secondary">Cancel</button><button class="h-btn primary">Save</button></div></div>`,
   react: p => `<form onSubmit={save}>\n  <TextInput label="Name" withAsterisk${p.error ? ' error="Enter a name to continue."' : ''} />\n  <Select label="Owner" data={owners} />\n  <Switch label="Alert owner when risk goes up" />\n  <Group justify="flex-end"><Button variant="secondary">Cancel</Button><Button type="submit">Save</Button></Group>\n</form>`,
   anatomy: [['Gap', 'space-4 between fields'], ['Footer', 'border-subtle · right aligned']],
-  pair: ['--ink-700', '--bg-surface'],
+  pair: ['--text-body', '--bg-surface'],
 });
 
 /* ---------- Rules writer ---------- */
@@ -232,7 +232,7 @@ const usedTokens = html => [...new Set((html.match(/--[a-z0-9-]+/g) || []))];
 AI.offline = (prompt, seedId) => {
   const a = AI.analyze(prompt), r = R[a.recipe](a);
   const spec = {
-    id: seedId || slug(a.name) + '-' + Math.random().toString(36).slice(2, 6), name: a.name, group: 'Made with AI', icon: 'sparkle', engine: 'harmony', prompt,
+    id: seedId || slug(a.name) + '-' + Math.random().toString(36).slice(2, 6), name: a.name, group: 'Made with AI', icon: 'comet', engine: 'harmony', prompt,
     mantine: 'Composed from Harmony', desc: `Made from your request: “${prompt.trim()}”. Built only from Harmony components and tokens.`,
     controls: r.controls, render: r.render, react: r.react, wire: r.wire, anatomy: r.anatomy, builtFrom: r.builtFrom, rules: rulesFor(a), pair: r.pair, analysis: a,
   };
@@ -293,7 +293,7 @@ AI.claude = async (prompt, key, model) => {
 AI.fromClaude = (prompt, j, seedId) => {
   const variants = [{ name: 'Default', html: AI.sanitize(j.html) }, ...(j.variants || []).map(v => ({ name: v.name, html: AI.sanitize(v.html) }))];
   return {
-    id: seedId || slug(j.name || 'component') + '-' + Math.random().toString(36).slice(2, 6), name: j.name || 'New component', group: 'Made with AI', icon: 'sparkle', engine: 'claude', prompt, raw: j,
+    id: seedId || slug(j.name || 'component') + '-' + Math.random().toString(36).slice(2, 6), name: j.name || 'New component', group: 'Made with AI', icon: 'comet', engine: 'claude', prompt, raw: j,
     mantine: 'Composed by Claude', desc: j.summary || prompt, builtFrom: j.builtFrom || [],
     controls: [{ k: 'variant', t: 'seg', o: variants.map(v => v.name), d: 'Default' }],
     render: p => `<div class="fit" style="display:flex;justify-content:center">${(variants.find(v => v.name === p.variant) || variants[0]).html}</div>`,

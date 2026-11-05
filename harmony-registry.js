@@ -6,6 +6,9 @@
 (function () {
 const H = window.H = {};
 H.ic = (n, c = 'ic') => `<svg class="${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+// Orchestry AI mark (Comet). Inline so each instance can animate on its own.
+H.comet = (cls = '', grad = false) => `<svg class="comet${grad ? ' grad' : ''}${cls ? ' ' + cls : ''}" viewBox="0 0 20 20" aria-hidden="true"><g class="mk-star"><path d="M12.6 1.4Q13.5 6.5 18.6 7.4Q13.5 8.3 12.6 13.4Q11.7 8.3 6.6 7.4Q11.7 6.5 12.6 1.4Z"/></g><g class="mk-trail"><path class="s" d="M3.2 16.8L7.2 12.8"/><path class="s" d="M2.4 11.6L3.6 10.4"/><circle cx="8.6" cy="16.6" r="1.25"/></g></svg>`;
+H.aiMark = (size = '', go = false) => `<span class="h-ai-mark${size ? ' ' + size : ''}">${H.comet(go ? 'go' : '')}</span>`;
 H.esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 H.cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
 H.pascal = s => String(s).replace(/(^|[\s_-]+)(\w)/g, (_, __, c) => c.toUpperCase());
@@ -133,7 +136,7 @@ C('text-input', {
   label="${p.label}"
   placeholder="${p.placeholder}"${p.required ? '\n  withAsterisk' : ''}${p.search ? '\n  leftSection={<IconSearch size={16} />}' : ''}${p.state === 'error' ? '\n  error="Enter an agent name to continue."' : p.helper ? `\n  description="${p.helper}"` : ''}${p.state === 'disabled' ? '\n  disabled' : ''}
 />`,
-  anatomy: [['Height', 'control-h-md · 32'], ['Border', 'border-default → border-brand on focus'], ['Radius', 'radius-md'], ['Label', 'type-label · ink-700'], ['Helper', 'type-caption · text-secondary'], ['Gap', 'space-1-5 · 6px']],
+  anatomy: [['Height', 'control-h-md · 32'], ['Border', 'border-default → border-brand on focus'], ['Radius', 'radius-md'], ['Label', 'type-label · text-body'], ['Helper', 'type-caption · text-secondary'], ['Gap', 'space-1-5 · 6px']],
   tokens: ['--border-default', '--border-brand', '--focus-ring', '--status-danger-solid', '--status-danger-fg', '--text-disabled', '--text-secondary', '--radius-md', '--control-h-md', '--type-label', '--type-body-s'],
   rules: {
     when: ['Free text like names, emails or search queries'],
@@ -216,7 +219,7 @@ C('switch', {
   onChange={(e) => setChecked(e.currentTarget.checked)}${p.disabled ? '\n  disabled' : ''}
 />`,
   anatomy: [['Switch', '32×18 · thumb 14 · radius-full'], ['Checkbox', '16×16 · radius-xs · border 1.5'], ['On', 'action-primary'], ['Label', 'type-body-s · gap space-2']],
-  tokens: ['--action-primary', '--ink-200', '--ink-300', '--radius-full', '--radius-xs', '--shadow-xs', '--type-body-s', '--duration-fast'],
+  tokens: ['--action-primary', '--border-strong', '--text-disabled', '--radius-full', '--radius-xs', '--shadow-xs', '--type-body-s', '--duration-fast'],
   rules: {
     when: ['Switch: the change happens immediately', 'Checkbox: picking several items, then pressing Save'],
     whenNot: ['The choice needs a confirm button: use Checkbox, not Switch'],
@@ -315,8 +318,8 @@ C('breadcrumbs', {
   react: p => `<Breadcrumbs separator={<IconChevronRight size={12} />}>
 ${['Home', 'Agents', 'HR Policy Assistant', 'Sharing'].slice(0, p.depth).map((x, i, a) => i === a.length - 1 ? `  <Text>${x}</Text>` : `  <Anchor href="#">${x}</Anchor>`).join('\n')}
 </Breadcrumbs>`,
-  anatomy: [['Type', 'type-body-s'], ['Separator', 'chevron 12px · gap 6px'], ['Current', 'ink-700 · 500']],
-  tokens: ['--text-secondary', '--text-brand', '--ink-700', '--type-body-s'],
+  anatomy: [['Type', 'type-body-s'], ['Separator', 'chevron 12px · gap 6px'], ['Current', 'text-primary · 500']],
+  tokens: ['--text-secondary', '--text-brand', '--text-primary', '--type-body-s'],
   rules: { when: ['Pages two or more levels deep'], whenNot: ['Top-level pages'], do: ['Make every crumb except the last a link', 'Keep page names identical to the nav'], dont: ['Use them as the page title', 'Show more than 4 levels'], a11y: ['<nav aria-label="Breadcrumb">', 'aria-current="page" on the last item'] },
 });
 
@@ -414,8 +417,8 @@ C('score-card', {
   benchmark={${p.bench}}
   // band is automatic: <40 danger · 40–69 warning · ≥70 success
 />`,
-  anatomy: [['Number', 'type-display · 32/40 500'], ['Track', '14 high · viz-score-track'], ['Benchmark', '2px ink-800 marker + label'], ['Bands', '<40 danger · 40–69 warning · ≥70 success'], ['Ruler', 'ticks every 20']],
-  tokens: ['--type-display', '--track-display', '--viz-score-track', '--status-success-solid', '--status-warning-solid', '--status-danger-solid', '--status-success-fg', '--ink-800', '--border-subtle'],
+  anatomy: [['Number', 'type-display · 32/40 500'], ['Track', '14 high · viz-score-track'], ['Benchmark', '2px text-primary marker + label'], ['Bands', '<40 danger · 40–69 warning · ≥70 success'], ['Ruler', 'ticks every 20']],
+  tokens: ['--type-display', '--track-display', '--viz-score-track', '--status-success-solid', '--status-warning-solid', '--status-danger-solid', '--status-success-fg', '--text-primary', '--border-subtle'],
   rules: { when: ['One headline score that sums up many checks'], whenNot: ['Comparing many items: use a Data Table or bar chart'], do: ['Always show "out of 100" and the benchmark', 'Let the band color follow the number automatically', 'Explain what the score is based on'], dont: ['Pick the color by hand', 'Show decimals', 'Put two score cards side by side'], a11y: ['Status also written as text ("Needs work")', 'Track has role="meter" with aria-valuenow'] },
 });
 
@@ -452,7 +455,7 @@ C('stat-card', {
   controls: [{ k: 'entity', t: 'select', o: Object.keys(H.entity), d: 'studio' }, { k: 'value', t: 'text', d: '128' }, { k: 'warn', t: 'bool', d: true, l: 'Warning line' }],
   render: p => { const e = H.entity[p.entity]; return `<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">${[p.entity, ...Object.keys(H.entity).filter(k => k !== p.entity).slice(0, 2)].map((k, i) => { const x = H.entity[k]; return `<div class="h-card" style="width:200px"><div class="h-tile" style="background:${x.bg};color:${x.fg}">${ic(x.icon, 'ic-lg')}</div><div class="h-stat-t">${x.label}</div><div class="h-stat-n">${i === 0 ? esc(p.value) : [42, 17][i - 1]}</div><div class="h-stat-s${i === 0 && p.warn ? ' warn' : ''}">${i === 0 && p.warn ? '6 need review' : 'All reviewed'}</div></div>`; }).join('')}</div>`; },
   react: p => `<StatCard entity="${p.entity}" label="${H.entity[p.entity].label}" value={${p.value}}${p.warn ? ' note="6 need review" noteTone="warning"' : ''} />`,
-  anatomy: [['Tile', '36×36 · radius-lg · icon 20'], ['Title', 'type-heading-s · ink-700'], ['Number', 'type-metric-m'], ['Note', 'type-caption · warn = warning-fg 500']],
+  anatomy: [['Tile', '36×36 · radius-lg · icon 20'], ['Title', 'type-heading-s · text-body'], ['Number', 'type-metric-m'], ['Note', 'type-caption · warn = warning-fg 500']],
   tokens: ['--agent-studio-bg', '--agent-studio-fg', '--agent-sharepoint-bg', '--agent-builder-bg', '--entity-environment-bg', '--entity-dlp-bg', '--entity-connection-bg', '--type-metric-m', '--status-warning-fg'],
   rules: { when: ['Counting a type of object: agents, environments, DLP policies'], whenNot: ['Showing good/bad status: use a Badge or the note line'], do: ['Use the entity color for that object everywhere', 'Keep one stat card per entity type'], dont: ['Use red/amber/green tiles', 'Invent a new tile color: add an entity token first'], a11y: ['Tile icon is decorative (aria-hidden)', 'Entity also named in text'] },
 });
@@ -569,8 +572,8 @@ C('tag', {
   controls: [{ k: 'label', t: 'text', d: 'HTTP connector' }, { k: 'icon', t: 'select', o: ['none', 'plug', 'lock', 'world', 'db'], d: 'plug' }, { k: 'removable', t: 'bool', d: false }],
   render: p => `<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="h-tag">${p.icon !== 'none' ? ic(p.icon, 'ic-sm') : ''}${esc(p.label)}${p.removable ? `<button aria-label="Remove ${esc(p.label)}" style="display:flex;margin-left:2px;color:var(--text-secondary)">${ic('x', 'ic-sm')}</button>` : ''}</span><span class="h-tag">${ic('lock', 'ic-sm')}Confidential</span><span class="h-tag">SharePoint</span></div>`,
   react: p => `<Pill${p.removable ? ' withRemoveButton onRemove={remove}' : ''}>${p.icon !== 'none' ? `<Icon${H.pascal(p.icon)} size={12} /> ` : ''}${p.label}</Pill>`,
-  anatomy: [['Height', '22 · radius-full'], ['Type', '11/16 500 · ink-600'], ['Background', 'bg-hover'], ['Icon', '12px text-secondary']],
-  tokens: ['--bg-hover', '--ink-600', '--text-secondary', '--radius-full'],
+  anatomy: [['Height', '22 · radius-full'], ['Type', '11/16 500 · text-secondary'], ['Background', 'bg-hover'], ['Icon', '12px text-secondary']],
+  tokens: ['--bg-hover', '--text-secondary', '--radius-full'],
   rules: { when: ['Categories, connectors, labels'], whenNot: ['State or risk'], do: ['Keep tags gray'], dont: ['Color tags by meaning: use a Badge'], a11y: ['Remove button has aria-label'] },
 });
 
@@ -647,20 +650,20 @@ C('empty-state', {
   action={<Button${p.kind === 'first use' ? '' : ' variant="secondary"'}>${p.kind === 'first use' ? 'Connect sources' : 'Clear filters'}</Button>}
 />`,
   anatomy: [['Padding', '48 / 32'], ['Border', '1px dashed border-strong'], ['Icon tile', '48×48'], ['Text max width', '360'], ['Skeleton', 'shimmer 1.4s']],
-  tokens: ['--border-strong', '--bg-surface', '--type-heading-m', '--type-body-s', '--ink-25', '--ink-50', '--ink-100'],
+  tokens: ['--border-strong', '--bg-surface', '--type-heading-m', '--type-body-s', '--bg-subtle', '--bg-hover', '--bg-pressed'],
   rules: { when: ['A list or chart has nothing to show yet'], whenNot: ['An error: say what went wrong instead'], do: ['Say why it is empty and what to do next', 'Use skeletons that match the real layout'], dont: ['Show a spinner for more than 1 second', 'Use illustrations that do not match the product'], a11y: ['Loading regions use aria-busy="true"'] },
 });
 
 /* ---- AI pattern ---- */
 C('ai-insight', {
-  name: 'AI Insight', group: 'AI patterns', icon: 'sparkle', mantine: 'Card (custom)',
+  name: 'AI Insight', group: 'AI patterns', icon: 'comet', mantine: 'Card (custom)',
   desc: 'Harmony’s signature pattern for AI. It always says what it found, why, how sure it is, and what to do.',
   controls: [{ k: 'confidence', t: 'seg', o: ['high', 'medium', 'low'], d: 'high' }, { k: 'state', t: 'seg', o: ['ready', 'thinking', 'applied'], d: 'ready' }, { k: 'sources', t: 'bool', d: true, l: 'Show sources' }],
-  render: p => `<div class="h-card fit" style="max-width:520px;border-color:var(--teal-100);background:linear-gradient(170deg,var(--teal-50),var(--bg-surface) 45%)">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span class="h-badge brand">${ic('sparkle', 'ic-sm')}Orchestry AI</span>${p.state === 'ready' ? H.badge(p.confidence === 'high' ? 'success' : p.confidence === 'medium' ? 'warning' : 'neutral', cap(p.confidence) + ' confidence') : ''}</div>
+  render: p => `<div class="h-card fit" style="max-width:520px;border-color:var(--border-brand-subtle);background:linear-gradient(170deg,var(--action-primary-subtle),var(--bg-surface) 45%)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span class="h-badge brand">${H.comet('ic-sm' + (p.state === 'thinking' ? ' go' : ''))}Orchestry AI</span>${p.state === 'ready' ? H.badge(p.confidence === 'high' ? 'success' : p.confidence === 'medium' ? 'warning' : 'neutral', cap(p.confidence) + ' confidence') : ''}</div>
   ${p.state === 'thinking' ? `<div class="h-skel" style="height:16px;width:70%;margin-bottom:10px"></div><div class="h-skel" style="height:12px;width:90%;margin-bottom:6px"></div><div class="h-skel" style="height:12px;width:60%"></div><div style="font:var(--type-caption);color:var(--text-secondary);margin-top:12px">Reading 248 agents and 1,920 sharing links…</div>`
   : `<div style="font:var(--type-heading-m);margin-bottom:6px">${p.state === 'applied' ? 'Sharing limited on 3 agents' : '3 HR agents are shared with the whole company'}</div>
-  <div style="font:var(--type-body-s);color:var(--ink-700);margin-bottom:12px">${p.state === 'applied' ? 'Only the HR team can use them now. Their risk dropped from Critical to Moderate.' : 'They answer from sites with salary data. Limiting them to the HR team would lower their risk from <b>Critical</b> to <b>Moderate</b>.'}</div>
+  <div style="font:var(--type-body-s);color:var(--text-body);margin-bottom:12px">${p.state === 'applied' ? 'Only the HR team can use them now. Their risk dropped from Critical to Moderate.' : 'They answer from sites with salary data. Limiting them to the HR team would lower their risk from <b>Critical</b> to <b>Moderate</b>.'}</div>
   ${p.sources ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px"><span class="h-tag">${ic('file', 'ic-sm')}HR Policies site</span><span class="h-tag">${ic('users', 'ic-sm')}Everyone except external</span><span class="h-tag">+2 sources</span></div>` : ''}
   <div style="display:flex;gap:8px">${p.state === 'applied' ? `<button class="h-btn secondary sm">${ic('refresh')}Undo</button><button class="h-btn subtle sm">View agents</button>` : `<button class="h-btn primary sm">Limit sharing</button><button class="h-btn secondary sm">Review first</button><button class="h-btn subtle sm">Dismiss</button>`}</div>`}
 </div>`,
@@ -674,12 +677,12 @@ C('ai-insight', {
   onDismiss={dismiss}
 />`,
   anatomy: [['Label', 'brand badge "Orchestry AI" always first'], ['Confidence', 'success / warning / neutral badge'], ['Title', 'the finding, in one sentence'], ['Reason', 'why + what changes'], ['Sources', 'tags, max 2 + more'], ['Actions', 'do it · review · dismiss']],
-  tokens: ['--teal-50', '--teal-100', '--teal-800', '--bg-surface', '--type-heading-m', '--type-body-s', '--status-success-bg', '--status-warning-bg'],
+  tokens: ['--action-primary-subtle', '--border-brand-subtle', '--text-brand', '--bg-surface', '--type-heading-m', '--type-body-s', '--status-success-bg', '--status-warning-bg'],
   rules: {
     when: ['Orchestry AI found something and can suggest an action'],
     whenNot: ['Plain system messages: use a Callout'],
     do: ['Always label it as AI', 'Show confidence and the sources it used', 'Say what will change before people click', 'Offer Undo after applying'],
-    dont: ['Apply changes without a click', 'Hide low-confidence results: show them as low', 'Use sparkle icons on non-AI content'],
+    dont: ['Apply changes without a click', 'Hide low-confidence results: show them as low', 'Use the Comet mark on non-AI content'],
     a11y: ['Thinking state uses aria-busy', 'Result is announced with role="status"'],
   },
 });

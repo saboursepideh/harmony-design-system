@@ -59,6 +59,11 @@
   --indigo-50: #EDEBFC;  --indigo-600: #4F46E5; --indigo-700: #4338CA;
   --mint-50:   #E1F4F1;  --mint-600: #0D9488;   --mint-700: #0F766E;
 
+}
+
+/* Semantic tokens also apply to [data-theme="light"] so a light area can sit inside a dark page. */
+:root, [data-theme="light"] {
+  color-scheme: light;
   /* ---------- 2. SEMANTIC: what designers and engineers actually use ---------- */
 
   /* Backgrounds */
@@ -76,6 +81,7 @@
 
   /* Text */
   --text-primary:   var(--ink-800);  /* 12.4:1 */
+  --text-body:      var(--ink-700);  /* long-form reading text */
   --text-secondary: var(--ink-500);  /* 5.1:1 */
   --text-disabled:  var(--ink-400);  /* Placeholder/disabled only, never content */
   --text-inverse:   var(--ink-0);
@@ -89,6 +95,7 @@
   --border-subtle:  var(--ink-150);
   --border-strong:  var(--ink-200);
   --border-brand:   var(--teal-700);
+  --border-brand-subtle: var(--teal-100);
   --border-nav:     rgba(255,255,255,0.08);
 
   /* Actions */
@@ -224,4 +231,73 @@
   --z-dropdown: 30;
   --z-modal: 90;
   --z-toast: 100;
+}
+
+/* ---------- 10. DARK THEME: same semantic names, new values ----------
+   Components never change. Set <html data-theme="dark"> and every
+   semantic token below swaps; primitives stay the same. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-page:      #111519;
+  --bg-surface:   #181D23;
+  --bg-subtle:    #14191E;
+  --bg-hover:     rgba(255,255,255,0.06);
+  --bg-pressed:   rgba(255,255,255,0.10);
+  --bg-selected:  rgba(58,157,162,0.16);
+  --bg-inverse:   #2A313A;
+  --bg-nav:       #14191E;
+  --bg-overlay:   rgba(0,0,0,0.6);
+
+  --text-primary:   #E8ECF0;  /* 14.6:1 on surface */
+  --text-body:      #C3CBD4;
+  --text-secondary: var(--ink-400);  /* 6.0:1 */
+  --text-disabled:  var(--ink-500);
+  --text-inverse:   var(--ink-0);
+  --text-brand:     var(--teal-300);  /* 7.4:1 */
+  --text-nav:       var(--ink-200);
+
+  --border-default: rgba(255,255,255,0.09);
+  --border-subtle:  rgba(255,255,255,0.06);
+  --border-strong:  rgba(255,255,255,0.16);
+  --border-brand:   var(--teal-400);
+  --border-brand-subtle: rgba(58,157,162,0.32);
+
+  --action-primary:        var(--teal-600);
+  --action-primary-hover:  var(--teal-500);
+  --action-primary-subtle: rgba(58,157,162,0.16);
+  --action-danger:         var(--red-500);
+  --focus-ring:            0 0 0 3px rgba(58,157,162,0.45);
+
+  --status-success-fg: #5CCB94;  --status-success-bg: rgba(47,163,107,0.14);  --status-success-solid: var(--green-500);
+  --status-warning-fg: #E8B04B;  --status-warning-bg: rgba(217,149,31,0.14);  --status-warning-solid: var(--amber-500);
+  --status-danger-fg:  #F2837A;  --status-danger-bg:  rgba(220,74,63,0.15);   --status-danger-solid:  var(--red-500);
+  --status-info-fg:    #82B1FA;  --status-info-bg:    rgba(59,130,246,0.15);  --status-info-solid:    var(--blue-500);
+  --status-neutral-fg: var(--ink-300); --status-neutral-bg: rgba(255,255,255,0.06); --status-neutral-solid: var(--ink-500);
+
+  --risk-critical-fg: #F2837A;  --risk-critical-bg: rgba(220,74,63,0.15);  --risk-critical-solid: var(--red-500);
+  --risk-high-fg:     #F59E66;  --risk-high-bg:     rgba(234,88,12,0.15);  --risk-high-solid: var(--orange-500);
+  --risk-elevated-fg: #EDB25A;  --risk-elevated-bg: rgba(217,149,31,0.14); --risk-elevated-solid: var(--amber-500);
+  --risk-moderate-fg: #E6C74A;  --risk-moderate-bg: rgba(234,179,8,0.13);  --risk-moderate-solid: var(--yellow-500);
+  --risk-low-fg:      #5CCB94;  --risk-low-bg:      rgba(47,163,107,0.14); --risk-low-solid: var(--green-500);
+
+  --priority-urgent: #F2837A;  --priority-important: #E8B04B;  --priority-standard: var(--ink-400);
+
+  --viz-1: var(--teal-400);  --viz-2: var(--blue-500);  --viz-3: var(--violet-500);  --viz-7: var(--lime-500);
+  --viz-grid: rgba(255,255,255,0.07);
+  --viz-axis: var(--ink-400);
+  --viz-score-track: linear-gradient(90deg, rgba(59,130,246,0.22) 0%, rgba(20,184,166,0.22) 45%, rgba(47,163,107,0.24) 100%);
+
+  --agent-studio-fg: #F59E66;      --agent-studio-bg: rgba(234,88,12,0.15);
+  --agent-sharepoint-fg: #3CCFBE;  --agent-sharepoint-bg: rgba(13,148,136,0.18);
+  --agent-builder-fg: #A98BFA;     --agent-builder-bg: rgba(139,92,246,0.18);
+  --entity-environment-fg: #8E8BF6; --entity-environment-bg: rgba(79,70,229,0.2);
+  --entity-dlp-fg: #4ADE80;        --entity-dlp-bg: rgba(22,163,74,0.15);
+  --entity-connection-fg: #F59E66; --entity-connection-bg: rgba(234,88,12,0.15);
+  --entity-solution-fg: #3CC3E3;   --entity-solution-bg: rgba(8,145,178,0.18);
+  --entity-neutral-fg: var(--ink-200); --entity-neutral-bg: rgba(255,255,255,0.07);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.35);
+  --shadow-md: 0 10px 28px rgba(0,0,0,0.45);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.6);
 }
