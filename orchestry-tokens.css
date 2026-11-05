@@ -83,7 +83,7 @@
   --text-primary:   var(--ink-800);  /* 12.4:1 */
   --text-body:      var(--ink-700);  /* long-form reading text */
   --text-secondary: var(--ink-500);  /* 5.1:1 */
-  --text-disabled:  var(--ink-400);  /* Placeholder/disabled only, never content */
+  --text-disabled:  var(--ink-400);  /* Disabled only. Placeholders use text-secondary */
   --text-inverse:   var(--ink-0);
   --text-brand:     var(--teal-700);
   --text-on-brand:  var(--ink-0);
@@ -139,13 +139,13 @@
   --viz-score-fill:  linear-gradient(90deg, var(--blue-500) 0%, #14B8A6 55%, var(--green-600) 100%);
 
   /* Entity identity (Agents) */
-  --agent-studio-fg: var(--orange-500);      --agent-studio-bg: var(--orange-50);
-  --agent-sharepoint-fg: var(--mint-600);    --agent-sharepoint-bg: var(--mint-50);
+  --agent-studio-fg: var(--orange-600);      --agent-studio-bg: var(--orange-50);
+  --agent-sharepoint-fg: var(--mint-700);    --agent-sharepoint-bg: var(--mint-50);
   --agent-builder-fg: var(--violet-600);     --agent-builder-bg: var(--violet-50);
   --entity-environment-fg: var(--indigo-600); --entity-environment-bg: var(--indigo-50);
   --entity-dlp-fg: #16A34A;                   --entity-dlp-bg: #E6F6EA;
-  --entity-connection-fg: var(--orange-500);  --entity-connection-bg: var(--orange-50);
-  --entity-solution-fg: var(--cyan-600);      --entity-solution-bg: var(--cyan-50);
+  --entity-connection-fg: var(--orange-600);  --entity-connection-bg: var(--orange-50);
+  --entity-solution-fg: var(--cyan-700);      --entity-solution-bg: var(--cyan-50);
   --entity-neutral-fg: var(--ink-700);        --entity-neutral-bg: #EDEFF2;
 
   --brand-gradient: linear-gradient(135deg, var(--lime-400) 0%, var(--leaf-500) 45%, var(--teal-600) 100%);
@@ -250,7 +250,7 @@
 
   --text-primary:   #E8ECF0;  /* 14.6:1 on surface */
   --text-body:      #C3CBD4;
-  --text-secondary: var(--ink-400);  /* 6.0:1 */
+  --text-secondary: #9AA6B6;  /* 5.4:1 on surface, 4.5:1 on raised rows */
   --text-disabled:  var(--ink-500);
   --text-inverse:   var(--ink-0);
   --text-brand:     var(--teal-300);  /* 7.4:1 */
@@ -265,22 +265,22 @@
   --action-primary:        var(--teal-600);
   --action-primary-hover:  var(--teal-500);
   --action-primary-subtle: rgba(58,157,162,0.16);
-  --action-danger:         var(--red-500);
+  --action-danger:         var(--red-600);  /* white text 5.5:1 (red-500 was 4.1) */
   --focus-ring:            0 0 0 3px rgba(58,157,162,0.45);
 
   --status-success-fg: #5CCB94;  --status-success-bg: rgba(47,163,107,0.14);  --status-success-solid: var(--green-500);
   --status-warning-fg: #E8B04B;  --status-warning-bg: rgba(217,149,31,0.14);  --status-warning-solid: var(--amber-500);
-  --status-danger-fg:  #F2837A;  --status-danger-bg:  rgba(220,74,63,0.15);   --status-danger-solid:  var(--red-500);
+  --status-danger-fg:  #F59992;  --status-danger-bg:  rgba(220,74,63,0.15);   --status-danger-solid:  var(--red-500);
   --status-info-fg:    #82B1FA;  --status-info-bg:    rgba(59,130,246,0.15);  --status-info-solid:    var(--blue-500);
   --status-neutral-fg: var(--ink-300); --status-neutral-bg: rgba(255,255,255,0.06); --status-neutral-solid: var(--ink-500);
 
-  --risk-critical-fg: #F2837A;  --risk-critical-bg: rgba(220,74,63,0.15);  --risk-critical-solid: var(--red-500);
+  --risk-critical-fg: #F59992;  --risk-critical-bg: rgba(220,74,63,0.15);  --risk-critical-solid: var(--red-500);
   --risk-high-fg:     #F59E66;  --risk-high-bg:     rgba(234,88,12,0.15);  --risk-high-solid: var(--orange-500);
   --risk-elevated-fg: #EDB25A;  --risk-elevated-bg: rgba(217,149,31,0.14); --risk-elevated-solid: var(--amber-500);
   --risk-moderate-fg: #E6C74A;  --risk-moderate-bg: rgba(234,179,8,0.13);  --risk-moderate-solid: var(--yellow-500);
   --risk-low-fg:      #5CCB94;  --risk-low-bg:      rgba(47,163,107,0.14); --risk-low-solid: var(--green-500);
 
-  --priority-urgent: #F2837A;  --priority-important: #E8B04B;  --priority-standard: var(--ink-400);
+  --priority-urgent: #F59992;  --priority-important: #E8B04B;  --priority-standard: var(--ink-400);
 
   --viz-1: var(--teal-400);  --viz-2: var(--blue-500);  --viz-3: var(--violet-500);  --viz-7: var(--lime-500);
   --viz-grid: rgba(255,255,255,0.07);
@@ -289,8 +289,8 @@
 
   --agent-studio-fg: #F59E66;      --agent-studio-bg: rgba(234,88,12,0.15);
   --agent-sharepoint-fg: #3CCFBE;  --agent-sharepoint-bg: rgba(13,148,136,0.18);
-  --agent-builder-fg: #A98BFA;     --agent-builder-bg: rgba(139,92,246,0.18);
-  --entity-environment-fg: #8E8BF6; --entity-environment-bg: rgba(79,70,229,0.2);
+  --agent-builder-fg: #B9A2FB;     --agent-builder-bg: rgba(139,92,246,0.18);
+  --entity-environment-fg: #9C99F7; --entity-environment-bg: rgba(79,70,229,0.2);
   --entity-dlp-fg: #4ADE80;        --entity-dlp-bg: rgba(22,163,74,0.15);
   --entity-connection-fg: #F59E66; --entity-connection-bg: rgba(234,88,12,0.15);
   --entity-solution-fg: #3CC3E3;   --entity-solution-bg: rgba(8,145,178,0.18);

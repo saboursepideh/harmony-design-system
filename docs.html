@@ -6,8 +6,8 @@
 <title>Harmony: Orchestry Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="orchestry-tokens.css">
-<link rel="stylesheet" href="harmony-components.css">
+<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.10">
+<link rel="stylesheet" href="harmony-components.css?v=3.0.10">
 <style>
 /* ================= DOCS SHELL ================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,7 +27,7 @@ svg { display: block; }
 .doc-brand b { font: var(--type-heading-m); display: block; }
 .doc-brand span { font: var(--type-caption); color: var(--text-secondary); }
 .doc-nav h6 { font: var(--type-overline); letter-spacing: var(--track-overline); text-transform: uppercase; color: var(--text-secondary); padding: var(--space-5) var(--space-2) var(--space-1-5); }
-.doc-nav a { display: block; padding: 6px var(--space-2); border-radius: var(--radius-md); font: var(--type-body-s); color: var(--ink-700); }
+.doc-nav a { display: block; padding: 6px var(--space-2); border-radius: var(--radius-md); font: var(--type-body-s); color: var(--text-body); }
 .doc-nav a:hover { background: var(--bg-hover); }
 .doc-nav a.on { background: var(--bg-selected); color: var(--text-brand); font-weight: 500; }
 
@@ -80,11 +80,11 @@ svg { display: block; }
 .prompt { background: var(--ink-800); color: var(--ink-100); border-radius: var(--radius-lg); padding: var(--space-6); font: 400 13px/22px var(--font-mono); }
 .prompt .who { display: flex; align-items: center; gap: 8px; font: var(--type-label); font-family: var(--font-sans); color: var(--teal-200); margin-bottom: var(--space-3); }
 .prompt .hl { color: var(--lime-300); }
-.prompt .dim { color: var(--ink-400); }
+.prompt .dim { color: var(--ink-300); }
 pre.code { background: var(--ink-900); color: var(--ink-100); border-radius: var(--radius-lg); padding: var(--space-5) var(--space-6); font: 400 12px/20px var(--font-mono); overflow-x: auto; white-space: pre; }
 pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } pre.code .k { color: var(--teal-200); } pre.code .n { color: #F9C784; }
 .checklist { display: flex; flex-direction: column; gap: var(--space-2); }
-.checklist div { display: flex; gap: var(--space-2); font: var(--type-body-s); color: var(--ink-700); }
+.checklist div { display: flex; gap: var(--space-2); font: var(--type-body-s); color: var(--text-body); }
 .checklist svg { color: var(--status-success-solid); margin-top: 2px; }
 
 /* Audit table */
@@ -144,7 +144,8 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
 .comp-head h4 { font: var(--type-heading-l); letter-spacing: var(--track-heading-l); }
 .comp-head p { font: var(--type-body-s); color: var(--text-secondary); margin-top: 4px; max-width: 620px; }
 .comp-meta { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
-.meta-chip { font: var(--type-label); padding: 3px 8px; border-radius: var(--radius-sm); background: var(--bg-subtle); color: var(--ink-700); border: 1px solid var(--border-default); white-space: nowrap; }
+.sw-pill { display: inline-block; padding: 1px 6px; border-radius: var(--radius-full); background: rgba(255,255,255,.92); color: var(--ink-900); font-weight: 600; }
+.meta-chip { font: var(--type-label); padding: 3px 8px; border-radius: var(--radius-sm); background: var(--bg-subtle); color: var(--text-body); border: 1px solid var(--border-default); white-space: nowrap; }
 .meta-chip.m { background: #EEF0FD; border-color: #DADFFB; color: #3B43B5; }
 .meta-chip.ok { background: var(--status-success-bg); border-color: var(--green-100); color: var(--status-success-fg); }
 .meta-chip.ai { background: var(--teal-50); border-color: var(--teal-100); color: var(--teal-800); }
@@ -154,7 +155,7 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
 .comp-foot { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: var(--space-6); padding: var(--space-5) var(--space-6) var(--space-6); }
 .comp-foot h5 { font: var(--type-overline); letter-spacing: var(--track-overline); text-transform: uppercase; color: var(--text-secondary); margin-bottom: var(--space-2); }
 .comp-foot ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.comp-foot li { font: var(--type-caption); line-height: 20px; color: var(--ink-700); }
+.comp-foot li { font: var(--type-caption); line-height: 20px; color: var(--text-body); }
 .comp-foot li code { font-size: 11px; background: var(--bg-subtle); border: 1px solid var(--border-subtle); padding: 0 4px; border-radius: 4px; color: var(--ink-800); white-space: nowrap; }
 .do li::before { content: '✓'; color: var(--status-success-solid); font-weight: 700; margin-right: 6px; }
 .dont li::before { content: '✕'; color: var(--status-danger-solid); font-weight: 700; margin-right: 6px; }
@@ -296,7 +297,7 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
   <p class="sec-lead">I don't draw components by hand anymore. I give AI the brand guidelines, the Mantine theme, and the rules. It does the repetitive work: building variables, variants, documentation, and code mappings. I review every step and make the design decisions.</p>
 
   <div class="pipe">
-    <div class="pipe-step"><div class="k">Input</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-book"/></svg></div><h5>Brand + code</h5><p>Brand guidelines, logo colors, and the Mantine theme engineers use.</p></div>
+    <div class="pipe-step"><div class="k">Input</div><div class="ico" style="background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-book"/></svg></div><h5>Brand + code</h5><p>Brand guidelines, logo colors, and the Mantine theme engineers use.</p></div>
     <div class="pipe-step ai"><div class="k">AI · Step 1</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-search"/></svg></div><h5>Audit</h5><p>Claude scans Figma files and code and lists every color, size, and duplicate component.</p></div>
     <div class="pipe-step ai"><div class="k">AI · Step 2</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-palette"/></svg></div><h5>Tokens</h5><p>Generates primitive and semantic tokens and writes them to Figma variables through Figma MCP.</p></div>
     <div class="pipe-step ai"><div class="k">AI · Step 3</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-layers"/></svg></div><h5>Components</h5><p>Builds every variant with auto layout, properties, and booleans, all bound to tokens.</p></div>
@@ -348,7 +349,7 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
 <span class="k">## Tokens</span>
 - Never use raw hex values. Use semantic tokens: <span class="s">--text-*</span>, <span class="s">--bg-*</span>, <span class="s">--border-*</span>, <span class="s">--status-*</span>, <span class="s">--risk-*</span>.
 - Primitives (<span class="s">--teal-600</span>, <span class="s">--ink-400</span>...) are for building semantic tokens only.
-- <span class="s">--text-disabled</span> (<span class="n">#8F9CAE</span>) fails AA. Use it for placeholder and disabled text only.
+- <span class="s">--text-disabled</span> (<span class="n">#8F9CAE</span>) fails AA. Use it for disabled text only. Placeholders use <span class="s">--text-secondary</span>.
 - Lime (<span class="n">#96C23A</span>) is decorative. Never use it for text or as the only signal.
 
 <span class="k">## Components</span>
@@ -404,11 +405,11 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
     <p>The outlined swatches are the exact logo colors. Every other step was generated by AI around them and then tuned by eye.</p>
     <div class="panel">
       <div class="ramp"><div class="ramp-name">Teal<span>Brand + action</span></div>
-        <div class="sw" style="background:#EEF6F6;color:#0B5560">50</div><div class="sw" style="background:#D4EBEC;color:#0B5560">100</div><div class="sw" style="background:#A9D6D8;color:#0B5560">200</div><div class="sw" style="background:#72BBBF;color:#083F47">300</div><div class="sw" style="background:#3A9DA2;color:#fff">400</div><div class="sw" style="background:#128A90;color:#fff">500</div><div class="sw brand" style="background:#007980;color:#fff">600</div><div class="sw" style="background:#0D6C79;color:#fff">700</div><div class="sw" style="background:#0B5560;color:#fff">800</div><div class="sw" style="background:#083F47;color:#fff">900</div></div>
+        <div class="sw" style="background:#EEF6F6;color:#0B5560">50</div><div class="sw" style="background:#D4EBEC;color:#0B5560">100</div><div class="sw" style="background:#A9D6D8;color:#0B5560">200</div><div class="sw" style="background:#72BBBF;color:#083F47">300</div><div class="sw" style="background:#3A9DA2;color:#1D2229">400</div><div class="sw" style="background:#128A90;color:#000">500</div><div class="sw brand" style="background:#007980;color:#fff">600</div><div class="sw" style="background:#0D6C79;color:#fff">700</div><div class="sw" style="background:#0B5560;color:#fff">800</div><div class="sw" style="background:#083F47;color:#fff">900</div></div>
       <div class="ramp"><div class="ramp-name">Lime<span>Highlight</span></div>
-        <div class="sw" style="background:#F5FAEC;color:#4D6B1A">50</div><div class="sw" style="background:#E7F3D0;color:#4D6B1A">100</div><div class="sw" style="background:#CFE6A3;color:#4D6B1A">200</div><div class="sw" style="background:#B3D66F;color:#4D6B1A">300</div><div class="sw brand" style="background:#96C23A;color:#2E353F">400</div><div class="sw" style="background:#7DA82B;color:#fff">500</div><div class="sw" style="background:#648A21;color:#fff">600</div><div class="sw" style="background:#4D6B1A;color:#fff">700</div><div></div><div></div></div>
+        <div class="sw" style="background:#F5FAEC;color:#4D6B1A">50</div><div class="sw" style="background:#E7F3D0;color:#4D6B1A">100</div><div class="sw" style="background:#CFE6A3;color:#4D6B1A">200</div><div class="sw" style="background:#B3D66F;color:#1D2229">300</div><div class="sw brand" style="background:#96C23A;color:#2E353F">400</div><div class="sw" style="background:#7DA82B;color:#1D2229">500</div><div class="sw" style="background:#648A21;color:#000">600</div><div class="sw" style="background:#4D6B1A;color:#fff">700</div><div></div><div></div></div>
       <div class="ramp"><div class="ramp-name">Ink<span>Text, borders, surfaces</span></div>
-        <div class="sw" style="background:#F6F8F9;color:#606F84;border:1px solid #E6E9ED">25</div><div class="sw" style="background:#F1F3F6;color:#606F84">50</div><div class="sw" style="background:#E6E9ED;color:#606F84">100</div><div class="sw" style="background:#D0D6DD;color:#38414E">200</div><div class="sw" style="background:#B5BEC9;color:#2E353F">300</div><div class="sw" style="background:#8F9CAE;color:#fff">400</div><div class="sw" style="background:#606F84;color:#fff">500</div><div class="sw" style="background:#4B5666;color:#fff">600</div><div class="sw" style="background:#38414E;color:#fff">700</div><div class="sw" style="background:#2E353F;color:#fff">800</div></div>
+        <div class="sw" style="background:#F6F8F9;color:#606F84;border:1px solid #E6E9ED">25</div><div class="sw" style="background:#F1F3F6;color:#606F84">50</div><div class="sw" style="background:#E6E9ED;color:#1D2229">100</div><div class="sw" style="background:#D0D6DD;color:#38414E">200</div><div class="sw" style="background:#B5BEC9;color:#2E353F">300</div><div class="sw" style="background:#8F9CAE;color:#1D2229">400</div><div class="sw" style="background:#606F84;color:#fff">500</div><div class="sw" style="background:#4B5666;color:#fff">600</div><div class="sw" style="background:#38414E;color:#fff">700</div><div class="sw" style="background:#2E353F;color:#fff">800</div></div>
     </div>
   </div>
 
@@ -420,7 +421,7 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
         <div class="tok"><div class="tok-chip" style="background:var(--text-primary)"></div><div><div class="tok-name">text-primary</div><div class="tok-val">ink-800 · #2E353F</div></div><div class="tok-meta"><span class="aa">12.4:1</span></div></div>
         <div class="tok"><div class="tok-chip" style="background:var(--text-secondary)"></div><div><div class="tok-name">text-secondary</div><div class="tok-val">ink-500 · #606F84</div></div><div class="tok-meta"><span class="aa">5.1:1</span></div></div>
         <div class="tok"><div class="tok-chip" style="background:var(--text-brand)"></div><div><div class="tok-name">text-brand</div><div class="tok-val">teal-700 · #0D6C79</div></div><div class="tok-meta"><span class="aa">6.1:1</span></div></div>
-        <div class="tok"><div class="tok-chip" style="background:var(--text-disabled)"></div><div><div class="tok-name">text-disabled</div><div class="tok-val">ink-400 · placeholder only</div></div><div class="tok-meta"><span class="aa fail">2.8:1</span></div></div>
+        <div class="tok"><div class="tok-chip" style="background:var(--text-disabled)"></div><div><div class="tok-name">text-disabled</div><div class="tok-val">ink-400 · disabled only</div></div><div class="tok-meta"><span class="aa fail">2.8:1</span></div></div>
         <div class="tok"><div class="tok-chip" style="background:var(--text-nav)"></div><div><div class="tok-name">text-nav</div><div class="tok-val">ink-200 on nav</div></div><div class="tok-meta"><span class="aa">7.1:1</span></div></div>
       </div>
       <div class="panel"><h4>Surfaces &amp; borders</h4>
@@ -465,16 +466,16 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
       <div class="panel"><h4>Categorical data viz</h4>
         <p class="lbl" style="margin-bottom:12px">Ordered so neighbors are easy to tell apart. Charts use them in this order.</p>
         <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:16px">
-          <div class="sw" style="background:var(--viz-1);color:#fff;height:48px">1</div><div class="sw" style="background:var(--viz-2);color:#fff;height:48px">2</div><div class="sw" style="background:var(--viz-3);color:#fff;height:48px">3</div><div class="sw" style="background:var(--viz-4);color:#fff;height:48px">4</div><div class="sw" style="background:var(--viz-5);color:#fff;height:48px">5</div><div class="sw" style="background:var(--viz-6);color:#fff;height:48px">6</div><div class="sw" style="background:var(--viz-7);color:#fff;height:48px">7</div><div class="sw" style="background:var(--viz-8);color:#fff;height:48px">8</div>
+          <div class="sw" style="background:var(--viz-1);height:48px"><span class="sw-pill">1</span></div><div class="sw" style="background:var(--viz-2);height:48px"><span class="sw-pill">2</span></div><div class="sw" style="background:var(--viz-3);height:48px"><span class="sw-pill">3</span></div><div class="sw" style="background:var(--viz-4);height:48px"><span class="sw-pill">4</span></div><div class="sw" style="background:var(--viz-5);height:48px"><span class="sw-pill">5</span></div><div class="sw" style="background:var(--viz-6);height:48px"><span class="sw-pill">6</span></div><div class="sw" style="background:var(--viz-7);height:48px"><span class="sw-pill">7</span></div><div class="sw" style="background:var(--viz-8);height:48px"><span class="sw-pill">8</span></div>
         </div>
         <h4>Entity identity (Agents)</h4>
         <div style="display:flex;flex-wrap:wrap;gap:8px">
           <span class="h-tag" style="background:var(--agent-studio-bg);color:var(--agent-studio-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-robot"/></svg>Copilot Studio</span>
-          <span class="h-tag" style="background:var(--agent-sharepoint-bg);color:var(--mint-700)"><svg class="ic-sm" style="color:inherit"><use href="#i-file"/></svg>SharePoint agent</span>
+          <span class="h-tag" style="background:var(--agent-sharepoint-bg);color:var(--agent-sharepoint-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-file"/></svg>SharePoint agent</span>
           <span class="h-tag" style="background:var(--agent-builder-bg);color:var(--agent-builder-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-tool"/></svg>Agent Builder</span>
           <span class="h-tag" style="background:var(--entity-environment-bg);color:var(--entity-environment-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-world"/></svg>Environment</span>
-          <span class="h-tag" style="background:var(--entity-solution-bg);color:var(--cyan-700)"><svg class="ic-sm" style="color:inherit"><use href="#i-box"/></svg>Solution</span>
-          <span class="h-tag" style="background:var(--entity-connection-bg);color:var(--orange-600)"><svg class="ic-sm" style="color:inherit"><use href="#i-plug"/></svg>Connection</span>
+          <span class="h-tag" style="background:var(--entity-solution-bg);color:var(--entity-solution-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-box"/></svg>Solution</span>
+          <span class="h-tag" style="background:var(--entity-connection-bg);color:var(--entity-connection-fg)"><svg class="ic-sm" style="color:inherit"><use href="#i-plug"/></svg>Connection</span>
         </div>
       </div>
     </div>
@@ -613,18 +614,18 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
   <h2>Iconography</h2>
   <p class="sec-lead">Tabler icons, the set Mantine recommends: 24px grid, 1.75 stroke, round caps. Shown at 16px in UI and 20px in tiles. Icons inherit text color, and they always come with a label or a tooltip.</p>
   <div class="panel" style="display:grid;grid-template-columns:repeat(12,1fr);gap:8px">
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-robot"/></svg></div><span class="tok-val">robot</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-shield"/></svg></div><span class="tok-val">shield</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-db"/></svg></div><span class="tok-val">database</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-users"/></svg></div><span class="tok-val">users</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-lock"/></svg></div><span class="tok-val">lock</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-world"/></svg></div><span class="tok-val">world</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-plug"/></svg></div><span class="tok-val">plug</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-box"/></svg></div><span class="tok-val">box</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-chart"/></svg></div><span class="tok-val">chart</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-alert"/></svg></div><span class="tok-val">alert</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-sparkle"/></svg></div><span class="tok-val">sparkles</span></div>
-    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-bulb"/></svg></div><span class="tok-val">bulb</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-robot"/></svg></div><span class="tok-val">robot</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-shield"/></svg></div><span class="tok-val">shield</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-db"/></svg></div><span class="tok-val">database</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-users"/></svg></div><span class="tok-val">users</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-lock"/></svg></div><span class="tok-val">lock</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-world"/></svg></div><span class="tok-val">world</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-plug"/></svg></div><span class="tok-val">plug</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-box"/></svg></div><span class="tok-val">box</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-chart"/></svg></div><span class="tok-val">chart</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-alert"/></svg></div><span class="tok-val">alert</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-sparkle"/></svg></div><span class="tok-val">sparkles</span></div>
+    <div style="text-align:center"><div class="h-tile" style="margin:0 auto 6px;background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-bulb"/></svg></div><span class="tok-val">bulb</span></div>
   </div>
 </section>
 
@@ -683,7 +684,7 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
       <div class="h-field"><label>Review by</label><div class="h-input error" style="color:var(--text-primary)">32/13/2025</div><small class="err">Enter a valid date</small></div>
     </div>
     <div class="comp-foot">
-      <div><h5>Spec</h5><ul><li>Height 32 · <code>border-default</code> · <code>radius-md</code></li><li>States: default, hover, focus, error, disabled</li><li>Placeholder uses <code>text-disabled</code></li></ul></div>
+      <div><h5>Spec</h5><ul><li>Height 32 · <code>border-default</code> · <code>radius-md</code></li><li>States: default, hover, focus, error, disabled</li><li>Placeholder uses <code>text-secondary</code></li></ul></div>
       <div class="do"><h5>Do</h5><ul><li>Always show a visible label</li></ul></div>
       <div class="dont"><h5>Don't</h5><ul><li>Use placeholder as the label</li></ul></div>
     </div>
@@ -904,8 +905,8 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
           <tbody>
             <tr class="exp"><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-studio-bg);color:var(--agent-studio-fg)"><svg class="ic"><use href="#i-robot"/></svg></div><div><b>HR Onboarding Assistant</b><small>Contoso-Prod</small></div></div></td><td><span class="h-badge neutral">No owner</span></td><td>Copilot Studio</td><td><span class="h-risk critical"><svg class="ic-sm"><use href="#i-alert"/></svg>Critical<span class="score">92</span></span></td><td>2 hours ago</td><td><svg class="ic" style="transform:rotate(180deg);color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
             <tr class="detail"><td colspan="6"><div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 0 4px 40px"><span class="h-tag"><svg class="ic-sm"><use href="#i-world"/></svg>Shared externally</span><span class="h-tag"><svg class="ic-sm"><use href="#i-db"/></svg>Reads HR SharePoint site</span><span class="h-tag"><svg class="ic-sm"><use href="#i-lock"/></svg>No sensitivity label</span><span class="h-tag"><svg class="ic-sm"><use href="#i-users"/></svg>412 users</span></div></td></tr>
-            <tr><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-sharepoint-bg);color:var(--agent-sharepoint-fg)"><svg class="ic"><use href="#i-file"/></svg></div><div><b>Policy Q&amp;A</b><small>Legal site</small></div></div></td><td><div class="h-cell" style="gap:8px"><div class="h-avatar sm" style="background:var(--viz-3)">DK</div>Daniel Kim</div></td><td>SharePoint</td><td><span class="h-risk high">High<span class="score">71</span></span></td><td>Yesterday</td><td><svg class="ic" style="color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
-            <tr><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-builder-bg);color:var(--agent-builder-fg)"><svg class="ic"><use href="#i-tool"/></svg></div><div><b>Sales Deal Coach</b><small>Contoso-Sales</small></div></div></td><td><div class="h-cell" style="gap:8px"><div class="h-avatar sm" style="background:var(--viz-1)">MC</div>Maria Chen</div></td><td>Agent Builder</td><td><span class="h-risk low">Low<span class="score">12</span></span></td><td>3 days ago</td><td><svg class="ic" style="color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
+            <tr><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-sharepoint-bg);color:var(--agent-sharepoint-fg)"><svg class="ic"><use href="#i-file"/></svg></div><div><b>Policy Q&amp;A</b><small>Legal site</small></div></div></td><td><div class="h-cell" style="gap:8px"><div class="h-avatar sm" style="background:var(--violet-600)">DK</div>Daniel Kim</div></td><td>SharePoint</td><td><span class="h-risk high">High<span class="score">71</span></span></td><td>Yesterday</td><td><svg class="ic" style="color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
+            <tr><td><div class="h-cell"><div class="h-tile sm" style="background:var(--agent-builder-bg);color:var(--agent-builder-fg)"><svg class="ic"><use href="#i-tool"/></svg></div><div><b>Sales Deal Coach</b><small>Contoso-Sales</small></div></div></td><td><div class="h-cell" style="gap:8px"><div class="h-avatar sm" style="background:var(--teal-600)">MC</div>Maria Chen</div></td><td>Agent Builder</td><td><span class="h-risk low">Low<span class="score">12</span></span></td><td>3 days ago</td><td><svg class="ic" style="color:var(--text-secondary)"><use href="#i-down"/></svg></td></tr>
           </tbody>
         </table>
       </div>
@@ -921,8 +922,8 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
     <div class="comp-head"><div><h4>Avatar &amp; User Row</h4><p>Shows people: agent owners, makers, and reviewers. Initials fall back to a <code>viz-*</code> color picked from the name.</p></div><div class="comp-meta"><span class="meta-chip m">Mantine · Avatar · Group</span></div></div>
     <div class="comp-demo">
       <div class="h-card" style="width:380px;padding:4px 20px">
-        <div class="h-user"><div class="h-avatar" style="background:var(--viz-1)">MC</div><div class="meta"><b>Maria Chen</b><small>Owns 14 agents</small></div><span class="h-badge success"><span class="h-dot"></span>Active</span></div>
-        <div class="h-user"><div class="h-avatar" style="background:var(--viz-3)">DK</div><div class="meta"><b>Daniel Kim</b><small>Owns 9 agents</small></div><span class="h-badge warning"><span class="h-dot"></span>Review due</span></div>
+        <div class="h-user"><div class="h-avatar" style="background:var(--teal-600)">MC</div><div class="meta"><b>Maria Chen</b><small>Owns 14 agents</small></div><span class="h-badge success"><span class="h-dot"></span>Active</span></div>
+        <div class="h-user"><div class="h-avatar" style="background:var(--violet-600)">DK</div><div class="meta"><b>Daniel Kim</b><small>Owns 9 agents</small></div><span class="h-badge warning"><span class="h-dot"></span>Review due</span></div>
         <div class="h-user"><div class="h-avatar" style="background:var(--ink-400)"><svg class="ic"><use href="#i-users"/></svg></div><div class="meta"><b>Former employee</b><small>Owns 6 agents · left 2 months ago</small></div><span class="h-badge danger"><span class="h-dot"></span>Orphaned</span></div>
       </div>
     </div>
@@ -1069,7 +1070,7 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
         <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--teal-50);color:var(--teal-700);font:var(--type-label)">1</span><div><div style="font:var(--type-heading-s)">How am I doing?</div><div class="tok-val">One score card with benchmark and change. Always first, full width.</div></div></div>
         <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--violet-50);color:var(--violet-700);font:var(--type-label)">2</span><div><div style="font:var(--type-heading-s)">What's behind it?</div><div class="tok-val">3–4 metric or stat cards on the 12-col grid (span 4 or 3), gap 12.</div></div></div>
         <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--orange-50);color:var(--orange-700);font:var(--type-label)">3</span><div><div style="font:var(--type-heading-s)">What should I do?</div><div class="tok-val">Recommendations or risk table (span 8) with supporting chart (span 4).</div></div></div>
-        <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--bg-hover);color:var(--ink-700)"><svg class="ic-sm"><use href="#i-layers"/></svg></span><div><div style="font:var(--type-heading-s)">Spacing</div><div class="tok-val">Page padding 40/32 · section gap 32 · card gap 12 · max width 1200.</div></div></div>
+        <div class="tok" style="align-items:flex-start"><span class="h-tile sm" style="background:var(--bg-hover);color:var(--text-body)"><svg class="ic-sm"><use href="#i-layers"/></svg></span><div><div style="font:var(--type-heading-s)">Spacing</div><div class="tok-val">Page padding 40/32 · section gap 32 · card gap 12 · max width 1200.</div></div></div>
       </div>
     </div>
   </div>
@@ -1108,11 +1109,11 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
   <h2>How Harmony stays true</h2>
   <p class="sec-lead">A design system only works if it stays the single source of truth. So adding or changing something follows one path, and AI checks the files every week for anything that drifted.</p>
   <div class="pipe" style="grid-template-columns:repeat(5,1fr)">
-    <div class="pipe-step"><div class="k">1 · Request</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-bulb"/></svg></div><h5>Anyone asks</h5><p>Designer, engineer, or PM opens a request with the use case.</p></div>
-    <div class="pipe-step"><div class="k">2 · Check</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-search"/></svg></div><h5>Does it exist?</h5><p>AI searches Harmony for an existing component or variant first.</p></div>
+    <div class="pipe-step"><div class="k">1 · Request</div><div class="ico" style="background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-bulb"/></svg></div><h5>Anyone asks</h5><p>Designer, engineer, or PM opens a request with the use case.</p></div>
+    <div class="pipe-step"><div class="k">2 · Check</div><div class="ico" style="background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-search"/></svg></div><h5>Does it exist?</h5><p>AI searches Harmony for an existing component or variant first.</p></div>
     <div class="pipe-step ai"><div class="k">3 · Draft</div><div class="ico" style="background:var(--teal-100);color:var(--teal-800)"><svg class="ic-lg"><use href="#i-sparkle"/></svg></div><h5>AI drafts it</h5><p>Variants, tokens, docs, and code mapping, from the rules file.</p></div>
-    <div class="pipe-step"><div class="k">4 · Review</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-eye"/></svg></div><h5>Design + Eng</h5><p>I review the design; engineering reviews the Mantine mapping.</p></div>
-    <div class="pipe-step"><div class="k">5 · Publish</div><div class="ico" style="background:var(--ink-50);color:var(--ink-700)"><svg class="ic-lg"><use href="#i-git"/></svg></div><h5>Ship it</h5><p>Library published, tokens versioned, changelog written by AI.</p></div>
+    <div class="pipe-step"><div class="k">4 · Review</div><div class="ico" style="background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-eye"/></svg></div><h5>Design + Eng</h5><p>I review the design; engineering reviews the Mantine mapping.</p></div>
+    <div class="pipe-step"><div class="k">5 · Publish</div><div class="ico" style="background:var(--bg-hover);color:var(--text-body)"><svg class="ic-lg"><use href="#i-git"/></svg></div><h5>Ship it</h5><p>Library published, tokens versioned, changelog written by AI.</p></div>
   </div>
 
   <div class="grid-2" style="margin-top:12px">
@@ -1138,11 +1139,12 @@ pre.code .c { color: var(--ink-400); } pre.code .s { color: var(--lime-300); } p
   <div class="sub" id="changelog">
     <h3>Changelog</h3>
     <div class="panel" style="padding:8px 24px">
+      <div class="log"><span class="d">v3.0.1</span><span class="meta-chip" style="justify-self:start">Patch</span><span>AA pass in both themes. Placeholders moved to <code>text-secondary</code>. Darker danger fill and lighter critical text in dark. Connection and solution text darkened in light. Viz avatars get a 25% shade so white initials pass.</span></div>
       <div class="log"><span class="d">v2.2.0</span><span class="meta-chip" style="justify-self:start">Minor</span><span>Added Partial Data state and Skeleton for slow tenant scans. Weekly drift audit turned on.</span></div>
       <div class="log"><span class="d">v2.1.0</span><span class="meta-chip" style="justify-self:start">Minor</span><span>Added Risk Badge, Priority Indicator, Insight Tag, and agent entity colors for the AI &amp; Agents dashboard.</span></div>
       <div class="log"><span class="d">v2.0.1</span><span class="meta-chip" style="justify-self:start">Patch</span><span>Success and warning text darkened to pass AA. Breadcrumbs and table headers moved to <code>text-secondary</code>.</span></div>
       <div class="log"><span class="d">v2.0.0</span><span class="meta-chip ai" style="justify-self:start">Major</span><span><b>Harmony launch.</b> Primitive + semantic token layers, Lexend only, 12 type styles, 6 radii, 41 components mapped to Mantine, AI rules file.</span></div>
-      <div class="log"><span class="d">v1.x</span><span class="meta-chip" style="justify-self:start;opacity:.6">Legacy</span><span style="color:var(--text-secondary)">The old "Design System" Figma file. Archived. Not a source of truth.</span></div>
+      <div class="log"><span class="d">v1.x</span><span class="meta-chip" style="justify-self:start;color:var(--text-secondary)">Legacy</span><span style="color:var(--text-secondary)">The old "Design System" Figma file. Archived. Not a source of truth.</span></div>
     </div>
   </div>
 </section>

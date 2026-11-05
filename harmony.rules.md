@@ -23,8 +23,10 @@ Source of truth, in this order:
 |---|---|---|
 | Main text | `--text-primary` | 12.4:1 on white |
 | Secondary text, breadcrumbs, table headers | `--text-secondary` | 5.1:1. Replaces the old `#8F9CAE` (2.8:1) |
-| Placeholder, disabled | `--text-disabled` | Fails AA on purpose. **Never** for readable content |
-| Primary button, links, active tab | `--action-primary` (teal-700) | 6.1:1 |
+| Placeholder text | `--text-secondary` | Placeholders are readable content, so they must pass AA too |
+| Disabled only | `--text-disabled` | Exempt from AA because it is inactive. **Never** for readable content or placeholders |
+| Primary button and other teal fills | `--action-primary` | Fills only. As text it drops to 2.6–2.9:1 in dark |
+| Links, active tab, any teal text | `--text-brand` | 6.1:1 light · 7.4:1 dark |
 | Page background | `--bg-page` | |
 | Cards | `--bg-surface` + `--border-default` | |
 | Side navigation | `--bg-nav`, `--text-nav` | 7.05:1 |

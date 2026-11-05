@@ -21,7 +21,7 @@
 .h-link { font: var(--type-button); color: var(--text-brand); display: inline-flex; align-items: center; gap: 4px; }
 
 /* Inputs */
-.h-input { display: flex; align-items: center; gap: var(--space-2); height: var(--control-h-md); padding: 0 var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--bg-surface); font: var(--type-body-s); color: var(--text-disabled); min-width: 240px; }
+.h-input { display: flex; align-items: center; gap: var(--space-2); height: var(--control-h-md); padding: 0 var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--bg-surface); font: var(--type-body-s); color: var(--text-secondary); min-width: 240px; }
 .h-input.focus { border-color: var(--border-brand); box-shadow: var(--focus-ring); color: var(--text-primary); }
 .h-input.error { border-color: var(--status-danger-solid); }
 .h-field { display: flex; flex-direction: column; gap: 6px; }
@@ -154,12 +154,12 @@
 .h-risk.moderate { color: var(--risk-moderate-fg); background: var(--risk-moderate-bg); }
 .h-risk.low { color: var(--risk-low-fg); background: var(--risk-low-bg); }
 .h-risk.sm { height: 20px; padding: 0 var(--space-2); font-size: 11px; }
-.h-risk .score { font-weight: 500; opacity: .85; padding-left: 6px; border-left: 1px solid currentColor; border-left-color: color-mix(in srgb, currentColor 30%, transparent); }
+.h-risk .score { font-weight: 500; padding-left: 6px; border-left: 1px solid currentColor; border-left-color: color-mix(in srgb, currentColor 30%, transparent); }
 .h-pri { display: inline-flex; align-items: center; gap: 6px; font: 500 13px/20px var(--font-sans); }
 .h-pri .h-dot { width: 7px; height: 7px; background: currentColor; }
 .h-pri.urgent { color: var(--priority-urgent); } .h-pri.important { color: var(--priority-important); } .h-pri.standard { color: var(--priority-standard); }
-.h-tag { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 var(--space-2); border-radius: var(--radius-full); background: var(--bg-hover); color: var(--text-secondary); font: 500 11px/16px var(--font-sans); white-space: nowrap; }
-.h-tag svg { color: var(--text-secondary); }
+.h-tag { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 var(--space-2); border-radius: var(--radius-full); background: var(--bg-hover); color: var(--text-body); font: 500 11px/16px var(--font-sans); white-space: nowrap; }
+.h-tag svg { color: var(--text-body); }
 .h-count { display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: var(--radius-full); font: var(--type-label); }
 .h-count.urgent { color: var(--status-danger-fg); background: var(--status-danger-bg); }
 .h-count.important { color: var(--status-warning-fg); background: var(--status-warning-bg); }
@@ -277,7 +277,7 @@
 .h-cal-grid { display: grid; grid-template-columns: repeat(7, 34px); row-gap: 2px; }
 .h-cal-grid span { height: 32px; display: flex; align-items: center; justify-content: center; font: var(--type-body-s); color: var(--text-primary); border-radius: var(--radius-sm); cursor: pointer; }
 .h-cal-grid span.dow { font: var(--type-caption); color: var(--text-secondary); cursor: default; }
-.h-cal-grid span.mute { color: var(--text-disabled); }
+.h-cal-grid span.mute { color: var(--text-secondary); }
 .h-cal-grid span:not(.dow):hover { background: var(--bg-hover); }
 .h-cal-grid span.today { box-shadow: inset 0 0 0 1px var(--border-brand); }
 .h-cal-grid span.in { background: var(--bg-selected); border-radius: 0; color: var(--text-brand); }
@@ -318,7 +318,7 @@
 .h-topbar .h-input { flex: 1; max-width: 360px; margin-left: auto; height: 32px; background: var(--bg-subtle); }
 .h-topbar .tools { display: flex; align-items: center; gap: 4px; }
 .h-indicator { position: relative; display: inline-flex; }
-.h-indicator > .n { position: absolute; top: -4px; right: -5px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--status-danger-solid); color: #fff; font: 600 10px/16px var(--font-sans); text-align: center; box-shadow: 0 0 0 2px var(--bg-surface); }
+.h-indicator > .n { position: absolute; top: -4px; right: -5px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--action-danger); color: #fff; font: 600 10px/16px var(--font-sans); text-align: center; box-shadow: 0 0 0 2px var(--bg-surface); }
 .h-indicator > .d { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--status-danger-solid); box-shadow: 0 0 0 2px var(--bg-surface); }
 .h-indicator > .d.brand { background: var(--action-primary); }
 .h-indicator > .d.pulse::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--status-danger-solid); animation: hPulse 1.6s infinite; }
@@ -514,7 +514,7 @@
 .h-ai-foot { padding: 0 var(--space-3) var(--space-2); font: var(--type-caption); color: var(--text-secondary); text-align: center; }
 .h-ai-field { position: relative; border-radius: var(--radius-md); padding: 1px; background: var(--brand-gradient); }
 .h-ai-field .h-input { border: 0; height: 30px; }
-.h-ai-field .ghost { color: var(--text-disabled); }
+.h-ai-field .ghost { color: var(--text-secondary); }
 .h-ai-hint { display: flex; align-items: center; gap: 6px; font: var(--type-caption); color: var(--text-secondary); margin-top: 6px; }
 .h-ai-hint .comet { width: 12px; height: 12px; color: var(--text-brand); }
 .h-ai-fb { display: flex; align-items: center; gap: var(--space-2); font: var(--type-caption); color: var(--text-secondary); flex-wrap: wrap; }
@@ -532,3 +532,6 @@
 [class*="h-"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
 [class*="h-"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus-visible,
 [class*="h-"] textarea:focus, [class*="h-"] textarea:focus-visible { outline: none; box-shadow: none; }
+
+/* AA: white initials on viz colors get a 25% shade so every hue clears 4.5:1 in both themes */
+.h-avatar[style*="--viz-"], .h-switcher .h-tile[style*="--viz-"] { background-image: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)) !important; }

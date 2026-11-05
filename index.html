@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>(function(){try{var t=localStorage.getItem('harmony.theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
-<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.8">
-<link rel="stylesheet" href="harmony-components.css?v=3.0.8">
+<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.10">
+<link rel="stylesheet" href="harmony-components.css?v=3.0.10">
 <style>
 /* ================= PLAYGROUND SHELL (pg-*) — built on Harmony tokens ================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,7 +59,7 @@ svg { display: block; }
 .pg-side:hover { scrollbar-color: var(--border-strong) transparent; }
 .pg-side h6 { font: 500 12px/16px var(--font-sans); color: var(--text-secondary); padding: 0 10px; margin: 22px 0 6px; display: flex; justify-content: space-between; align-items: center; }
 .pg-side h6:first-child { margin-top: 0; }
-.pg-side h6 .n { font: 500 11px/16px var(--font-mono); color: var(--text-disabled); }
+.pg-side h6 .n { font: 500 11px/16px var(--font-mono); color: var(--text-secondary); }
 .pg-side a { position: relative; display: flex; align-items: center; gap: var(--space-2); height: 32px; padding: 0 10px; border-radius: 8px; font: 400 14px/20px var(--font-sans); color: var(--text-body); transition: background var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
 .pg-side a:hover { background: var(--bg-hover); color: var(--text-primary); }
 .pg-side a.on { background: var(--bg-hover); color: var(--text-primary); font-weight: 500; }
@@ -284,14 +284,14 @@ pre.code .t { color: var(--teal-200); } pre.code .a { color: #F9C784; } pre.code
 /* AI Studio */
 .ai-box { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); overflow: hidden; }
 .ai-box textarea { width: 100%; min-height: 96px; border: none; outline: none; resize: vertical; padding: var(--space-5) var(--space-6) var(--space-2); font: 400 16px/26px var(--font-sans); color: var(--text-primary); background: transparent; }
-.ai-box textarea::placeholder { color: var(--text-disabled); }
+.ai-box textarea::placeholder { color: var(--text-secondary); }
 .ai-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4) var(--space-3) var(--space-6); border-top: 1px solid var(--border-subtle); background: var(--bg-subtle); }
 .ai-ideas { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0 var(--space-8); }
 .ai-idea { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 var(--space-3); border-radius: var(--radius-full); border: 1px solid var(--border-default); background: var(--bg-surface); font: 500 12px/16px var(--font-sans); color: var(--text-body); }
 .ai-idea:hover { border-color: var(--border-brand); color: var(--text-brand); }
 .ai-idea svg { color: var(--text-brand); }
 .ai-steps { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: var(--space-5) var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-6); }
-.ai-step { display: flex; align-items: center; gap: var(--space-3); font: var(--type-body-s); color: var(--text-disabled); }
+.ai-step { display: flex; align-items: center; gap: var(--space-3); font: var(--type-body-s); color: var(--text-secondary); }
 .ai-step .s-ic { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border-strong); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .ai-step.run { color: var(--text-primary); }
 .ai-step.run .s-ic { border-color: var(--action-primary-subtle); border-top-color: var(--border-brand); animation: spin .7s linear infinite; }
@@ -319,7 +319,7 @@ pre.code .t { color: var(--teal-200); } pre.code .a { color: #F9C784; } pre.code
 .h-icon-btn[disabled] { color: var(--text-disabled); background: var(--bg-hover); border-color: transparent; cursor: not-allowed; }
 .h-icon-btn.sm { width: var(--control-h-sm); height: var(--control-h-sm); border-radius: var(--radius-sm); }
 .h-input input { border: 0; outline: 0; background: transparent; flex: 1; min-width: 0; font: var(--type-body-s); color: var(--text-primary); }
-.h-input input::placeholder { color: var(--text-disabled); }
+.h-input input::placeholder { color: var(--text-secondary); }
 .h-input:focus-within { border-color: var(--border-brand); box-shadow: var(--focus-ring); }
 .h-input.error:focus-within { border-color: var(--status-danger-solid); box-shadow: 0 0 0 3px var(--status-danger-bg); }
 .h-input.disabled { background: var(--bg-hover); cursor: not-allowed; }
@@ -525,10 +525,10 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 
 <div class="pg-toasts" id="toasts" aria-live="polite"></div>
 
-<script src="harmony-tokens.js?v=3.0.8"></script>
-<script src="harmony-registry.js?v=3.0.8"></script>
-<script src="harmony-registry-plus.js?v=3.0.8"></script>
-<script src="harmony-ai.js?v=3.0.8"></script>
-<script src="harmony-playground.js?v=3.0.8"></script>
+<script src="harmony-tokens.js?v=3.0.10"></script>
+<script src="harmony-registry.js?v=3.0.10"></script>
+<script src="harmony-registry-plus.js?v=3.0.10"></script>
+<script src="harmony-ai.js?v=3.0.10"></script>
+<script src="harmony-playground.js?v=3.0.10"></script>
 </body>
 </html>

@@ -675,7 +675,7 @@
   },
   "agent": {
     "studio-fg": {
-      "$value": "{orange.500}",
+      "$value": "{orange.600}",
       "$type": "color"
     },
     "studio-bg": {
@@ -683,7 +683,7 @@
       "$type": "color"
     },
     "sharepoint-fg": {
-      "$value": "{mint.600}",
+      "$value": "{mint.700}",
       "$type": "color"
     },
     "sharepoint-bg": {
@@ -717,7 +717,7 @@
       "$type": "color"
     },
     "connection-fg": {
-      "$value": "{orange.500}",
+      "$value": "{orange.600}",
       "$type": "color"
     },
     "connection-bg": {
@@ -725,7 +725,7 @@
       "$type": "color"
     },
     "solution-fg": {
-      "$value": "{cyan.600}",
+      "$value": "{cyan.700}",
       "$type": "color"
     },
     "solution-bg": {
