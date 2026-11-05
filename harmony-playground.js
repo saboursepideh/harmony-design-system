@@ -94,7 +94,7 @@ document.addEventListener('keydown', e => { const t = e.target.closest?.('.comp-
 /* ---------- Home ---------- */
 route(/^\/$/, () => {
   const total = H.registry.length;
-  const featured = ['button', 'risk-badge', 'score-card', 'data-table', 'ai-insight', 'stat-card', 'tabs', 'select', 'callout', 'metric-card', 'empty-state', 'donut'];
+  const featured = ['button', 'risk-badge', 'score-card', 'data-table', 'ai-insight', 'stat-card', 'select', 'command-palette', 'ai-assistant', 'donut'];
   view.innerHTML = `<div class="ov-hero"><div class="glow"></div>
 <a class="ov-pill ai-hover" href="#/ai">${H.aiMark()}New: create components with Orchestry AI ${ic('right', 'ic-sm')}</a>
 <h1>The design system for Orchestry, <em>built and kept alive with AI.</em></h1>
@@ -107,7 +107,7 @@ route(/^\/$/, () => {
   <a class="ov-card ai ai-hover" href="#/ai">${H.aiMark()}<b>Create with AI</b><p>Describe a component in plain words. AI builds it from Harmony, writes its rules and checks contrast.</p></a>
 </div>
 <div class="sec"><div class="sec-head"><div><h3>Components</h3><p>Every tile is the real component, rendered live from the same CSS developers use.</p></div><a class="h-btn secondary sm" href="#/components">View all ${total}${ic('right')}</a></div>
-<div class="comp-grid">${featured.map(id => tile(findComp(id))).join('')}</div></div>
+<div class="home-grid-wrap"><div class="comp-grid home-grid">${featured.map(id => tile(findComp(id))).join('')}</div></div></div>
 <div class="sec"><h3>How Harmony stays one source of truth</h3><p>The same tokens feed Figma variables, the Mantine theme and this site. Change a token once and every place updates.</p>
 <div class="panel" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">${[['palette', 'Tokens', 'orchestry-tokens.json → CSS + Figma variables'], ['code', 'Code', 'Mantine theme + @orchestry/harmony'], ['book', 'Rules', 'harmony.rules.md: read by people and AI'], ['comet', 'AI', 'Builds new parts only from the above']].map(([i, t, s], n) => `<div style="display:flex;gap:12px;align-items:flex-start">${n ? `<span style="color:var(--text-disabled);margin-top:8px;margin-left:-12px">${ic('right')}</span>` : ''}${i === 'comet' ? H.aiMark() : `<div class="h-tile sm" style="background:var(--action-primary-subtle);color:var(--text-brand)">${ic(i)}</div>`}<div><b style="font:var(--type-heading-s)">${t}</b><div style="font:var(--type-caption);color:var(--text-secondary);margin-top:2px">${s}</div></div></div>`).join('')}</div></div>`;
 });

@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>(function(){try{var t=localStorage.getItem('harmony.theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
-<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.1">
-<link rel="stylesheet" href="harmony-components.css?v=3.0.1">
+<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.2">
+<link rel="stylesheet" href="harmony-components.css?v=3.0.2">
 <style>
 /* ================= PLAYGROUND SHELL (pg-*) — built on Harmony tokens ================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -228,6 +228,11 @@ pre.code .t { color: var(--teal-200); } pre.code .a { color: #F9C784; } pre.code
 .ov-card p { font: var(--type-body-s); color: var(--text-secondary); }
 .ov-card.ai { background: linear-gradient(160deg, var(--action-primary-subtle), var(--bg-surface) 60%); }
 .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--gap-cards); }
+.home-grid-wrap { container-type: inline-size; }
+.comp-grid.home-grid { grid-template-columns: repeat(5, 1fr); }
+@container (max-width: 1100px) { .comp-grid.home-grid { grid-template-columns: repeat(4, 1fr); } .home-grid > :nth-child(n+9) { display: none; } }
+@container (max-width: 860px) { .comp-grid.home-grid { grid-template-columns: repeat(3, 1fr); } .home-grid > :nth-child(n+7) { display: none; } }
+@container (max-width: 620px) { .comp-grid.home-grid { grid-template-columns: repeat(2, 1fr); } .home-grid > :nth-child(n+5) { display: none; } }
 .comp-tile { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); overflow: hidden; color: inherit; display: block; }
 .comp-tile:hover { border-color: var(--border-brand); }
 .comp-tile { cursor: pointer; }
@@ -507,10 +512,10 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 
 <div class="pg-toasts" id="toasts" aria-live="polite"></div>
 
-<script src="harmony-tokens.js?v=3.0.1"></script>
-<script src="harmony-registry.js?v=3.0.1"></script>
-<script src="harmony-registry-plus.js?v=3.0.1"></script>
-<script src="harmony-ai.js?v=3.0.1"></script>
-<script src="harmony-playground.js?v=3.0.1"></script>
+<script src="harmony-tokens.js?v=3.0.2"></script>
+<script src="harmony-registry.js?v=3.0.2"></script>
+<script src="harmony-registry-plus.js?v=3.0.2"></script>
+<script src="harmony-ai.js?v=3.0.2"></script>
+<script src="harmony-playground.js?v=3.0.2"></script>
 </body>
 </html>
