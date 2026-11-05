@@ -528,3 +528,7 @@
 .h-menu .mi > span { display: block; }
 .h-progress i:not([style*="background"]) { background: var(--action-primary); }
 .h-topbar .h-input { min-width: 0; white-space: nowrap; overflow: hidden; }
+/* Wrapper fields own the focus ring; the native text control inside stays clean */
+[class*="h-"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+[class*="h-"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus-visible,
+[class*="h-"] textarea:focus, [class*="h-"] textarea:focus-visible { outline: none; box-shadow: none; }
