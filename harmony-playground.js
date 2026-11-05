@@ -480,3 +480,8 @@ route(/^\/ai(?:\?p=(.*))?$/, pre => {
 window.addEventListener('hashchange', go);
 go();
 })();
+
+const rangeFill = r => { const min = +r.min || 0, max = +r.max || 100; r.style.setProperty('--p', ((r.value - min) / (max - min || 1) * 100) + '%'); };
+document.addEventListener('input', e => { if (e.target.matches?.('input[type=range]')) rangeFill(e.target); });
+new MutationObserver(() => document.querySelectorAll('input[type=range]').forEach(rangeFill)).observe(document.body, { childList: true, subtree: true });
+document.querySelectorAll('input[type=range]').forEach(rangeFill);
