@@ -31,17 +31,6 @@
   --lime-800: #3C5414;
   --lime-900: #2C3E0E;
 
-  /* Leaf: logo mid-tone. leaf-500 is the brand-gradient stop */
-  --leaf-50:  #F1F9F4;
-  --leaf-100: #D9F2E3;
-  --leaf-200: #B3E4C7;
-  --leaf-300: #80D0A4;
-  --leaf-400: #4EB783;
-  --leaf-500: #35A973; /* Logo mid-tone, used only in the brand gradient */
-  --leaf-600: #2A9765;
-  --leaf-700: #2B8A5E;
-  --leaf-800: #26714D;
-  --leaf-900: #21593D;
 
   /* Ink: cool neutral */
   --ink-0:   #FFFFFF;
@@ -61,15 +50,12 @@
   /* Feedback and category hues: every family runs 50–900 */
   --green-50: #EBF7F0;  --green-100: #CFEBDB;  --green-200: #A8DEBF;  --green-300: #75CA9C;  --green-400: #44B17B;  --green-500: #2FA36B;  --green-600: #1E8E5A;  --green-700: #177048;  --green-800: #115838;  --green-900: #0C4129;
   --amber-50: #FDF6E9;  --amber-100: #F9E7C2;  --amber-200: #F9D592;  --amber-300: #F2BA54;  --amber-400: #E39F19;  --amber-500: #D9951F;  --amber-600: #B7791F;  --amber-700: #8A5A12;  --amber-800: #6E480F;  --amber-900: #53360C;
-  --yellow-50: #FDF8E1;  --yellow-100: #FDF1C5;  --yellow-200: #FFEAA7;  --yellow-300: #FFD34C;  --yellow-400: #F0BB05;  --yellow-500: #EAB308;  --yellow-600: #B18602;  --yellow-700: #806000;  --yellow-800: #664C03;  --yellow-900: #4D3905;
   --orange-50: #FDEFE7;  --orange-100: #FADCC8;  --orange-200: #FDC09B;  --orange-300: #FD9962;  --orange-400: #F26F29;  --orange-500: #EA580C;  --orange-600: #C2410C;  --orange-700: #9A3412;  --orange-800: #79270C;  --orange-900: #5A1B07;
   --red-50: #FCEEEC;  --red-100: #F8D7D3;  --red-200: #F9B8B0;  --red-300: #F58E83;  --red-400: #E76357;  --red-500: #DC4A3F;  --red-600: #C0362C;  --red-700: #B91C1C;  --red-800: #941716;  --red-900: #701210;
   --blue-50: #EAF2FE;  --blue-100: #D0E1FE;  --blue-200: #AFCDFF;  --blue-300: #83B1FF;  --blue-400: #5292FE;  --blue-500: #3B82F6;  --blue-600: #2563EB;  --blue-700: #1D4ED8;  --blue-800: #163DAC;  --blue-900: #0F2D81;
-  --violet-50: #F1EBFC;  --violet-100: #E2D6FA;  --violet-200: #D0BBFF;  --violet-300: #B797FF;  --violet-400: #9C6FFE;  --violet-500: #8B5CF6;  --violet-600: #7C3AED;  --violet-700: #6D28D9;  --violet-800: #5620AD;  --violet-900: #401782;
   --cyan-50: #E1F4F8;  --cyan-100: #BEF1FD;  --cyan-200: #83E3FA;  --cyan-300: #1FCCF0;  --cyan-400: #02AED0;  --cyan-500: #059EBF;  --cyan-600: #0891B2;  --cyan-700: #0E7490;  --cyan-800: #0E5D74;  --cyan-900: #0D4758;
   --pink-50: #FCEAF0;  --pink-100: #FED5E2;  --pink-200: #FEAEC9;  --pink-300: #FE76A7;  --pink-400: #E84183;  --pink-500: #D5216E;  --pink-600: #BE185D;  --pink-700: #9D174D;  --pink-800: #7B103B;  --pink-900: #5A092A;
   --indigo-50: #EDEBFC;  --indigo-100: #DEDBFF;  --indigo-200: #C1BEFF;  --indigo-300: #9D99FE;  --indigo-400: #796FFE;  --indigo-500: #6251FE;  --indigo-600: #4F46E5;  --indigo-700: #4338CA;  --indigo-800: #332A9F;  --indigo-900: #231D76;
-  --mint-50: #E1F4F1;  --mint-100: #BFF2EB;  --mint-200: #85E5D9;  --mint-300: #27D1C1;  --mint-400: #04B2A4;  --mint-500: #04A194;  --mint-600: #0D9488;  --mint-700: #0F766E;  --mint-800: #0E5E58;  --mint-900: #0C4742;
 
 }
 
@@ -127,8 +113,8 @@
   /* Risk scale (AI & Agents) */
   --risk-critical-fg: var(--red-700);     --risk-critical-bg: #FCEAEA;  --risk-critical-solid: var(--red-600);
   --risk-high-fg:     var(--orange-600);  --risk-high-bg:     var(--orange-50); --risk-high-solid: var(--orange-500);
-  --risk-elevated-fg: #B45309;            --risk-elevated-bg: #FDF3E4;  --risk-elevated-solid: var(--amber-500);
-  --risk-moderate-fg: var(--yellow-700);  --risk-moderate-bg: var(--yellow-50); --risk-moderate-solid: var(--yellow-500);
+  --risk-elevated-fg: #B45309;            --risk-elevated-bg: #FDF3E4;  --risk-elevated-solid: var(--amber-600); /* deep amber */
+  --risk-moderate-fg: var(--amber-700);   --risk-moderate-bg: var(--amber-50);  --risk-moderate-solid: var(--amber-300); /* light amber */
   --risk-low-fg:      var(--green-700);   --risk-low-bg:      var(--green-50);  --risk-low-solid: var(--green-600);
 
   /* Priority (Recommendations) */
@@ -139,10 +125,10 @@
   /* Data visualization: categorical, ordered for max distinction */
   --viz-1: var(--teal-700);
   --viz-2: var(--blue-600);
-  --viz-3: var(--violet-600);
+  --viz-3: var(--pink-600);
   --viz-4: var(--orange-500);
   --viz-5: var(--cyan-600);
-  --viz-6: var(--pink-600);
+  --viz-6: var(--amber-500);
   --viz-7: var(--lime-600);
   --viz-8: var(--indigo-600);
   --viz-grid: var(--ink-150);
@@ -152,15 +138,15 @@
 
   /* Entity identity (Agents) */
   --agent-studio-fg: var(--orange-600);      --agent-studio-bg: var(--orange-50);
-  --agent-sharepoint-fg: var(--mint-700);    --agent-sharepoint-bg: var(--mint-50);
-  --agent-builder-fg: var(--violet-600);     --agent-builder-bg: var(--violet-50);
-  --entity-environment-fg: var(--indigo-600); --entity-environment-bg: var(--indigo-50);
+  --agent-sharepoint-fg: var(--teal-700);    --agent-sharepoint-bg: var(--teal-50);
+  --agent-builder-fg: var(--indigo-600);     --agent-builder-bg: var(--indigo-50);
+  --entity-environment-fg: var(--blue-700);   --entity-environment-bg: var(--blue-50);
   --entity-dlp-fg: #16A34A;                   --entity-dlp-bg: #E6F6EA;
   --entity-connection-fg: var(--orange-600);  --entity-connection-bg: var(--orange-50);
   --entity-solution-fg: var(--cyan-700);      --entity-solution-bg: var(--cyan-50);
   --entity-neutral-fg: var(--ink-700);        --entity-neutral-bg: #EDEFF2;
 
-  --brand-gradient: linear-gradient(135deg, var(--lime-400) 0%, var(--leaf-500) 45%, var(--teal-600) 100%);
+  --brand-gradient: linear-gradient(135deg, var(--lime-400) 0%, var(--green-500) 45%, var(--teal-600) 100%);
 
   /* ---------- 3. TYPOGRAPHY ---------- */
   --font-sans: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -288,21 +274,21 @@
 
   --risk-critical-fg: #F59992;  --risk-critical-bg: rgba(220,74,63,0.15);  --risk-critical-solid: var(--red-500);
   --risk-high-fg:     #F59E66;  --risk-high-bg:     rgba(234,88,12,0.15);  --risk-high-solid: var(--orange-500);
-  --risk-elevated-fg: #EDB25A;  --risk-elevated-bg: rgba(217,149,31,0.14); --risk-elevated-solid: var(--amber-500);
-  --risk-moderate-fg: #E6C74A;  --risk-moderate-bg: rgba(234,179,8,0.13);  --risk-moderate-solid: var(--yellow-500);
+  --risk-elevated-fg: #EDB25A;  --risk-elevated-bg: rgba(183,121,31,0.18); --risk-elevated-solid: var(--amber-600);
+  --risk-moderate-fg: #F5CF85;  --risk-moderate-bg: rgba(242,186,84,0.12); --risk-moderate-solid: var(--amber-300);
   --risk-low-fg:      #5CCB94;  --risk-low-bg:      rgba(47,163,107,0.14); --risk-low-solid: var(--green-500);
 
   --priority-urgent: #F59992;  --priority-important: #E8B04B;  --priority-standard: var(--ink-400);
 
-  --viz-1: var(--teal-400);  --viz-2: var(--blue-500);  --viz-3: var(--violet-500);  --viz-7: var(--lime-500);
+  --viz-1: var(--teal-400);  --viz-2: var(--blue-500);  --viz-3: var(--pink-400);  --viz-6: var(--amber-400);  --viz-7: var(--lime-500);
   --viz-grid: rgba(255,255,255,0.07);
   --viz-axis: var(--ink-400);
   --viz-score-track: linear-gradient(90deg, rgba(59,130,246,0.22) 0%, rgba(20,184,166,0.22) 45%, rgba(47,163,107,0.24) 100%);
 
   --agent-studio-fg: #F59E66;      --agent-studio-bg: rgba(234,88,12,0.15);
-  --agent-sharepoint-fg: #3CCFBE;  --agent-sharepoint-bg: rgba(13,148,136,0.18);
-  --agent-builder-fg: #B9A2FB;     --agent-builder-bg: rgba(139,92,246,0.18);
-  --entity-environment-fg: #9C99F7; --entity-environment-bg: rgba(79,70,229,0.2);
+  --agent-sharepoint-fg: var(--teal-300); --agent-sharepoint-bg: rgba(0,121,128,0.22);
+  --agent-builder-fg: #9C99F7;     --agent-builder-bg: rgba(79,70,229,0.2);
+  --entity-environment-fg: #82B1FA; --entity-environment-bg: rgba(59,130,246,0.15);
   --entity-dlp-fg: #4ADE80;        --entity-dlp-bg: rgba(22,163,74,0.15);
   --entity-connection-fg: #F59E66; --entity-connection-bg: rgba(234,88,12,0.15);
   --entity-solution-fg: #3CC3E3;   --entity-solution-bg: rgba(8,145,178,0.18);

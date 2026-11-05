@@ -204,7 +204,7 @@
 .comet .mk-trail > :nth-child(2) { animation-delay: .14s !important; }
 .comet .mk-trail > :nth-child(3) { animation-delay: .28s !important; }
 .h-ai-mark { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0;
-  background: linear-gradient(45deg, var(--lime-400) 0%, var(--leaf-500) 34%, var(--teal-600) 66%, var(--teal-700) 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.18); }
+  background: linear-gradient(45deg, var(--lime-400) 0%, var(--green-500) 34%, var(--teal-600) 66%, var(--teal-700) 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.18); }
 .h-ai-mark .comet { width: 55%; height: 55%; }
 .h-ai-mark.sm { width: 24px; height: 24px; border-radius: 7px; }
 .h-ai-mark.lg { width: 48px; height: 48px; border-radius: 13px; }
@@ -535,3 +535,5 @@
 
 /* AA: white initials on viz colors get a 25% shade so every hue clears 4.5:1 in both themes */
 .h-avatar[style*="--viz-"], .h-switcher .h-tile[style*="--viz-"] { background-image: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)) !important; }
+/* Amber (viz-6) is too light for white initials: use dark ink instead of the shade */
+.h-avatar[style*="--viz-6"], .h-switcher .h-tile[style*="--viz-6"] { background-image: none !important; color: #1D2229 !important; }

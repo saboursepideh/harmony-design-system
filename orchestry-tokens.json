@@ -87,49 +87,6 @@
       "$type": "color"
     }
   },
-  "leaf": {
-    "50": {
-      "$value": "#F1F9F4",
-      "$type": "color"
-    },
-    "100": {
-      "$value": "#D9F2E3",
-      "$type": "color"
-    },
-    "200": {
-      "$value": "#B3E4C7",
-      "$type": "color"
-    },
-    "300": {
-      "$value": "#80D0A4",
-      "$type": "color"
-    },
-    "400": {
-      "$value": "#4EB783",
-      "$type": "color"
-    },
-    "500": {
-      "$value": "#35A973",
-      "$type": "color",
-      "$description": "Logo mid-tone, used only in the brand gradient"
-    },
-    "600": {
-      "$value": "#2A9765",
-      "$type": "color"
-    },
-    "700": {
-      "$value": "#2B8A5E",
-      "$type": "color"
-    },
-    "800": {
-      "$value": "#26714D",
-      "$type": "color"
-    },
-    "900": {
-      "$value": "#21593D",
-      "$type": "color"
-    }
-  },
   "ink": {
     "0": {
       "$value": "#FFFFFF",
@@ -269,48 +226,6 @@
       "$type": "color"
     }
   },
-  "yellow": {
-    "50": {
-      "$value": "#FDF8E1",
-      "$type": "color"
-    },
-    "100": {
-      "$value": "#FDF1C5",
-      "$type": "color"
-    },
-    "200": {
-      "$value": "#FFEAA7",
-      "$type": "color"
-    },
-    "300": {
-      "$value": "#FFD34C",
-      "$type": "color"
-    },
-    "400": {
-      "$value": "#F0BB05",
-      "$type": "color"
-    },
-    "500": {
-      "$value": "#EAB308",
-      "$type": "color"
-    },
-    "600": {
-      "$value": "#B18602",
-      "$type": "color"
-    },
-    "700": {
-      "$value": "#806000",
-      "$type": "color"
-    },
-    "800": {
-      "$value": "#664C03",
-      "$type": "color"
-    },
-    "900": {
-      "$value": "#4D3905",
-      "$type": "color"
-    }
-  },
   "orange": {
     "50": {
       "$value": "#FDEFE7",
@@ -437,48 +352,6 @@
       "$type": "color"
     }
   },
-  "violet": {
-    "50": {
-      "$value": "#F1EBFC",
-      "$type": "color"
-    },
-    "100": {
-      "$value": "#E2D6FA",
-      "$type": "color"
-    },
-    "200": {
-      "$value": "#D0BBFF",
-      "$type": "color"
-    },
-    "300": {
-      "$value": "#B797FF",
-      "$type": "color"
-    },
-    "400": {
-      "$value": "#9C6FFE",
-      "$type": "color"
-    },
-    "500": {
-      "$value": "#8B5CF6",
-      "$type": "color"
-    },
-    "600": {
-      "$value": "#7C3AED",
-      "$type": "color"
-    },
-    "700": {
-      "$value": "#6D28D9",
-      "$type": "color"
-    },
-    "800": {
-      "$value": "#5620AD",
-      "$type": "color"
-    },
-    "900": {
-      "$value": "#401782",
-      "$type": "color"
-    }
-  },
   "cyan": {
     "50": {
       "$value": "#E1F4F8",
@@ -602,49 +475,6 @@
     },
     "900": {
       "$value": "#231D76",
-      "$type": "color"
-    }
-  },
-  "mint": {
-    "50": {
-      "$value": "#E1F4F1",
-      "$type": "color"
-    },
-    "100": {
-      "$value": "#BFF2EB",
-      "$type": "color"
-    },
-    "200": {
-      "$value": "#85E5D9",
-      "$type": "color"
-    },
-    "300": {
-      "$value": "#27D1C1",
-      "$type": "color"
-    },
-    "400": {
-      "$value": "#04B2A4",
-      "$type": "color"
-    },
-    "500": {
-      "$value": "#04A194",
-      "$type": "color"
-    },
-    "600": {
-      "$value": "#0D9488",
-      "$type": "color"
-    },
-    "700": {
-      "$value": "#0F766E",
-      "$type": "color",
-      "$description": "---------- 2. SEMANTIC: what designers and engineers actually use ----------"
-    },
-    "800": {
-      "$value": "#0E5E58",
-      "$type": "color"
-    },
-    "900": {
-      "$value": "#0C4742",
       "$type": "color"
     }
   },
@@ -878,19 +708,19 @@
       "$type": "color"
     },
     "elevated-solid": {
-      "$value": "{amber.500}",
+      "$value": "{amber.600}",
       "$type": "color"
     },
     "moderate-fg": {
-      "$value": "{yellow.700}",
+      "$value": "{amber.700}",
       "$type": "color"
     },
     "moderate-bg": {
-      "$value": "{yellow.50}",
+      "$value": "{amber.50}",
       "$type": "color"
     },
     "moderate-solid": {
-      "$value": "{yellow.500}",
+      "$value": "{amber.300}",
       "$type": "color"
     },
     "low-fg": {
@@ -932,7 +762,7 @@
       "$type": "color"
     },
     "3": {
-      "$value": "{violet.600}",
+      "$value": "{pink.600}",
       "$type": "color"
     },
     "4": {
@@ -944,7 +774,7 @@
       "$type": "color"
     },
     "6": {
-      "$value": "{pink.600}",
+      "$value": "{amber.500}",
       "$type": "color"
     },
     "7": {
@@ -987,29 +817,29 @@
       "$type": "color"
     },
     "sharepoint-fg": {
-      "$value": "{mint.700}",
+      "$value": "{teal.700}",
       "$type": "color"
     },
     "sharepoint-bg": {
-      "$value": "{mint.50}",
+      "$value": "{teal.50}",
       "$type": "color"
     },
     "builder-fg": {
-      "$value": "{violet.600}",
+      "$value": "{indigo.600}",
       "$type": "color"
     },
     "builder-bg": {
-      "$value": "{violet.50}",
+      "$value": "{indigo.50}",
       "$type": "color"
     }
   },
   "entity": {
     "environment-fg": {
-      "$value": "{indigo.600}",
+      "$value": "{blue.700}",
       "$type": "color"
     },
     "environment-bg": {
-      "$value": "{indigo.50}",
+      "$value": "{blue.50}",
       "$type": "color"
     },
     "dlp-fg": {
@@ -1047,9 +877,9 @@
   },
   "brand": {
     "gradient": {
-      "$value": "linear-gradient(135deg, {lime.400} 0%, {leaf.500} 45%, {teal.600} 100%)",
+      "$value": "linear-gradient(135deg, {lime.400} 0%, {green.500} 45%, {teal.600} 100%)",
       "$extensions": {
-        "com.orchestry.css": "linear-gradient(135deg, var(--lime-400) 0%, var(--leaf-500) 45%, var(--teal-600) 100%)"
+        "com.orchestry.css": "linear-gradient(135deg, var(--lime-400) 0%, var(--green-500) 45%, var(--teal-600) 100%)"
       },
       "$description": "---------- 3. TYPOGRAPHY ----------"
     }

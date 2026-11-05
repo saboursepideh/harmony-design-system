@@ -31,7 +31,7 @@ Source of truth, in this order:
 | Cards | `--bg-surface` + `--border-default` | |
 | Side navigation | `--bg-nav`, `--text-nav` | 7.05:1 |
 
-- Every primitive family (teal, lime, leaf, ink, green, amber, yellow, orange, red, blue, violet, cyan, pink, indigo, mint) runs the same ten steps: 50, 100, 200 … 900. Ink also keeps three helpers: 0, 25, 150.
+- Every primitive family (teal, lime, ink, green, amber, orange, red, blue, cyan, pink, indigo) runs the same ten steps: 50, 100, 200 … 900. Ink also keeps three helpers: 0, 25, 150.
 - Orchestry Teal (`--teal-600`, `#007980`) is the logo color. Use `--action-primary` (teal-700) for interactive UI.
 - Orchestry Lime (`--lime-400`, `#96C23A`) is decorative only (2.1:1). Never use it for text, icons that carry meaning, or as the only signal.
 - `--brand-gradient` is for marketing moments and the hero. Never inside data UI.
@@ -112,6 +112,7 @@ These are three **different** scales. Don't mix them.
 | Risk (how dangerous an agent or site is) | Critical · High · Elevated · Moderate · Low | `--risk-{critical,high,elevated,moderate,low}-{fg,bg,solid}` | Risk Badge |
 | Priority (order of recommendations) | Urgent · Important · Standard | `--priority-*` | Priority Indicator |
 
+- Moderate and Elevated share the amber hue: Moderate is light amber (`amber-300` solid), Elevated is deep amber (`amber-600` solid). The word tells them apart.
 - **Always pair color with a word.** Never color alone. Critical risk also gets an icon.
 - Risk Badge shows the score (0–100) when the list is sorted by risk.
 - Don't invent a sixth risk level or a new status color.
