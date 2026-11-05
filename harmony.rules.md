@@ -77,15 +77,16 @@ Build with **Mantine**. Use the Harmony wrapper when one exists. Never rebuild a
 
 | Group | Harmony component | Mantine |
 |---|---|---|
-| Actions | Button, Icon Button, Link | `Button`, `ActionIcon`, `Anchor` |
-| Inputs | Text Input, Select, Date Range, Menu, Switch, Checkbox | `TextInput`, `Select`, `DatePickerInput`, `Menu`, `Switch`, `Checkbox` |
-| Navigation | Side Nav, Tabs, Breadcrumbs, Pagination | `AppShell.Navbar` + `NavLink`, `Tabs`, `Breadcrumbs`, `Pagination` |
-| Containers | Card, Page Header, Section Header | `Card`/`Paper`, `Group` + `Title` |
-| Data display | Score Card, KPI Tile, Metric Card, Stat Card, Progress Bar, Ring Gauge, Line Chart, Donut Chart, Legend, Data Table, Avatar, User Row, Icon Tile | `Card`, `Progress`, `RingProgress`, `@mantine/charts`, `Table`, `Avatar`, `ThemeIcon` |
-| Status & labels | Status Badge, Risk Badge, Priority Indicator, Insight Tag, Count Chip | `Badge`, `Pill`, `Group` |
-| Feedback | Callout, Tooltip, Modal, Toast, Empty State, Partial Data, Skeleton | `Alert`, `Tooltip`, `Modal`, `Notifications`, `Skeleton`, `Stack` |
+| Actions | Button, Icon Button, Button Group, Link, Action Menu | `Button`, `ActionIcon`, `Button.Group`, `Anchor`, `Menu` |
+| Inputs | Text Input, Select & Menu, Switch, Textarea, Radio Group, Segmented Control, People Picker, Checkbox, Date Picker, File Upload, Slider, Filter Bar | `TextInput`, `Select`, `Switch`, `Textarea`, `Radio`, `SegmentedControl`, `MultiSelect`/`TagsInput`, `Checkbox`, `DatePickerInput`, `Dropzone`, `Slider`, `Group` + `Pill` |
+| Navigation | Tabs, Side Nav, Breadcrumbs, Pagination, Top Bar, Stepper, Command Palette, Tree View | `Tabs`, `AppShell.Navbar` + `NavLink`, `Breadcrumbs`, `Pagination`, `AppShell.Header`, `Stepper`, `Spotlight`, `Tree` |
+| Containers | Card, Page Header, Section Header, Accordion, Drawer, Popover, Description List, Workspace Card | `Card`/`Paper`, `Group` + `Title`, `Accordion`, `Drawer`, `Popover`/`HoverCard`, `SimpleGrid`, `Card` |
+| Data display | Score Card, KPI Tile, Metric Card, Stat Card, Progress Bar, Donut Chart, Data Table, Avatar, Timeline, Avatar Group, Ring Gauge, Code Block | `Card`, `Progress`, `@mantine/charts`, `Table`, `Avatar`, `Timeline`, `Avatar.Group`, `RingProgress`, `Code` |
+| Status & labels | Status Badge, Risk Badge, Priority Indicator, Insight Tag, Lifecycle Status, Sensitivity Label, Notification Indicator | `Badge`, `Pill`, `Indicator` |
+| Feedback | Callout, Tooltip, Modal, Toast, Empty State, Banner, Skeleton, Loader, Notification Center, Partial Data | `Alert`, `Tooltip`, `Modal`, `Notifications`, `Skeleton`, `Loader`, `Popover` + `ScrollArea`, `Stack` |
+| AI patterns | AI Insight, AI Assistant, AI Suggestion, AI Feedback (all marked with the Comet icon) | Custom, built on `Paper`, `Textarea`, `ActionIcon` |
 
-**41 components in total.** Before creating anything new, search this list and the Figma library for an existing component or variant.
+**66 components in total** (the live playground is the exact list). Before creating anything new, search this list and the Figma library for an existing component or variant.
 
 ### Key component rules
 - **Button:** one primary button per view. Variants: primary, secondary, subtle, danger. Sizes sm/md/lg map to control heights.
