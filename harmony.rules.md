@@ -41,22 +41,48 @@ Source of truth, in this order:
 ## 2. Typography
 
 - **Lexend only.** `--font-mono` (JetBrains Mono) is for code and IDs only.
-- Use only the 12 `--type-*` styles. No other font sizes.
+- Use only the 35 `--type-*` styles. They sit on 12 sizes: 11, 12, 13, 14, 16, 18, 20, 24, 28, 32, 40, 48. No other font sizes.
+- Older names `display`, `heading-l/m/s`, `button`, `label` are aliases (`display` → `display-s`, `heading-l` → `h3`, `heading-m` → `h5`, `heading-s` → `h6`, `button` → `button-m`, `label` → `label-m`). Use the new names in new work.
+- One `h1` per page. Don’t skip heading levels for looks; pick the level by structure, then the style by size.
+- Links use `link-*` at the same size as the text around them, in `--text-brand`. Inline links are always underlined.
 
-| Style | Size / line | Weight | Use |
-|---|---|---|---|
-| `display` | 32/40 | 500 | Score number |
-| `metric-l` | 28/36 | 500 | Hero metric in a metric card |
-| `metric-m` | 20/28 | 500 | KPI tile, stat card value |
-| `heading-l` | 20/28 | 600 | Page title |
-| `heading-m` | 16/24 | 600 | Section and card title |
-| `heading-s` | 14/20 | 600 | Small card title, table primary cell |
-| `body-m` | 14/20 | 400 | Default text |
-| `body-s` | 13/20 | 400 | Subtitles, table cells, descriptions |
-| `button` | 13/20 | 600 | Buttons |
-| `label` | 12/16 | 600 | Badges, chips |
-| `caption` | 12/16 | 400 | Meta text, timestamps |
-| `overline` | 11/16 | 600 | Group labels, table headers (uppercase, +0.4px) |
+| Group | Style | Size / line | Weight | Use |
+|---|---|---|---|---|
+| Display | `display-l` | 48/56 | 600 | Marketing and empty-state heroes (-1px tracking) |
+| Display | `display-m` | 40/48 | 600 | Welcome and onboarding screens (-0.8px tracking) |
+| Display | `display-s` | 32/40 | 500 | Hero numbers and page heroes (-0.5px tracking) |
+| Heading | `h1` | 28/36 | 600 | Page title (one per page) (-0.4px tracking) |
+| Heading | `h2` | 24/32 | 600 | Major page section (-0.3px tracking) |
+| Heading | `h3` | 20/28 | 600 | Section title, drawer and modal title (-0.2px tracking) |
+| Heading | `h4` | 18/26 | 600 | Sub-section, settings group |
+| Heading | `h5` | 16/24 | 600 | Card title, panel header |
+| Heading | `h6` | 14/20 | 600 | Small card title, table name, list group |
+| Subtitle | `subtitle-l` | 18/28 | 400 | Lead text under a page title |
+| Subtitle | `subtitle-m` | 16/24 | 400 | Intro under a section or modal title |
+| Body | `body-l` | 16/24 | 400 | Long reading, onboarding, empty states |
+| Body | `body-l-strong` | 16/24 | 500 | Emphasis inside body-l |
+| Body | `body-m` | 14/20 | 400 | Default UI text, navigation, forms |
+| Body | `body-m-strong` | 14/20 | 500 | Emphasis, selected nav item, names in text |
+| Body | `body-s` | 13/20 | 400 | Table cells, dense lists, descriptions |
+| Body | `body-s-strong` | 13/20 | 500 | Primary cell in a table, key values |
+| Link | `link-l` | 16/24 | 500 | Links inside body-l |
+| Link | `link-m` | 14/20 | 500 | Default links, “View all” |
+| Link | `link-s` | 13/20 | 500 | Links in tables, captions, breadcrumbs |
+| Button | `button-l` | 14/20 | 600 | Large buttons, hero calls to action |
+| Button | `button-m` | 13/20 | 600 | Default buttons, tabs, menu actions |
+| Button | `button-s` | 12/16 | 600 | Small buttons, table row actions |
+| Label | `label-l` | 14/20 | 500 | Form field labels, filters |
+| Label | `label-m` | 12/16 | 600 | Badges, chips, tags, segmented controls |
+| Label | `label-s` | 11/16 | 600 | Counters, tiny tags, avatar initials |
+| Caption | `caption` | 12/16 | 400 | Helper text, timestamps, meta |
+| Caption | `caption-strong` | 12/16 | 500 | Emphasis in captions, chart labels |
+| Overline | `overline` | 11/16 | 600 | Eyebrows, table headers, nav groups (uppercase) (0.4px tracking) |
+| Metric | `metric-xl` | 40/48 | 500 | Single hero number on a page (-0.8px tracking) |
+| Metric | `metric-l` | 28/36 | 500 | Metric cards (-0.4px tracking) |
+| Metric | `metric-m` | 20/28 | 500 | KPI tiles, stat cards (-0.3px tracking) |
+| Metric | `metric-s` | 16/24 | 500 | Inline stats, table totals, deltas |
+| Code | `code-m` | 13/20 | 400 mono | Code blocks, commands |
+| Code | `code-s` | 12/16 | 400 mono | Inline code, IDs, keys |
 
 - Metric numbers use `font-variant-numeric: tabular-nums`.
 - Sentence case everywhere. Uppercase only through `overline`.

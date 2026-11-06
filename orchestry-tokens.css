@@ -155,19 +155,60 @@
   --weight-medium: 500;
   --weight-semibold: 600;
 
-  /* size / line-height / weight / tracking */
-  --type-display:    500 32px/40px var(--font-sans);  --track-display: -0.5px;
-  --type-metric-l:   500 28px/36px var(--font-sans);  --track-metric-l: -0.4px;
-  --type-metric-m:   500 20px/28px var(--font-sans);  --track-metric-m: -0.3px;
-  --type-heading-l:  600 20px/28px var(--font-sans);  --track-heading-l: -0.2px;
-  --type-heading-m:  600 16px/24px var(--font-sans);
-  --type-heading-s:  600 14px/20px var(--font-sans);
-  --type-body-m:     400 14px/20px var(--font-sans);
-  --type-body-s:     400 13px/20px var(--font-sans);
-  --type-caption:    400 12px/16px var(--font-sans);
-  --type-label:      600 12px/16px var(--font-sans);
-  --type-button:     600 13px/20px var(--font-sans);
-  --type-overline:   600 11px/16px var(--font-sans);  --track-overline: 0.4px;
+  /* size / line-height / weight / tracking: 35 styles on a 12-step size scale */
+  /* Display */
+  --type-display-l:     600 48px/56px var(--font-sans);             --track-display-l: -1px;
+  --type-display-m:     600 40px/48px var(--font-sans);             --track-display-m: -0.8px;
+  --type-display-s:     500 32px/40px var(--font-sans);             --track-display-s: -0.5px;
+  /* Heading */
+  --type-h1:            600 28px/36px var(--font-sans);             --track-h1: -0.4px;
+  --type-h2:            600 24px/32px var(--font-sans);             --track-h2: -0.3px;
+  --type-h3:            600 20px/28px var(--font-sans);             --track-h3: -0.2px;
+  --type-h4:            600 18px/26px var(--font-sans);
+  --type-h5:            600 16px/24px var(--font-sans);
+  --type-h6:            600 14px/20px var(--font-sans);
+  /* Subtitle */
+  --type-subtitle-l:    400 18px/28px var(--font-sans);
+  --type-subtitle-m:    400 16px/24px var(--font-sans);
+  /* Body */
+  --type-body-l:        400 16px/24px var(--font-sans);
+  --type-body-l-strong: 500 16px/24px var(--font-sans);
+  --type-body-m:        400 14px/20px var(--font-sans);
+  --type-body-m-strong: 500 14px/20px var(--font-sans);
+  --type-body-s:        400 13px/20px var(--font-sans);
+  --type-body-s-strong: 500 13px/20px var(--font-sans);
+  /* Link */
+  --type-link-l:        500 16px/24px var(--font-sans);
+  --type-link-m:        500 14px/20px var(--font-sans);
+  --type-link-s:        500 13px/20px var(--font-sans);
+  /* Button */
+  --type-button-l:      600 14px/20px var(--font-sans);
+  --type-button-m:      600 13px/20px var(--font-sans);
+  --type-button-s:      600 12px/16px var(--font-sans);
+  /* Label */
+  --type-label-l:       500 14px/20px var(--font-sans);
+  --type-label-m:       600 12px/16px var(--font-sans);
+  --type-label-s:       600 11px/16px var(--font-sans);
+  /* Caption */
+  --type-caption:       400 12px/16px var(--font-sans);
+  --type-caption-strong: 500 12px/16px var(--font-sans);
+  /* Overline */
+  --type-overline:      600 11px/16px var(--font-sans);             --track-overline: 0.4px;
+  /* Metric */
+  --type-metric-xl:     500 40px/48px var(--font-sans);             --track-metric-xl: -0.8px;
+  --type-metric-l:      500 28px/36px var(--font-sans);             --track-metric-l: -0.4px;
+  --type-metric-m:      500 20px/28px var(--font-sans);             --track-metric-m: -0.3px;
+  --type-metric-s:      500 16px/24px var(--font-sans);
+  /* Code */
+  --type-code-m:        400 13px/20px var(--font-mono);
+  --type-code-s:        400 12px/16px var(--font-mono);
+  /* Legacy names: older code keeps working, each points at the new scale */
+  --type-display:       var(--type-display-s);                      --track-display: var(--track-display-s);
+  --type-heading-l:     var(--type-h3);                             --track-heading-l: var(--track-h3);
+  --type-heading-m:     var(--type-h5);
+  --type-heading-s:     var(--type-h6);
+  --type-button:        var(--type-button-m);
+  --type-label:         var(--type-label-m);
 
   /* ---------- 4. SPACING (4-pt scale) ---------- */
   --space-0: 0;

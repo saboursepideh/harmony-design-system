@@ -25,10 +25,12 @@ export const harmonyTheme = createTheme({
   headings: {
     fontWeight: '600',
     sizes: {
-      h1: { fontSize: '32px', lineHeight: '40px', fontWeight: '500' }, // type-display
-      h2: { fontSize: '20px', lineHeight: '28px' }, // type-heading-l
-      h3: { fontSize: '16px', lineHeight: '24px' }, // type-heading-m
-      h4: { fontSize: '14px', lineHeight: '20px' }, // type-heading-s
+      h1: { fontSize: '28px', lineHeight: '36px' }, // type-h1
+      h2: { fontSize: '24px', lineHeight: '32px' }, // type-h2
+      h3: { fontSize: '20px', lineHeight: '28px' }, // type-h3
+      h4: { fontSize: '18px', lineHeight: '26px' }, // type-h4
+      h5: { fontSize: '16px', lineHeight: '24px' }, // type-h5
+      h6: { fontSize: '14px', lineHeight: '20px' }, // type-h6
     },
   },
   shadows: {

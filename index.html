@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>(function(){try{var t=localStorage.getItem('harmony.theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
-<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.12">
-<link rel="stylesheet" href="harmony-components.css?v=3.0.12">
+<link rel="stylesheet" href="orchestry-tokens.css?v=3.0.13">
+<link rel="stylesheet" href="harmony-components.css?v=3.0.13">
 <style>
 /* ================= PLAYGROUND SHELL (pg-*) — built on Harmony tokens ================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -195,6 +195,9 @@ pre.code .t { color: var(--teal-200); } pre.code .a { color: #F9C784; } pre.code
 .cc-ratio { font-size: 44px; line-height: 52px; font-weight: 600; letter-spacing: -1px; }
 .type-row { display: grid; grid-template-columns: 170px 1fr 170px; gap: var(--space-6); align-items: center; padding: var(--space-4) 0; border-bottom: 1px solid var(--border-subtle); cursor: copy; }
 .type-row:last-child { border-bottom: none; }
+.type-sizes { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 24px 28px; overflow-x: auto; }
+.type-sizes > div { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-primary); }
+.type-sizes small { font: var(--type-caption); color: var(--text-secondary); font-family: var(--font-mono); }
 .type-row .tn { font: 500 12px/16px var(--font-mono); }
 .type-row .tu { font: var(--type-caption); color: var(--text-secondary); margin-top: 2px; }
 .type-row .ts { font: var(--type-caption); color: var(--text-secondary); text-align: right; }
@@ -525,10 +528,10 @@ html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
 
 <div class="pg-toasts" id="toasts" aria-live="polite"></div>
 
-<script src="harmony-tokens.js?v=3.0.12"></script>
-<script src="harmony-registry.js?v=3.0.12"></script>
-<script src="harmony-registry-plus.js?v=3.0.12"></script>
-<script src="harmony-ai.js?v=3.0.12"></script>
-<script src="harmony-playground.js?v=3.0.12"></script>
+<script src="harmony-tokens.js?v=3.0.13"></script>
+<script src="harmony-registry.js?v=3.0.13"></script>
+<script src="harmony-registry-plus.js?v=3.0.13"></script>
+<script src="harmony-ai.js?v=3.0.13"></script>
+<script src="harmony-playground.js?v=3.0.13"></script>
 </body>
 </html>
